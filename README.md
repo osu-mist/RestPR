@@ -1,6 +1,5 @@
 # RestPR
-
-TEST LINE FOR MERGE 
+ 
 
 RestPR is a RESTful web api that enables competitive communities to create player leaderboard seasons using tournament match data from services like Challonge.com
 
