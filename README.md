@@ -33,10 +33,11 @@ Panelists involved in the subjective power rankings can utilize the upset filter
 
 #Resources
 
-- Seasons
-- Tournaments
-- Matches
-- Players
+- Season
+- Tournament
+- Match
+- Player
+- User
 
 #Response Codes
 
