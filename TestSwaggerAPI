@@ -1,0 +1,1053 @@
+swagger: "2.0"
+info:
+  description: RestPR is a RESTful web api that enables competitive communities to create player leaderboard seasons using tournament match data from services like Challonge.com
+  version: "1.0.0"
+  title: RestPR
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+host: localhost:8080
+basePath: /v1
+schemes:
+  - http
+paths:
+  /user:
+    get:
+      tags:
+        - User
+      summary: A list of users and their info
+      description: "This returns the information obtained about the users including user_id, user_login, and display_name"
+      operationId: getUser
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - name: user_id
+          in: path
+          description: The user's id number
+          required: true
+          type: number
+          format: double
+          schema:
+            $ref: "#/definitions/user"
+        - name: user_login
+          in: path
+          description: This is the user's login name
+          required: true
+          type: string
+          format: string
+          schema:
+            $ref: "#/definitions/user"
+        - name: display_name
+          in: path
+          description: This is the user's display name
+          required: true
+          type: string
+          format: string
+          schema:
+            $ref: "#/definitions/user"
+      responses:
+        "200":
+          description: An array of users.
+        "400":
+          description: Invalid status value
+      security:
+        - user_auth:
+          - read_user
+    put:
+      tags:
+        - User
+      summary: Update an existing user
+      description: "Adds updates to existing users"
+      operationId: updateUser
+      consumes:
+        - application/json
+        - application/xml
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - name: user_id
+          in: path
+          description: The user's id number
+          required: true
+          type: number
+          format: double
+          schema:
+            $ref: "#/definitions/user" #Change later as desired
+        - name: user_login
+          in: path
+          description: This is the user's login name
+          required: true
+          type: string
+          format: string
+          schema:
+            $ref: "#/definitions/user" #Change later as desired
+        - name: display_name
+          in: path
+          description: This is the user's display name
+          required: true
+          type: string
+          format: string
+          schema:
+            $ref: "#/definitions/user" #Change later as desired
+      responses:
+        "405":
+          description: Validation exception
+        "404":
+          description: User not found
+        "400":
+          description: Invalid ID supplied
+      security:
+        - user_auth:
+          - write_user
+          - read_user
+    post:
+      tags:
+        - user
+      summary: Updates a user in the database with form data
+      description: "Creates and updates a user into the database"
+      operationId: updateUserWithForm
+      consumes:
+        - application/x-www-form-urlencoded
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - in: path
+          name: user_id
+          description: ID of user that needs to be updated
+          required: true
+          type: number
+          format: double
+        - in: path
+          name: user_login
+          description: This is the user's login name to be updated
+          required: true
+          type: string
+          format: string
+        - in: path
+          name: display_name
+          description: This is the user's display name to be updated
+          required: true
+          type: string
+          format: string
+      responses:
+        "405":
+          description: Invalid input
+      security:
+        - user_auth:
+          - write_users
+          - read_users
+    delete:
+      tags:
+        - user
+      summary: Deletes a user
+      description: "Deletes user from database."
+      operationId: deleteUser
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - in: header
+          name: api_key
+          description: ""
+          required: true
+          type: string
+        - in: path
+          name: user_id
+          description: User id to delete
+          required: true
+          type: number
+          format: double
+      responses:
+        "404":
+          description: Order not found
+        "400":
+          description: Invalid user value
+      security:
+        - user_auth:
+          - write_user
+          - read_user
+          
+  /season:
+    get:
+      tags:
+          - season
+      summary: A list of seasons and their info
+      description: The season request returns a full list of season information including season_id, community_name, cycle_format, cycle_count, and ELO_default_seed.
+      operationId: getSeason
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - name: season_id
+          in: path
+          description: The id of the selected season.
+          required: true
+          type: number
+          format: double
+        - name: community_name
+          in: path
+          description: The name of the community.
+          required: true
+          type: string
+          format: string
+        - name: cycle_format
+          in: path
+          description: The cycle format of the season.
+          required: true
+          type: string
+          format: string
+        - name: cycle_count
+          in: path
+          description: A count of cycles in the season.
+          required: true
+          type: number
+          format: double
+        - name: ELO_default_seed
+          in: path
+          description: The ELO default seed.
+          required: true
+          type: number
+          format: double
+      responses:
+        "200":
+          description: An array of seasons.
+        "400":
+          description: Invalid status value
+      security:
+        - season_auth:
+          - read_season
+    put:
+      tags:
+        - season
+      summary: Update an existing season
+      description: "Adds updates to existing seasons"
+      operationId: updateSeason
+      consumes:
+        - application/json
+        - application/xml
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - name: season_id
+          in: path
+          description: The season's id number.
+          required: true
+          type: number
+          format: double
+          schema:
+            $ref: "#/definitions/season" #Change later as desired
+        - name: community_name
+          in: path
+          description: This is the community name.
+          required: true
+          type: string
+          format: string
+          schema:
+            $ref: "#/definitions/season" #Change later as desired
+        - name: cycle_format
+          in: path
+          description: This is the season's cycle format.
+          required: true
+          type: string
+          format: string
+          schema:
+            $ref: "#/definitions/season" #Change later as desired
+        - name: cycle_count
+          in: path
+          description: This is the season's cycle count.
+          required: true
+          type: number
+          format: double
+          schema:
+            $ref: "#/definitions/season" #Change later as desired
+        - name: ELO_default_seed
+          in: path
+          description: This is the default ELO seed.
+          required: true
+          type: number
+          format: double
+          schema:
+            $ref: "#/definitions/season" #Change later as desired
+      responses:
+        "405":
+          description: Validation exception
+        "404":
+          description: Season not found
+        "400":
+          description: Invalid ID supplied
+      security:
+        - user_auth:
+          - write_season
+          - read_season
+    post:
+      tags:
+        - season
+      summary: Updates a season in the database with form data
+      description: "Creates and updates a season into the database"
+      operationId: updateSeasonWithForm
+      consumes:
+        - application/x-www-form-urlencoded
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - in: path
+          name: season_id
+          description: ID of season that needs to be updated.
+          required: true
+          type: number
+          format: double
+        - in: path
+          name: community_name
+          description: This is the season's community name to be updated.
+          required: true
+          type: string
+          format: string
+        - in: path
+          name: cycle_format
+          description: This is the season's cycle format to be updated.
+          required: true
+          type: string
+          format: string
+        - in: path
+          name: cycle_count
+          description: The season's cycle count to be updated.
+          required: true
+          type: number
+          format: double
+        - in: path
+          name: ELO_default_seed
+          description: The default seed of ELO to be updated.
+          required: true
+          type: number
+          format: double
+      responses:
+        "405":
+          description: Invalid input
+      security:
+        - season_auth:
+          - write_season
+          - read_season
+    delete:
+      tags:
+        - season
+      summary: Deletes a season
+      description: "Deletes season from database."
+      operationId: deleteSeason
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - in: header
+          name: api_key
+          description: ""
+          required: true
+          type: string
+        - in: path
+          name: season_id
+          description: Season id to delete
+          required: true
+          type: number
+          format: double
+      responses:
+        "404":
+          description: Order not found
+        "400":
+          description: Invalid season value
+      security:
+        - user_auth:
+          - write_season
+          - read_season       
+
+  /tournament:
+    get:
+      tags:
+          - tournament
+      summary: A list of tournaments and their info
+      description: The tournament request returns a full list of tournament information including tournament_id, series_name, series_number, and season_id
+      operationId: getTournament
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - name: tournament_id
+          in: path
+          description: The id of the selected tournament.
+          required: true
+          type: number
+          format: double
+        - name: series_name
+          in: path
+          description: The name of the series.
+          required: true
+          type: string
+          format: string
+        - name: series_number
+          in: path
+          description: The series number of the tournament.
+          required: true
+          type: number
+          format: double
+        - name: season_id
+          in: path
+          description: The id number of the season.
+          required: true
+          type: number
+          format: double
+      responses:
+        "200":
+          description: An array of tournaments.
+        "400":
+          description: Invalid status value
+      security:
+        - tournament_auth:
+          - read_tournament
+    put:
+      tags:
+        - tournament
+      summary: Update an existing tournament
+      description: "Adds updates to existing tournaments"
+      operationId: updateTournament
+      consumes:
+        - application/json
+        - application/xml
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - name: tournament_id
+          in: path
+          description: The tournament's id number.
+          required: true
+          type: number
+          format: double
+          schema:
+            $ref: "#/definitions/tournament" #Change later as desired
+        - name: series_name
+          in: path
+          description: This is the series name.
+          required: true
+          type: string
+          format: string
+          schema:
+            $ref: "#/definitions/tournament" #Change later as desired
+        - name: series_number
+          in: path
+          description: This is the series' number.
+          required: true
+          type: number
+          format: double
+          schema:
+            $ref: "#/definitions/tournament" #Change later as desired
+        - name: season_id
+          in: path
+          description: This is the tournament's id number.
+          required: true
+          type: number
+          format: double
+          schema:
+            $ref: "#/definitions/tournament" #Change later as desired
+      responses:
+        "405":
+          description: Validation exception
+        "404":
+          description: Tournament not found
+        "400":
+          description: Invalid ID supplied
+      security:
+        - user_auth:
+          - write_tournament
+          - read_tournament
+    post:
+      tags:
+        - tournament
+      summary: Updates a tournament in the database with form data
+      description: "Creates and updates a tournament into the database"
+      operationId: updateTournamentWithForm
+      consumes:
+        - application/x-www-form-urlencoded
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - in: path
+          name: tournament_id
+          description: ID of tournament that needs to be updated.
+          required: true
+          type: number
+          format: double
+        - in: path
+          name: series_name
+          description: This is the tournament's series name to be updated.
+          required: true
+          type: string
+          format: string
+        - in: path
+          name: series_number
+          description: This is the tournament's series number to be updated.
+          required: true
+          type: number
+          format: double
+        - in: path
+          name: season_id
+          description: The season's id number.
+          required: true
+          type: number
+          format: double
+      responses:
+        "405":
+          description: Invalid input
+      security:
+        - season_auth:
+          - write_tournament
+          - read_tournament
+    delete:
+      tags:
+        - tournament
+      summary: Deletes a tournament
+      description: "Deletes tournament from database."
+      operationId: deleteTournament
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - in: header
+          name: api_key
+          description: ""
+          required: true
+          type: string
+        - in: path
+          name: tournament_id
+          description: Tournament id to delete
+          required: true
+          type: number
+          format: double
+      responses:
+        "404":
+          description: Order not found
+        "400":
+          description: Invalid tournament value
+      security:
+        - user_auth:
+          - write_tournament
+          - read_tournament
+          
+  /match:
+    get:
+      tags:
+          - match
+      summary: A list of matches and their info
+      description: The match request returns a full list of match information including match_id, player_1, player_2, winner, and tournament_id.
+      operationId: getMatch
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - name: match_id
+          in: path
+          description: The id of the selected match.
+          required: true
+          type: number
+          format: double
+        - name: player_1
+          in: path
+          description: Player 1 of the match.
+          required: true
+          type: string
+          format: string
+        - name: player_2
+          in: path
+          description: Player 2 of the match.
+          required: true
+          type: string
+          format: string
+        - name: winner
+          in: path
+          description: The winner of the match.
+          required: true
+          type: string
+          format: string
+        - name: tournament_id
+          in: path
+          description: The id number of the tournament.
+          required: true
+          type: number
+          format: double
+      responses:
+        "200":
+          description: An array of matches.
+        "400":
+          description: Invalid status value
+      security:
+        - match_auth:
+          - read_match
+    put:
+      tags:
+        - match
+      summary: Update an existing match
+      description: "Adds updates to existing matches"
+      operationId: updateMatch
+      consumes:
+        - application/json
+        - application/xml
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - name: match_id
+          in: path
+          description: The match's id number.
+          required: true
+          type: number
+          format: double
+          schema:
+            $ref: "#/definitions/match" #Change later as desired
+        - name: player_1
+          in: path
+          description: This is player 1.
+          required: true
+          type: string
+          format: string
+          schema:
+            $ref: "#/definitions/match" #Change later as desired
+        - name: player_2
+          in: path
+          description: This is player 2.
+          required: true
+          type: string
+          format: string
+          schema:
+            $ref: "#/definitions/match" #Change later as desired
+        - name: winner
+          in: path
+          description: This is the winner.
+          required: true
+          type: string
+          format: string
+          schema:
+            $ref: "#/definitions/match" #Change later as desired
+        - name: tournament_id
+          in: path
+          description: This is the tournament's id number.
+          required: true
+          type: number
+          format: double
+          schema:
+            $ref: "#/definitions/match" #Change later as desired
+      responses:
+        "405":
+          description: Validation exception
+        "404":
+          description: Match not found
+        "400":
+          description: Invalid ID supplied
+      security:
+        - user_auth:
+          - write_match
+          - read_match
+    post:
+      tags:
+        - match
+      summary: Updates a match in the database with form data
+      description: "Creates and updates a match into the database"
+      operationId: updateMatchWithForm
+      consumes:
+        - application/x-www-form-urlencoded
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - in: path
+          name: match_id
+          description: ID of match that needs to be updated.
+          required: true
+          type: number
+          format: double
+        - in: path
+          name: player_1
+          description: This is player 1 to be updated.
+          required: true
+          type: string
+          format: string
+        - in: path
+          name: player_2
+          description: This is player 2 to be updated.
+          required: true
+          type: string
+          format: string
+        - in: path
+          name: winner
+          description: This is the winner to be updated.
+          required: true
+          type: string
+          format: string
+        - in: path
+          name: tournament_id
+          description: ID of tournament that needs to be updated.
+          required: true
+          type: number
+          format: double
+      responses:
+        "405":
+          description: Invalid input
+      security:
+        - season_auth:
+          - write_match
+          - read_match
+    delete:
+      tags:
+        - match
+      summary: Deletes a match
+      description: "Deletes tournament from database."
+      operationId: deleteMatch
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - in: header
+          name: api_key
+          description: ""
+          required: true
+          type: string
+        - in: path
+          name: match_id
+          description: Match id to delete
+          required: true
+          type: number
+          format: double
+      responses:
+        "404":
+          description: Order not found
+        "400":
+          description: Invalid match value
+      security:
+        - user_auth:
+          - write_match
+          - read_match
+          
+  /player:
+    get:
+      tags:
+          - player
+      summary: A list of players and their info
+      description: The match request returns a full list of match information including player_id, name, ELO_rating, initial_ELO_seed, win_count, and loss_count.
+      operationId: getPlayer
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - name: player_id
+          in: path
+          description: The id of the selected player.
+          required: true
+          type: number
+          format: double
+        - name: name
+          in: path
+          description: The player's name.
+          required: true
+          type: string
+          format: string
+        - name: ELO_rating
+          in: path
+          description: The player's ELO rating.
+          required: true
+          type: number
+          format: double
+        - name: initial_ELO_seed
+          in: path
+          description: The player's initial ELO seed.
+          required: true
+          type: number
+          format: double
+        - name: win_count
+          in: path
+          description: The number of wins the player has.
+          required: true
+          type: number
+          format: double
+        - name: loss_count
+          in: path
+          description: The number of losses the player has.
+          required: true
+          type: number
+          format: double
+      responses:
+        "200":
+          description: An array of players.
+        "400":
+          description: Invalid status value
+      security:
+        - player_auth:
+          - read_player
+    put:
+      tags:
+        - player
+      summary: Update an existing player
+      description: "Adds updates to existing players"
+      operationId: updatePlayer
+      consumes:
+        - application/json
+        - application/xml
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - name: player_id
+          in: path
+          description: The player's id number.
+          required: true
+          type: number
+          format: double
+          schema:
+            $ref: "#/definitions/player" #Change later as desired
+        - name: name
+          in: path
+          description: This is the player's name.
+          required: true
+          type: string
+          format: string
+          schema:
+            $ref: "#/definitions/player" #Change later as desired
+        - name: ELO_ranking
+          in: path
+          description: This is the player's ELO ranking.
+          required: true
+          type: number
+          format: double
+          schema:
+            $ref: "#/definitions/player" #Change later as desired
+        - name: initial_ELO_seed
+          in: path
+          description: This is the player's initial ELO seed.
+          required: true
+          type: number
+          format: double
+          schema:
+            $ref: "#/definitions/player" #Change later as desired
+        - name: win_count
+          in: path
+          description: This is the player's win count.
+          required: true
+          type: number
+          format: double
+          schema:
+            $ref: "#/definitions/player" #Change later as desired
+        - name: loss_count
+          in: path
+          description: This is the player's loss count.
+          required: true
+          type: number
+          format: double
+          schema:
+            $ref: "#/definitions/player" #Change later as desired
+      responses:
+        "405":
+          description: Validation exception
+        "404":
+          description: Player not found
+        "400":
+          description: Invalid ID supplied
+      security:
+        - player_auth:
+          - write_player
+          - read_player
+    post:
+      tags:
+        - player
+      summary: Updates a player in the database with form data
+      description: "Creates and updates a player into the database"
+      operationId: updatePlayerWithForm
+      consumes:
+        - application/x-www-form-urlencoded
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - in: path
+          name: player_id
+          description: The player's id number.
+          required: true
+          type: number
+          format: double
+        - in: path
+          name: name
+          description: This is the player's name.
+          required: true
+          type: string
+          format: string
+        - in: path
+          name: ELO_ranking
+          description: This is the player's ELO ranking.
+          required: true
+          type: number
+          format: double
+        - in: path 
+          name: initial_ELO_seed
+          description: This is the player's initial ELO seed.
+          required: true
+          type: number
+          format: double
+        - in: path
+          name: win_count
+          description: This is the player's win count.
+          required: true
+          type: number
+          format: double
+        - in: path
+          name: loss_count
+          description: This is the player's loss count.
+          required: true
+          type: number
+          format: double
+      responses:
+        "405":
+          description: Invalid input
+      security:
+        - season_auth:
+          - write_player
+          - read_player
+    delete:
+      tags:
+        - player
+      summary: Deletes a player
+      description: "Deletes player from database."
+      operationId: deletePlayer
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - in: query
+          name: api_key
+          description: ""
+          required: true
+          type: string
+        - in: path
+          name: player_id
+          description: Player id to delete
+          required: true
+          type: number
+          format: double
+      responses:
+        "404":
+          description: Order not found
+        "400":
+          description: Invalid player value
+      security:
+        - user_auth:
+          - write_player
+          - read_player
+  
+securityDefinitions:
+  api_key:
+    type: apiKey
+    name: api_key
+    in: header
+  restPR_auth:
+    type: oauth2
+    authorizationUrl: localhost:8080
+    flow: implicit
+    scopes:
+      write_resource: modify resource in your account
+      read_resource: read your resource
+definitions:
+  user:
+    required:
+      - user_id
+      - user_login
+      - display_name
+    properties:
+      user_id:
+        type: number
+        format: double
+      user_login:
+        type: string
+      display_name:
+        type: string
+  season:
+    required:
+      - season_id
+      - community_name
+      - cycle_format
+      - cycle_count
+      - ELO_default_seed
+    properties:
+      season_id:
+        type: number
+        format: double
+      community_name:
+        type: string
+      cycle_format:
+        type: string
+      cycle_count:
+        type: number
+        format: double
+      ELO_default_seed:
+        type: number
+        format: double
+  tournament:
+    required:
+      - tournament_id
+      - series_name
+      - series_number
+      - season_id
+    properties:
+      season_id:
+        type: number
+        format: double
+      series_name:
+        type: string
+      series_number:
+        type: number
+        format: double
+      season_id:
+        $ref: "#definitions/season"
+  match:
+    required:
+      - match_id
+      - player_1
+      - player_2
+      - winner
+      - tournament_id
+    properties:
+      match_id:
+        type: number
+        format: double
+      player_1:
+        type: string
+      player_2:
+        type: string
+      winner:
+        type: string
+      tournament_id:
+        $ref: "#/definitions/tournament"
+  player:
+    required:
+      - player_id
+      - name
+      - ELO_ranking
+      - initial_ELO_seed
+      - win_count
+      - loss_count
+    properties:
+      player_id:
+        type: number
+        format: double
+      name:
+        type: string
+      ELO_ranking:
+        type: number
+        format: double
+      initial_ELO_seed:
+        type: number
+        format: double
+      win_count:
+        type: number
+        format: double
+      loss_count:
+        type: number
+        format: double
