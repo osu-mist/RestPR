@@ -28,24 +28,21 @@ paths:
           required: true
           type: number
           format: double
-          schema:
-            $ref: "#/definitions/user"
+
         - name: user_login
           in: path
           description: This is the user's login name
           required: true
           type: string
           format: string
-          schema:
-            $ref: "#/definitions/user"
+
         - name: display_name
           in: path
           description: This is the user's display name
           required: true
           type: string
           format: string
-          schema:
-            $ref: "#/definitions/user"
+
       responses:
         "200":
           description: An array of users.
@@ -73,24 +70,21 @@ paths:
           required: true
           type: number
           format: double
-          schema:
-            $ref: "#/definitions/user" #Change later as desired
+          
         - name: user_login
           in: path
           description: This is the user's login name
           required: true
           type: string
           format: string
-          schema:
-            $ref: "#/definitions/user" #Change later as desired
+         
         - name: display_name
           in: path
           description: This is the user's display name
           required: true
           type: string
           format: string
-          schema:
-            $ref: "#/definitions/user" #Change later as desired
+      
       responses:
         "405":
           description: Validation exception
@@ -238,40 +232,35 @@ paths:
           required: true
           type: number
           format: double
-          schema:
-            $ref: "#/definitions/season" #Change later as desired
+
         - name: community_name
           in: path
           description: This is the community name.
           required: true
           type: string
           format: string
-          schema:
-            $ref: "#/definitions/season" #Change later as desired
+
         - name: cycle_format
           in: path
           description: This is the season's cycle format.
           required: true
           type: string
           format: string
-          schema:
-            $ref: "#/definitions/season" #Change later as desired
+
         - name: cycle_count
           in: path
           description: This is the season's cycle count.
           required: true
           type: number
           format: double
-          schema:
-            $ref: "#/definitions/season" #Change later as desired
+
         - name: ELO_default_seed
           in: path
           description: This is the default ELO seed.
           required: true
           type: number
           format: double
-          schema:
-            $ref: "#/definitions/season" #Change later as desired
+
       responses:
         "405":
           description: Validation exception
@@ -425,32 +414,28 @@ paths:
           required: true
           type: number
           format: double
-          schema:
-            $ref: "#/definitions/tournament" #Change later as desired
+
         - name: series_name
           in: path
           description: This is the series name.
           required: true
           type: string
           format: string
-          schema:
-            $ref: "#/definitions/tournament" #Change later as desired
+
         - name: series_number
           in: path
           description: This is the series' number.
           required: true
           type: number
           format: double
-          schema:
-            $ref: "#/definitions/tournament" #Change later as desired
+
         - name: season_id
           in: path
           description: This is the tournament's id number.
           required: true
           type: number
           format: double
-          schema:
-            $ref: "#/definitions/tournament" #Change later as desired
+
       responses:
         "405":
           description: Validation exception
@@ -604,40 +589,35 @@ paths:
           required: true
           type: number
           format: double
-          schema:
-            $ref: "#/definitions/match" #Change later as desired
+
         - name: player_1
           in: path
           description: This is player 1.
           required: true
           type: string
           format: string
-          schema:
-            $ref: "#/definitions/match" #Change later as desired
+
         - name: player_2
           in: path
           description: This is player 2.
           required: true
           type: string
           format: string
-          schema:
-            $ref: "#/definitions/match" #Change later as desired
+
         - name: winner
           in: path
           description: This is the winner.
           required: true
           type: string
           format: string
-          schema:
-            $ref: "#/definitions/match" #Change later as desired
+
         - name: tournament_id
           in: path
           description: This is the tournament's id number.
           required: true
           type: number
           format: double
-          schema:
-            $ref: "#/definitions/match" #Change later as desired
+
       responses:
         "405":
           description: Validation exception
@@ -803,48 +783,39 @@ paths:
           required: true
           type: number
           format: double
-          schema:
-            $ref: "#/definitions/player" #Change later as desired
         - name: name
           in: path
           description: This is the player's name.
           required: true
           type: string
           format: string
-          schema:
-            $ref: "#/definitions/player" #Change later as desired
         - name: ELO_ranking
           in: path
           description: This is the player's ELO ranking.
           required: true
           type: number
           format: double
-          schema:
-            $ref: "#/definitions/player" #Change later as desired
+
         - name: initial_ELO_seed
           in: path
           description: This is the player's initial ELO seed.
           required: true
           type: number
           format: double
-          schema:
-            $ref: "#/definitions/player" #Change later as desired
+
         - name: win_count
           in: path
           description: This is the player's win count.
           required: true
           type: number
           format: double
-          schema:
-            $ref: "#/definitions/player" #Change later as desired
         - name: loss_count
           in: path
           description: This is the player's loss count.
           required: true
           type: number
           format: double
-          schema:
-            $ref: "#/definitions/player" #Change later as desired
+
       responses:
         "405":
           description: Validation exception
@@ -996,7 +967,7 @@ definitions:
       - series_number
       - season_id
     properties:
-      season_id:
+      tournament_id:
         type: number
         format: double
       series_name:
