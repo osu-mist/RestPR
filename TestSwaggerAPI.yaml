@@ -1,7 +1,7 @@
 swagger: "2.0"
 info:
   description: RestPR is a RESTful web api that enables competitive communities to create player leaderboard seasons using tournament match data from services like Challonge.com
-  version: "1.0.0"
+  version: "0.0.1"
   title: RestPR
   license:
     name: Apache 2.0
@@ -14,7 +14,7 @@ paths:
   /user:
     get:
       tags:
-        - User
+        - user
       summary: A list of users and their info
       description: "This returns the information obtained about the users including user_id, user_login, and display_name"
       operationId: getUser
@@ -23,37 +23,31 @@ paths:
         - application/xml
       parameters:
         - name: user_id
-          in: path
+          in: query
           description: The user's id number
-          required: true
+          required: false
           type: number
-          format: double
-
+          format: integer
         - name: user_login
-          in: path
+          in: query
           description: This is the user's login name
-          required: true
+          required: false
           type: string
           format: string
-
         - name: display_name
-          in: path
+          in: query
           description: This is the user's display name
-          required: true
+          required: false
           type: string
           format: string
-
       responses:
         "200":
           description: An array of users.
         "400":
           description: Invalid status value
-      security:
-        - user_auth:
-          - read_user
     put:
       tags:
-        - User
+        - user
       summary: Update an existing user
       description: "Adds updates to existing users"
       operationId: updateUser
@@ -65,21 +59,21 @@ paths:
         - application/xml
       parameters:
         - name: user_id
-          in: path
+          in: query
           description: The user's id number
           required: true
           type: number
-          format: double
+          format: integer
           
         - name: user_login
-          in: path
+          in: query
           description: This is the user's login name
           required: true
           type: string
           format: string
          
         - name: display_name
-          in: path
+          in: query
           description: This is the user's display name
           required: true
           type: string
@@ -92,10 +86,7 @@ paths:
           description: User not found
         "400":
           description: Invalid ID supplied
-      security:
-        - user_auth:
-          - write_user
-          - read_user
+
     post:
       tags:
         - user
@@ -108,19 +99,19 @@ paths:
         - application/json
         - application/xml
       parameters:
-        - in: path
+        - in: query
           name: user_id
           description: ID of user that needs to be updated
           required: true
           type: number
-          format: double
-        - in: path
+          format: integer
+        - in: query
           name: user_login
           description: This is the user's login name to be updated
           required: true
           type: string
           format: string
-        - in: path
+        - in: query
           name: display_name
           description: This is the user's display name to be updated
           required: true
@@ -129,10 +120,7 @@ paths:
       responses:
         "405":
           description: Invalid input
-      security:
-        - user_auth:
-          - write_users
-          - read_users
+
     delete:
       tags:
         - user
@@ -148,21 +136,17 @@ paths:
           description: ""
           required: true
           type: string
-        - in: path
+        - in: query
           name: user_id
           description: User id to delete
           required: true
           type: number
-          format: double
+          format: integer
       responses:
         "404":
           description: Order not found
         "400":
           description: Invalid user value
-      security:
-        - user_auth:
-          - write_user
-          - read_user
           
   /season:
     get:
@@ -176,43 +160,40 @@ paths:
         - application/xml
       parameters:
         - name: season_id
-          in: path
+          in: query
           description: The id of the selected season.
           required: true
           type: number
-          format: double
+          format: integer
         - name: community_name
-          in: path
+          in: query
           description: The name of the community.
           required: true
           type: string
           format: string
         - name: cycle_format
-          in: path
+          in: query
           description: The cycle format of the season.
           required: true
           type: string
           format: string
         - name: cycle_count
-          in: path
+          in: query
           description: A count of cycles in the season.
           required: true
           type: number
-          format: double
+          format: integer
         - name: ELO_default_seed
-          in: path
+          in: query
           description: The ELO default seed.
           required: true
           type: number
-          format: double
+          format: integer
       responses:
         "200":
           description: An array of seasons.
         "400":
           description: Invalid status value
-      security:
-        - season_auth:
-          - read_season
     put:
       tags:
         - season
@@ -227,39 +208,35 @@ paths:
         - application/xml
       parameters:
         - name: season_id
-          in: path
+          in: query
           description: The season's id number.
           required: true
           type: number
-          format: double
-
+          format: integer
         - name: community_name
-          in: path
+          in: query
           description: This is the community name.
           required: true
           type: string
           format: string
-
         - name: cycle_format
-          in: path
+          in: query
           description: This is the season's cycle format.
           required: true
           type: string
           format: string
-
         - name: cycle_count
-          in: path
+          in: query
           description: This is the season's cycle count.
           required: true
           type: number
-          format: double
-
+          format: integer
         - name: ELO_default_seed
-          in: path
+          in: query
           description: This is the default ELO seed.
           required: true
           type: number
-          format: double
+          format: integer
 
       responses:
         "405":
@@ -268,10 +245,6 @@ paths:
           description: Season not found
         "400":
           description: Invalid ID supplied
-      security:
-        - user_auth:
-          - write_season
-          - read_season
     post:
       tags:
         - season
@@ -284,43 +257,39 @@ paths:
         - application/json
         - application/xml
       parameters:
-        - in: path
+        - in: query
           name: season_id
           description: ID of season that needs to be updated.
           required: true
           type: number
-          format: double
-        - in: path
+          format: integer
+        - in: query
           name: community_name
           description: This is the season's community name to be updated.
           required: true
           type: string
           format: string
-        - in: path
+        - in: query
           name: cycle_format
           description: This is the season's cycle format to be updated.
           required: true
           type: string
           format: string
-        - in: path
+        - in: query
           name: cycle_count
           description: The season's cycle count to be updated.
           required: true
           type: number
-          format: double
-        - in: path
+          format: integer
+        - in: query
           name: ELO_default_seed
           description: The default seed of ELO to be updated.
           required: true
           type: number
-          format: double
+          format: integer
       responses:
         "405":
           description: Invalid input
-      security:
-        - season_auth:
-          - write_season
-          - read_season
     delete:
       tags:
         - season
@@ -336,21 +305,17 @@ paths:
           description: ""
           required: true
           type: string
-        - in: path
+        - in: query
           name: season_id
           description: Season id to delete
           required: true
           type: number
-          format: double
+          format: integer
       responses:
         "404":
           description: Order not found
         "400":
           description: Invalid season value
-      security:
-        - user_auth:
-          - write_season
-          - read_season       
 
   /tournament:
     get:
@@ -364,37 +329,34 @@ paths:
         - application/xml
       parameters:
         - name: tournament_id
-          in: path
+          in: query
           description: The id of the selected tournament.
           required: true
           type: number
-          format: double
+          format: integer
         - name: series_name
-          in: path
+          in: query
           description: The name of the series.
           required: true
           type: string
           format: string
         - name: series_number
-          in: path
+          in: query
           description: The series number of the tournament.
           required: true
           type: number
-          format: double
+          format: integer
         - name: season_id
-          in: path
+          in: query
           description: The id number of the season.
           required: true
           type: number
-          format: double
+          format: integer
       responses:
         "200":
           description: An array of tournaments.
         "400":
           description: Invalid status value
-      security:
-        - tournament_auth:
-          - read_tournament
     put:
       tags:
         - tournament
@@ -409,32 +371,29 @@ paths:
         - application/xml
       parameters:
         - name: tournament_id
-          in: path
+          in: query
           description: The tournament's id number.
           required: true
           type: number
-          format: double
-
+          format: integer
         - name: series_name
-          in: path
+          in: query
           description: This is the series name.
           required: true
           type: string
           format: string
-
         - name: series_number
-          in: path
+          in: query
           description: This is the series' number.
           required: true
           type: number
-          format: double
-
+          format: integer
         - name: season_id
-          in: path
+          in: query
           description: This is the tournament's id number.
           required: true
           type: number
-          format: double
+          format: integer
 
       responses:
         "405":
@@ -443,10 +402,6 @@ paths:
           description: Tournament not found
         "400":
           description: Invalid ID supplied
-      security:
-        - user_auth:
-          - write_tournament
-          - read_tournament
     post:
       tags:
         - tournament
@@ -459,37 +414,34 @@ paths:
         - application/json
         - application/xml
       parameters:
-        - in: path
+        - in: query
           name: tournament_id
           description: ID of tournament that needs to be updated.
           required: true
           type: number
-          format: double
-        - in: path
+          format: integer
+        - in: query
           name: series_name
           description: This is the tournament's series name to be updated.
           required: true
           type: string
           format: string
-        - in: path
+        - in: query
           name: series_number
           description: This is the tournament's series number to be updated.
           required: true
           type: number
-          format: double
-        - in: path
+          format: integer
+        - in: query
           name: season_id
           description: The season's id number.
           required: true
           type: number
-          format: double
+          format: integer
       responses:
         "405":
           description: Invalid input
-      security:
-        - season_auth:
-          - write_tournament
-          - read_tournament
+
     delete:
       tags:
         - tournament
@@ -505,21 +457,17 @@ paths:
           description: ""
           required: true
           type: string
-        - in: path
+        - in: query
           name: tournament_id
           description: Tournament id to delete
           required: true
           type: number
-          format: double
+          format: integer
       responses:
         "404":
           description: Order not found
         "400":
           description: Invalid tournament value
-      security:
-        - user_auth:
-          - write_tournament
-          - read_tournament
           
   /match:
     get:
@@ -533,43 +481,40 @@ paths:
         - application/xml
       parameters:
         - name: match_id
-          in: path
+          in: query
           description: The id of the selected match.
           required: true
           type: number
-          format: double
+          format: integer
         - name: player_1
-          in: path
+          in: query
           description: Player 1 of the match.
           required: true
           type: string
           format: string
         - name: player_2
-          in: path
+          in: query
           description: Player 2 of the match.
           required: true
           type: string
           format: string
         - name: winner
-          in: path
+          in: query
           description: The winner of the match.
           required: true
           type: string
           format: string
         - name: tournament_id
-          in: path
+          in: query
           description: The id number of the tournament.
           required: true
           type: number
-          format: double
+          format: integer
       responses:
         "200":
           description: An array of matches.
         "400":
           description: Invalid status value
-      security:
-        - match_auth:
-          - read_match
     put:
       tags:
         - match
@@ -584,39 +529,39 @@ paths:
         - application/xml
       parameters:
         - name: match_id
-          in: path
+          in: query
           description: The match's id number.
           required: true
           type: number
-          format: double
+          format: integer
 
         - name: player_1
-          in: path
+          in: query
           description: This is player 1.
           required: true
           type: string
           format: string
 
         - name: player_2
-          in: path
+          in: query
           description: This is player 2.
           required: true
           type: string
           format: string
 
         - name: winner
-          in: path
+          in: query
           description: This is the winner.
           required: true
           type: string
           format: string
 
         - name: tournament_id
-          in: path
+          in: query
           description: This is the tournament's id number.
           required: true
           type: number
-          format: double
+          format: integer
 
       responses:
         "405":
@@ -625,10 +570,7 @@ paths:
           description: Match not found
         "400":
           description: Invalid ID supplied
-      security:
-        - user_auth:
-          - write_match
-          - read_match
+
     post:
       tags:
         - match
@@ -641,43 +583,40 @@ paths:
         - application/json
         - application/xml
       parameters:
-        - in: path
+        - in: query
           name: match_id
           description: ID of match that needs to be updated.
           required: true
           type: number
-          format: double
-        - in: path
+          format: integer
+        - in: query
           name: player_1
           description: This is player 1 to be updated.
           required: true
           type: string
           format: string
-        - in: path
+        - in: query
           name: player_2
           description: This is player 2 to be updated.
           required: true
           type: string
           format: string
-        - in: path
+        - in: query
           name: winner
           description: This is the winner to be updated.
           required: true
           type: string
           format: string
-        - in: path
+        - in: query
           name: tournament_id
           description: ID of tournament that needs to be updated.
           required: true
           type: number
-          format: double
+          format: integer
       responses:
         "405":
           description: Invalid input
-      security:
-        - season_auth:
-          - write_match
-          - read_match
+
     delete:
       tags:
         - match
@@ -693,21 +632,17 @@ paths:
           description: ""
           required: true
           type: string
-        - in: path
+        - in: query
           name: match_id
           description: Match id to delete
           required: true
           type: number
-          format: double
+          format: integer
       responses:
         "404":
           description: Order not found
         "400":
           description: Invalid match value
-      security:
-        - user_auth:
-          - write_match
-          - read_match
           
   /player:
     get:
@@ -721,49 +656,46 @@ paths:
         - application/xml
       parameters:
         - name: player_id
-          in: path
+          in: query
           description: The id of the selected player.
           required: true
           type: number
-          format: double
+          format: integer
         - name: name
-          in: path
+          in: query
           description: The player's name.
           required: true
           type: string
           format: string
         - name: ELO_rating
-          in: path
+          in: query
           description: The player's ELO rating.
           required: true
           type: number
-          format: double
+          format: integer
         - name: initial_ELO_seed
-          in: path
+          in: query
           description: The player's initial ELO seed.
           required: true
           type: number
-          format: double
+          format: integer
         - name: win_count
-          in: path
+          in: query
           description: The number of wins the player has.
           required: true
           type: number
-          format: double
+          format: integer
         - name: loss_count
-          in: path
+          in: query
           description: The number of losses the player has.
           required: true
           type: number
-          format: double
+          format: integer
       responses:
         "200":
           description: An array of players.
         "400":
           description: Invalid status value
-      security:
-        - player_auth:
-          - read_player
     put:
       tags:
         - player
@@ -778,43 +710,41 @@ paths:
         - application/xml
       parameters:
         - name: player_id
-          in: path
+          in: query
           description: The player's id number.
           required: true
           type: number
-          format: double
+          format: integer
         - name: name
-          in: path
+          in: query
           description: This is the player's name.
           required: true
           type: string
           format: string
         - name: ELO_ranking
-          in: path
+          in: query
           description: This is the player's ELO ranking.
           required: true
           type: number
-          format: double
-
+          format: integer
         - name: initial_ELO_seed
-          in: path
+          in: query
           description: This is the player's initial ELO seed.
           required: true
           type: number
-          format: double
-
+          format: integer
         - name: win_count
-          in: path
+          in: query
           description: This is the player's win count.
           required: true
           type: number
-          format: double
+          format: integer
         - name: loss_count
-          in: path
+          in: query
           description: This is the player's loss count.
           required: true
           type: number
-          format: double
+          format: integer
 
       responses:
         "405":
@@ -823,10 +753,6 @@ paths:
           description: Player not found
         "400":
           description: Invalid ID supplied
-      security:
-        - player_auth:
-          - write_player
-          - read_player
     post:
       tags:
         - player
@@ -839,49 +765,46 @@ paths:
         - application/json
         - application/xml
       parameters:
-        - in: path
+        - in: query
           name: player_id
           description: The player's id number.
           required: true
           type: number
-          format: double
-        - in: path
+          format: integer
+        - in: query
           name: name
           description: This is the player's name.
           required: true
           type: string
           format: string
-        - in: path
+        - in: query
           name: ELO_ranking
           description: This is the player's ELO ranking.
           required: true
           type: number
-          format: double
-        - in: path 
+          format: integer
+        - in: query 
           name: initial_ELO_seed
           description: This is the player's initial ELO seed.
           required: true
           type: number
-          format: double
-        - in: path
+          format: integer
+        - in: query
           name: win_count
           description: This is the player's win count.
           required: true
           type: number
-          format: double
-        - in: path
+          format: integer
+        - in: query
           name: loss_count
           description: This is the player's loss count.
           required: true
           type: number
-          format: double
+          format: integer
       responses:
         "405":
           description: Invalid input
-      security:
-        - season_auth:
-          - write_player
-          - read_player
+
     delete:
       tags:
         - player
@@ -897,34 +820,17 @@ paths:
           description: ""
           required: true
           type: string
-        - in: path
+        - in: query
           name: player_id
           description: Player id to delete
           required: true
           type: number
-          format: double
+          format: integer
       responses:
         "404":
           description: Order not found
         "400":
           description: Invalid player value
-      security:
-        - user_auth:
-          - write_player
-          - read_player
-  
-securityDefinitions:
-  api_key:
-    type: apiKey
-    name: api_key
-    in: header
-  restPR_auth:
-    type: oauth2
-    authorizationUrl: localhost:8080
-    flow: implicit
-    scopes:
-      write_resource: modify resource in your account
-      read_resource: read your resource
 definitions:
   user:
     required:
@@ -934,7 +840,7 @@ definitions:
     properties:
       user_id:
         type: number
-        format: double
+        format: integer
       user_login:
         type: string
       display_name:
@@ -949,17 +855,17 @@ definitions:
     properties:
       season_id:
         type: number
-        format: double
+        format: integer
       community_name:
         type: string
       cycle_format:
         type: string
       cycle_count:
         type: number
-        format: double
+        format: integer
       ELO_default_seed:
         type: number
-        format: double
+        format: integer
   tournament:
     required:
       - tournament_id
@@ -969,14 +875,14 @@ definitions:
     properties:
       tournament_id:
         type: number
-        format: double
+        format: integer
       series_name:
         type: string
       series_number:
         type: number
-        format: double
+        format: integer
       season_id:
-        $ref: "#definitions/season"
+        $ref: "#/definitions/season"
   match:
     required:
       - match_id
@@ -987,7 +893,7 @@ definitions:
     properties:
       match_id:
         type: number
-        format: double
+        format: integer
       player_1:
         type: string
       player_2:
@@ -1007,18 +913,18 @@ definitions:
     properties:
       player_id:
         type: number
-        format: double
+        format: integer
       name:
         type: string
       ELO_ranking:
         type: number
-        format: double
+        format: integer
       initial_ELO_seed:
         type: number
-        format: double
+        format: integer
       win_count:
         type: number
-        format: double
+        format: integer
       loss_count:
         type: number
-        format: double
+        format: integer
