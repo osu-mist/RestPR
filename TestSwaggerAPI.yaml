@@ -22,12 +22,14 @@ paths:
         - application/json
         - application/xml
       parameters:
+      
         - name: user_id
           in: query
           description: The user's id number
           required: false
           type: number
           format: integer
+          
         - name: user_login
           in: query
           description: This is the user's login name
@@ -35,14 +37,18 @@ paths:
           type: string
           format: string
         - name: display_name
+        
           in: query
           description: This is the user's display name
           required: false
           type: string
           format: string
+          
       responses:
         "200":
-          description: An array of users.
+          description: Successful response
+          schema:
+            $ref: "#/definitions/user"
         "400":
           description: Invalid status value
     put:
@@ -58,6 +64,7 @@ paths:
         - application/json
         - application/xml
       parameters:
+      
         - name: user_id
           in: query
           description: The user's id number
@@ -80,6 +87,8 @@ paths:
           format: string
       
       responses:
+        "200":
+          description: Successful response
         "405":
           description: Validation exception
         "404":
@@ -99,25 +108,35 @@ paths:
         - application/json
         - application/xml
       parameters:
+      
         - in: query
           name: user_id
           description: ID of user that needs to be updated
           required: true
           type: number
           format: integer
+          
         - in: query
           name: user_login
           description: This is the user's login name to be updated
           required: true
           type: string
           format: string
+          
         - in: query
           name: display_name
           description: This is the user's display name to be updated
           required: true
           type: string
           format: string
+          
       responses:
+        "200":
+          description: Successful response
+        "201":
+          description: Resource created
+        "202":
+          description: Representation accepted
         "405":
           description: Invalid input
 
@@ -131,18 +150,23 @@ paths:
         - application/json
         - application/xml
       parameters:
+      
         - in: header
           name: api_key
           description: ""
           required: true
           type: string
+          
         - in: query
           name: user_id
           description: User id to delete
           required: true
           type: number
           format: integer
+          
       responses:
+        "200":
+          description: Successful response
         "404":
           description: Order not found
         "400":
@@ -159,39 +183,47 @@ paths:
         - application/json
         - application/xml
       parameters:
+      
         - name: season_id
           in: query
           description: The id of the selected season.
-          required: true
+          required: false
           type: number
           format: integer
+          
         - name: community_name
           in: query
           description: The name of the community.
-          required: true
+          required: false
           type: string
           format: string
+          
         - name: cycle_format
           in: query
           description: The cycle format of the season.
-          required: true
+          required: false
           type: string
           format: string
+          
         - name: cycle_count
           in: query
           description: A count of cycles in the season.
-          required: true
+          required: false
           type: number
           format: integer
+          
         - name: ELO_default_seed
           in: query
           description: The ELO default seed.
-          required: true
+          required: false
           type: number
           format: integer
+          
       responses:
         "200":
-          description: An array of seasons.
+          description: Successful response
+          schema:
+            $ref: "#/definitions/season"
         "400":
           description: Invalid status value
     put:
@@ -207,30 +239,35 @@ paths:
         - application/json
         - application/xml
       parameters:
+      
         - name: season_id
           in: query
           description: The season's id number.
           required: true
           type: number
           format: integer
+          
         - name: community_name
           in: query
           description: This is the community name.
           required: true
           type: string
           format: string
+          
         - name: cycle_format
           in: query
           description: This is the season's cycle format.
           required: true
           type: string
           format: string
+          
         - name: cycle_count
           in: query
           description: This is the season's cycle count.
           required: true
           type: number
           format: integer
+          
         - name: ELO_default_seed
           in: query
           description: This is the default ELO seed.
@@ -239,6 +276,8 @@ paths:
           format: integer
 
       responses:
+        "200":
+          description: Successful response
         "405":
           description: Validation exception
         "404":
@@ -257,37 +296,49 @@ paths:
         - application/json
         - application/xml
       parameters:
+      
         - in: query
           name: season_id
           description: ID of season that needs to be updated.
           required: true
           type: number
           format: integer
+          
         - in: query
           name: community_name
           description: This is the season's community name to be updated.
           required: true
           type: string
           format: string
+          
         - in: query
           name: cycle_format
           description: This is the season's cycle format to be updated.
           required: true
           type: string
           format: string
+          
         - in: query
           name: cycle_count
           description: The season's cycle count to be updated.
           required: true
           type: number
           format: integer
+          
         - in: query
           name: ELO_default_seed
           description: The default seed of ELO to be updated.
           required: true
           type: number
           format: integer
+          
       responses:
+        "200":
+          description: Successful response
+        "201":
+          description: Resource created
+        "202":
+          description: Representation accepted
         "405":
           description: Invalid input
     delete:
@@ -312,6 +363,8 @@ paths:
           type: number
           format: integer
       responses:
+        "200":
+          description: Successful response
         "404":
           description: Order not found
         "400":
@@ -328,33 +381,40 @@ paths:
         - application/json
         - application/xml
       parameters:
+      
         - name: tournament_id
           in: query
           description: The id of the selected tournament.
-          required: true
+          required: false
           type: number
           format: integer
+          
         - name: series_name
           in: query
           description: The name of the series.
-          required: true
+          required: false
           type: string
           format: string
+          
         - name: series_number
           in: query
           description: The series number of the tournament.
-          required: true
+          required: false
           type: number
           format: integer
+          
         - name: season_id
           in: query
           description: The id number of the season.
-          required: true
+          required: false
           type: number
           format: integer
+          
       responses:
         "200":
-          description: An array of tournaments.
+          description: Successful response
+          schema:
+            $ref: "#/definitions/tournament"
         "400":
           description: Invalid status value
     put:
@@ -370,24 +430,28 @@ paths:
         - application/json
         - application/xml
       parameters:
+      
         - name: tournament_id
           in: query
           description: The tournament's id number.
           required: true
           type: number
           format: integer
+          
         - name: series_name
           in: query
           description: This is the series name.
           required: true
           type: string
           format: string
+          
         - name: series_number
           in: query
           description: This is the series' number.
           required: true
           type: number
           format: integer
+          
         - name: season_id
           in: query
           description: This is the tournament's id number.
@@ -396,6 +460,8 @@ paths:
           format: integer
 
       responses:
+        "200":
+          description: Successful response
         "405":
           description: Validation exception
         "404":
@@ -414,31 +480,42 @@ paths:
         - application/json
         - application/xml
       parameters:
+      
         - in: query
-          name: tournament_id
+          name: tournament_id #REMOVE THIS?
           description: ID of tournament that needs to be updated.
           required: true
           type: number
           format: integer
+          
         - in: query
           name: series_name
           description: This is the tournament's series name to be updated.
           required: true
           type: string
           format: string
+          
         - in: query
           name: series_number
           description: This is the tournament's series number to be updated.
           required: true
           type: number
           format: integer
+          
         - in: query
           name: season_id
           description: The season's id number.
           required: true
           type: number
           format: integer
+          
       responses:
+        "200":
+          description: Successful response
+        "201":
+          description: Resource created
+        "202":
+          description: Representation accepted
         "405":
           description: Invalid input
 
@@ -452,18 +529,23 @@ paths:
         - application/json
         - application/xml
       parameters:
+      
         - in: header
           name: api_key
           description: ""
           required: true
           type: string
+          
         - in: query
           name: tournament_id
           description: Tournament id to delete
           required: true
           type: number
           format: integer
+          
       responses:
+        "200":
+          description: Successful response
         "404":
           description: Order not found
         "400":
@@ -480,39 +562,47 @@ paths:
         - application/json
         - application/xml
       parameters:
+      
         - name: match_id
           in: query
           description: The id of the selected match.
-          required: true
+          required: false
           type: number
           format: integer
+          
         - name: player_1
           in: query
           description: Player 1 of the match.
-          required: true
+          required: false
           type: string
           format: string
+          
         - name: player_2
           in: query
           description: Player 2 of the match.
-          required: true
+          required: false
           type: string
           format: string
+          
         - name: winner
           in: query
           description: The winner of the match.
-          required: true
+          required: false
           type: string
           format: string
+          
         - name: tournament_id
           in: query
           description: The id number of the tournament.
-          required: true
+          required: false
           type: number
           format: integer
+          
       responses:
         "200":
-          description: An array of matches.
+          description: Successful response
+          schema:
+            $ref: "#/definitions/match"
         "400":
           description: Invalid status value
     put:
@@ -528,6 +618,7 @@ paths:
         - application/json
         - application/xml
       parameters:
+      
         - name: match_id
           in: query
           description: The match's id number.
@@ -564,6 +655,8 @@ paths:
           format: integer
 
       responses:
+        "200":
+          description: Successful response.
         "405":
           description: Validation exception
         "404":
@@ -583,37 +676,49 @@ paths:
         - application/json
         - application/xml
       parameters:
+      
         - in: query
           name: match_id
           description: ID of match that needs to be updated.
           required: true
           type: number
           format: integer
+          
         - in: query
           name: player_1
           description: This is player 1 to be updated.
           required: true
           type: string
           format: string
+          
         - in: query
           name: player_2
           description: This is player 2 to be updated.
           required: true
           type: string
           format: string
+          
         - in: query
           name: winner
           description: This is the winner to be updated.
           required: true
           type: string
           format: string
+          
         - in: query
           name: tournament_id
           description: ID of tournament that needs to be updated.
           required: true
           type: number
           format: integer
+          
       responses:
+        "200":
+          description: Successful response
+        "201":
+          description: Resource created
+        "202":
+          description: Representation accepted
         "405":
           description: Invalid input
 
@@ -627,18 +732,23 @@ paths:
         - application/json
         - application/xml
       parameters:
+      
         - in: header
           name: api_key
           description: ""
           required: true
           type: string
+          
         - in: query
           name: match_id
           description: Match id to delete
           required: true
           type: number
           format: integer
+          
       responses:
+        "200":
+          description: Successful response
         "404":
           description: Order not found
         "400":
@@ -655,45 +765,54 @@ paths:
         - application/json
         - application/xml
       parameters:
+      
         - name: player_id
           in: query
           description: The id of the selected player.
-          required: true
+          required: false
           type: number
           format: integer
+          
         - name: name
           in: query
           description: The player's name.
-          required: true
+          required: false
           type: string
           format: string
+          
         - name: ELO_rating
           in: query
           description: The player's ELO rating.
-          required: true
+          required: false
           type: number
           format: integer
+          
         - name: initial_ELO_seed
           in: query
           description: The player's initial ELO seed.
-          required: true
+          required: false
           type: number
           format: integer
+          
         - name: win_count
           in: query
           description: The number of wins the player has.
-          required: true
+          required: false
           type: number
           format: integer
+          
         - name: loss_count
           in: query
           description: The number of losses the player has.
-          required: true
+          required: false
           type: number
           format: integer
+          
       responses:
         "200":
-          description: An array of players.
+          description: Successful response
+          schema:
+            $ref: "#/definitions/player"
         "400":
           description: Invalid status value
     put:
@@ -709,36 +828,42 @@ paths:
         - application/json
         - application/xml
       parameters:
+      
         - name: player_id
           in: query
           description: The player's id number.
           required: true
           type: number
           format: integer
+          
         - name: name
           in: query
           description: This is the player's name.
           required: true
           type: string
           format: string
+          
         - name: ELO_ranking
           in: query
           description: This is the player's ELO ranking.
           required: true
           type: number
           format: integer
+          
         - name: initial_ELO_seed
           in: query
           description: This is the player's initial ELO seed.
           required: true
           type: number
           format: integer
+          
         - name: win_count
           in: query
           description: This is the player's win count.
           required: true
           type: number
           format: integer
+          
         - name: loss_count
           in: query
           description: This is the player's loss count.
@@ -747,6 +872,8 @@ paths:
           format: integer
 
       responses:
+        "200":
+          description: Successful response
         "405":
           description: Validation exception
         "404":
@@ -765,43 +892,56 @@ paths:
         - application/json
         - application/xml
       parameters:
+      
         - in: query
           name: player_id
           description: The player's id number.
           required: true
           type: number
           format: integer
+          
         - in: query
           name: name
           description: This is the player's name.
           required: true
           type: string
           format: string
+          
         - in: query
           name: ELO_ranking
           description: This is the player's ELO ranking.
           required: true
           type: number
           format: integer
+          
         - in: query 
           name: initial_ELO_seed
           description: This is the player's initial ELO seed.
           required: true
           type: number
           format: integer
+          
         - in: query
           name: win_count
           description: This is the player's win count.
           required: true
           type: number
           format: integer
+          
         - in: query
           name: loss_count
           description: This is the player's loss count.
           required: true
           type: number
           format: integer
+          
       responses:
+        "200":
+          description: Successful response
+        "201":
+          description: Resource created
+        "202":
+          description: Representation accepted
         "405":
           description: Invalid input
 
@@ -815,23 +955,29 @@ paths:
         - application/json
         - application/xml
       parameters:
+      
         - in: query
           name: api_key
           description: ""
           required: true
           type: string
+          
         - in: query
           name: player_id
           description: Player id to delete
           required: true
           type: number
           format: integer
+          
       responses:
+        "200":
+          description: Successful response
         "404":
           description: Order not found
         "400":
           description: Invalid player value
 definitions:
+
   user:
     required:
       - user_id
@@ -845,6 +991,7 @@ definitions:
         type: string
       display_name:
         type: string
+        
   season:
     required:
       - season_id
@@ -866,6 +1013,7 @@ definitions:
       ELO_default_seed:
         type: number
         format: integer
+        
   tournament:
     required:
       - tournament_id
@@ -883,6 +1031,7 @@ definitions:
         format: integer
       season_id:
         $ref: "#/definitions/season"
+        
   match:
     required:
       - match_id
@@ -902,6 +1051,7 @@ definitions:
         type: string
       tournament_id:
         $ref: "#/definitions/tournament"
+        
   player:
     required:
       - player_id
