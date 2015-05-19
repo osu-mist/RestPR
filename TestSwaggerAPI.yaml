@@ -51,6 +51,8 @@ paths:
             $ref: "#/definitions/user"
         "400":
           description: Invalid status value
+      security:
+        - api_key: []
     put:
       tags:
         - user
@@ -95,7 +97,9 @@ paths:
           description: User not found
         "400":
           description: Invalid ID supplied
-
+      security:
+        - api_key: []
+        
     post:
       tags:
         - user
@@ -129,7 +133,7 @@ paths:
           required: true
           type: string
           format: string
-          
+ 
       responses:
         "200":
           description: Successful response
@@ -139,6 +143,8 @@ paths:
           description: Representation accepted
         "405":
           description: Invalid input
+      security:
+        - api_key: []
 
     delete:
       tags:
@@ -171,6 +177,8 @@ paths:
           description: Order not found
         "400":
           description: Invalid user value
+      security:
+        - api_key: []
           
   /season:
     get:
@@ -226,6 +234,9 @@ paths:
             $ref: "#/definitions/season"
         "400":
           description: Invalid status value
+      security:
+        - api_key: []
+        
     put:
       tags:
         - season
@@ -284,6 +295,9 @@ paths:
           description: Season not found
         "400":
           description: Invalid ID supplied
+      security:
+        - api_key: []
+        
     post:
       tags:
         - season
@@ -341,6 +355,9 @@ paths:
           description: Representation accepted
         "405":
           description: Invalid input
+      security:
+        - api_key: []
+        
     delete:
       tags:
         - season
@@ -369,6 +386,8 @@ paths:
           description: Order not found
         "400":
           description: Invalid season value
+      security:
+        - api_key: []
 
   /tournament:
     get:
@@ -417,6 +436,9 @@ paths:
             $ref: "#/definitions/tournament"
         "400":
           description: Invalid status value
+      security:
+        - api_key: []
+        
     put:
       tags:
         - tournament
@@ -468,6 +490,9 @@ paths:
           description: Tournament not found
         "400":
           description: Invalid ID supplied
+      security:
+        - challonge_api_key: []
+        
     post:
       tags:
         - tournament
@@ -518,6 +543,8 @@ paths:
           description: Representation accepted
         "405":
           description: Invalid input
+      security:
+        - api_key: []
 
     delete:
       tags:
@@ -550,6 +577,8 @@ paths:
           description: Order not found
         "400":
           description: Invalid tournament value
+      security:
+        - api_key: []
           
   /match:
     get:
@@ -605,6 +634,9 @@ paths:
             $ref: "#/definitions/match"
         "400":
           description: Invalid status value
+      security:
+        - api_key: []
+        
     put:
       tags:
         - match
@@ -663,6 +695,8 @@ paths:
           description: Match not found
         "400":
           description: Invalid ID supplied
+      security:
+        - api_key: []
 
     post:
       tags:
@@ -721,7 +755,9 @@ paths:
           description: Representation accepted
         "405":
           description: Invalid input
-
+      security:
+        - api_key: []
+        
     delete:
       tags:
         - match
@@ -753,6 +789,8 @@ paths:
           description: Order not found
         "400":
           description: Invalid match value
+      security:
+        - api_key: []
           
   /player:
     get:
@@ -815,6 +853,9 @@ paths:
             $ref: "#/definitions/player"
         "400":
           description: Invalid status value
+      security:
+        - api_key: []
+        
     put:
       tags:
         - player
@@ -880,6 +921,9 @@ paths:
           description: Player not found
         "400":
           description: Invalid ID supplied
+      security:
+        - api_key: []
+        
     post:
       tags:
         - player
@@ -944,6 +988,8 @@ paths:
           description: Representation accepted
         "405":
           description: Invalid input
+      security:
+        - api_key: []
 
     delete:
       tags:
@@ -976,8 +1022,19 @@ paths:
           description: Order not found
         "400":
           description: Invalid player value
+      security:
+        - api_key: []
+        
+securityDefinitions:
+    api_key:
+        type: apiKey
+        name: api_key
+        in:   header
+    challonge_api_key:
+        type: apiKey
+        name: challonge_api_key
+        in:   header
 definitions:
-
   user:
     required:
       - user_id
