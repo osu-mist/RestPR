@@ -479,12 +479,26 @@ paths:
         - application/xml
       parameters:
       
-        - name: body
-          in: body
-          description: "tournament object that needs to be added to the catalog"
+        - in: query
+          name: challonge_api_key
+          description: "Your API key (required unless you're using HTTP basic authentication)"
           required: true
           schema:
-            $ref: "#/definitions/tournament"
+            $ref: "#/definitions/user"
+      
+        - in: query
+          name: tournamentID
+          description: "Tournament ID (e.g. 10230)"
+          required: true
+          schema:
+            $ref: "#/definitions/user"
+          
+        - in: query
+          name: URL
+          description: "URL (e.g. 'single_elim' for challonge.com/single_elim)."
+          required: true
+          schema:
+            $ref: "#/definitions/user"
           
       responses:
         "200":
