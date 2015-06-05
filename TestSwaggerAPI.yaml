@@ -1062,11 +1062,13 @@ securityDefinitions:
     api_key:
         type: apiKey
         name: api_key
+        description: Rest PR API Key for general authentication
         in:   header
     challonge_api_key:
         type: apiKey
         name: challonge_api_key
-        in:   header
+        description: User API Key for Challonge for performing data collection.
+        in:   query
 definitions:
   user:
     required:
