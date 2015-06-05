@@ -477,6 +477,11 @@ paths:
       produces:
         - application/json
         - application/xml
+
+      security:
+        - api_key: []
+        - challonge_api_key: []
+
       parameters:
       
         - in: query
