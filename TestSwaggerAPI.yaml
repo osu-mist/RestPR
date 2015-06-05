@@ -483,28 +483,19 @@ paths:
         - challonge_api_key: []
 
       parameters:
-      
-        - in: query
-          name: challonge_api_key
-          description: "Your API key (required unless you're using HTTP basic authentication)"
+        - name: tournament_url_id
+          in: query
+          description: Tournament ID of challonge bracket url
+          type: string
           required: true
-          schema:
-            $ref: "#/definitions/user"
-      
-        - in: query
-          name: tournamentID
-          description: "Tournament ID (e.g. 10230)"
-          required: true
-          schema:
-            $ref: "#/definitions/user"
-          
-        - in: query
-          name: URL
-          description: "URL (e.g. 'single_elim' for challonge.com/single_elim)."
-          required: true
-          schema:
-            $ref: "#/definitions/user"
-          
+
+        - name: tournament_url_subdomain
+          in: query
+          description: Subdomain of challonge bracket url if assigned
+          type: string
+          required: false
+
+
       responses:
         "200":
           description: Successful response
