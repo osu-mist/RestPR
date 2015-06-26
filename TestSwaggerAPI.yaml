@@ -16,20 +16,12 @@ paths:
       tags:
         - user
       summary: A list of users and their info
-      description: "This returns the information obtained about the users including user_id, user_login, and display_name"
+      description: "This returns the information obtained about the users, can be filtered using parameters"
       operationId: getUser
       produces:
         - application/json
         - application/xml
       parameters:
-      
-        - name: user_id
-          in: query
-          description: The user's id number
-          required: false
-          type: number
-          format: integer
-          
         - name: user_login
           in: query
           description: This is the user's login name
