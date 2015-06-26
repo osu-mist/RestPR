@@ -1,20 +1,22 @@
 Note: A lot of this pseudocode will have to change to fit the DAO access patterns.
 
-##GET USER //get users
+##GET USER
 
+Get users and filters for partial name matches.
 Accept display_name and user_login as parameters used for set constraints
 
 ```
 if db connection is dead
-return 500 error response
+	return 500 error response
 else
-	//See how dropwizards’ dao binding handles null values
-
 	select from users in the user table where like %display_name% and where like %user_login%
-return query result as json collection of users
+	return query result as json collection of users with 200 succes response
 ```
+See how dropwizards’ dao binding handles null values
 
-##POST USER // Authenticated action
+##POST USER
+
+Authenticated action
 
 POST USER // Authenticated action
 Accept api_key in header as parameter
@@ -46,8 +48,6 @@ else
 	return 500 internal server error response
 ```
 
-
-
 ##PUT USER/{ID}
 
 PUT USER/{ID}
@@ -72,13 +72,13 @@ else
 if db connection is live
 	if api_key parameter exists in the user permissions table
 		delete specified user from the table
-		//Delete is idempotent so we don’t have to check if it exists in advance
 		200 successful response
 	else
 		401 invalid authorization error
 else
 	500 internal server error
 ```
+Delete is idempotent so we don’t have to check if it exists in advance
 
 ##POST TOURNAMENT
 
@@ -94,13 +94,9 @@ make http request to challonge api for
 			take set difference of db_players and tournament_players by name
 			make new players in db
 				keep these names in a list
-				//this gets returned later as a way to handle merging players
-				//Instead of trying to match spelling variations the user will just be notified of new players that get added to the players table.
-				//This way they can manually merge the players on their own
-
-map tournament_player id’s to db_player id’s
-			for every tournament_match
-add new match rows with internal db playerid’s
+			map tournament_player id’s to db_player id’s
+				for every tournament_match
+					add new match rows with internal db playerid’s
 		else
 			405 invalid input
 	else
@@ -110,6 +106,9 @@ add new match rows with internal db playerid’s
 else //db is down
 	500 internal server error
 ```
+Instead of trying to match spelling variations of player names the user will
+just be notified of new players that get added to the players table.
+This way they can manually merge the players on their own
 
 ##Player/Merge
 
@@ -144,6 +143,7 @@ return a json representation of the player collection
 ```
 
 Ideally this representation would be cached until a new set of tournament matches get posted or the base elo’s
-
-In this case we use a hashmap because the player id’s we receive from the matches don’t correspond to array indexes. They’re keys to the player objects in memory. On top of this the players are going to be accessed out of order so it’d be nice to have a data structure that accommodates for that. We are going to be iterating through the matches so they can just be put into an array.
-```
+In this case we use a hashmap because the player id’s we receive from the matches don’t correspond to array indexes.
+They’re keys to the player objects in memory.
+On top of this the players are going to be accessed out of order so it’d be nice to have a data structure that accommodates for that.
+We are going to be iterating through the matches so they can just be put into an array.
