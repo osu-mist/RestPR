@@ -4,6 +4,7 @@ Note: A lot of this pseudocode will have to change to fit the DAO access pattern
 
 Accept display_name and user_login as parameters used for set constraints
 
+```
 if db connection is dead
 return 500 error response
 else
@@ -11,6 +12,7 @@ else
 
 	select from users in the user table where like %display_name% and where like %user_login%
 return query result as json collection of users
+```
 
 ##POST USER // Authenticated action
 
@@ -18,6 +20,7 @@ POST USER // Authenticated action
 Accept api_key in header as parameter
 Accept new user object in the request body
 
+```
 if db connection is live
 	if api_key parameter exists in user permissions table
 if display_name parameter and user_login parameter are unique (both do not exist in table)
@@ -29,9 +32,11 @@ else
 		return 401 invalid authentication response
 else
 	return 500 internal server error response
+```
 
 ##GET USER/{ID}
 
+```
 if db connection is live
 	if id exists in the users table
 		return 200 success response with it in body
@@ -39,6 +44,7 @@ if db connection is live
 		return 404 not found error
 else
 	return 500 internal server error response
+```
 
 
 
@@ -46,6 +52,7 @@ else
 
 PUT USER/{ID}
 
+```
 if db connection is live
 	if api_key parameter exists in user permissions table
 if display_name parameter and user_login parameter are unique (both do not exist in table)
@@ -57,9 +64,11 @@ else
 		return 401 invalid authentication response
 else
 	return 500 internal server error response
+```
 
 ##DELETE USER/{ID}
 
+```
 if db connection is live
 	if api_key parameter exists in the user permissions table
 		delete specified user from the table
@@ -69,11 +78,13 @@ if db connection is live
 		401 invalid authorization error
 else
 	500 internal server error
+```
 
 ##POST TOURNAMENT
 
 Takes in Season_ID, Challonge API Key, Challonge Subdomain string, Challonge url string
 
+```
 if db connection is alive
 	if challonge url string and subdomain pair are unique to the db
 make http request to challonge api for
@@ -98,11 +109,13 @@ add new match rows with internal db playerid’s
 		405 invalid input
 else //db is down
 	500 internal server error
+```
 
 ##Player/Merge
 
 Accepts a source_player_id and destination_player_id that correspond to the players table
 
+```
 if source_player_id exists and destination_player_id exists in the player table
 	//Change the matches
 	update matches
@@ -110,6 +123,7 @@ if source_player_id exists and destination_player_id exists in the player table
 	where player_id = source_player_id
 
 delete source_player_id row from player table
+```
 
 ##PLAYERS/ELO
 
@@ -130,3 +144,4 @@ return a json representation of the player collection
 Ideally this representation would be cached until a new set of tournament matches get posted or the base elo’s
 
 In this case we use a hashmap because the player id’s we receive from the matches don’t correspond to array indexes. They’re keys to the player objects in memory. On top of this the players are going to be accessed out of order so it’d be nice to have a data structure that accommodates for that. We are going to be iterating through the matches so they can just be put into an array.
+```
