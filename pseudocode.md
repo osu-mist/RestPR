@@ -129,6 +129,7 @@ delete source_player_id row from player table
 
 Accepts a season, returns the elo of all players
 
+```
 Query DB for all player from the season
 	initialize their base elo values
 		if null
@@ -140,6 +141,7 @@ iterate through each match
 	update the respective players
 
 return a json representation of the player collection
+```
 
 Ideally this representation would be cached until a new set of tournament matches get posted or the base elo’s
 
