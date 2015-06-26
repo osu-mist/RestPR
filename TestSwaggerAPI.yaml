@@ -45,9 +45,6 @@ paths:
           description: Resource not found
         "500":
           description: Internal server error
-      security:
-        - api_key: []
-        
     post:
       tags:
         - user
