@@ -1,6 +1,7 @@
 Note: A lot of this pseudocode will have to change to fit the DAO access patterns.
 
-GET USER //get users
+##GET USER //get users
+
 Accept display_name and user_login as parameters used for set constraints
 
 if db connection is dead
@@ -10,6 +11,8 @@ else
 
 	select from users in the user table where like %display_name% and where like %user_login%
 return query result as json collection of users
+
+##POST USER // Authenticated action
 
 POST USER // Authenticated action
 Accept api_key in header as parameter
@@ -27,7 +30,7 @@ else
 else
 	return 500 internal server error response
 
-GET USER/{ID}
+##GET USER/{ID}
 
 if db connection is live
 	if id exists in the users table
@@ -39,6 +42,7 @@ else
 
 
 
+##PUT USER/{ID}
 
 PUT USER/{ID}
 
@@ -54,7 +58,7 @@ else
 else
 	return 500 internal server error response
 
-DELETE USER/{ID}
+##DELETE USER/{ID}
 
 if db connection is live
 	if api_key parameter exists in the user permissions table
@@ -66,7 +70,7 @@ if db connection is live
 else
 	500 internal server error
 
-POST TOURNAMENT BACKEND DESIGN
+##POST TOURNAMENT
 
 Takes in Season_ID, Challonge API Key, Challonge Subdomain string, Challonge url string
 
@@ -95,8 +99,8 @@ add new match rows with internal db playerid’s
 else //db is down
 	500 internal server error
 
+##Player/Merge
 
-Player/Merge
 Accepts a source_player_id and destination_player_id that correspond to the players table
 
 if source_player_id exists and destination_player_id exists in the player table
@@ -107,8 +111,8 @@ if source_player_id exists and destination_player_id exists in the player table
 
 delete source_player_id row from player table
 
+##PLAYERS/ELO
 
-PLAYERS/ELO
 Accepts a season, returns the elo of all players
 
 Query DB for all player from the season
