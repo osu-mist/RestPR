@@ -1,0 +1,55 @@
+// https://docs.gradle.org/current/userguide/groovy_plugin.html
+apply plugin: 'groovy'
+
+// https://docs.gradle.org/current/userguide/codenarc_plugin.html
+apply plugin: 'codenarc'
+
+// https://docs.gradle.org/current/userguide/idea_plugin.html
+apply plugin: 'idea'
+
+// https://plugins.gradle.org/plugin/com.github.johnrengelman.shadow
+apply plugin: 'com.github.johnrengelman.shadow'
+
+// https://docs.gradle.org/current/userguide/organizing_build_logic.html#sec:external_dependencies
+buildscript {
+    repositories {
+        maven {
+	    url 'https://plugins.gradle.org/m2/'
+        }
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.1'
+    }
+}
+
+// https://docs.gradle.org/current/userguide/artifact_dependencies_tutorial.html#N10621
+repositories {
+    mavenCentral()
+}
+
+// https://docs.gradle.org/current/userguide/artifact_dependencies_tutorial.html#N105E1
+dependencies {
+    compile "org.codehaus.groovy:groovy:${groovyVersion}"
+    compile "io.dropwizard:dropwizard-core:${dropwizardVersion}"
+}
+
+codenarc {
+    configFile = new File("config/codenarc/codenarc.groovy")
+}
+
+// https://github.com/johnrengelman/shadow
+shadowJar {
+    manifest {
+        attributes 'Main-Class': "${mainClass}"
+    }
+    mergeServiceFiles()
+}
+
+build.dependsOn shadowJar
+
+// FIXME: use ShadowJar (java -jar build/libs/web-api-skeleton-all.jar server configuration.yaml)
+task run(type: JavaExec, dependsOn: build) {
+    main = "${mainClass}"
+    classpath = sourceSets.main.runtimeClasspath
+    args = ['server', 'configuration.yaml']
+}
