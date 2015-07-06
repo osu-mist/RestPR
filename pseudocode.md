@@ -203,3 +203,8 @@ http://www.joda.org/joda-time/apidocs/org/joda/time/DateTimeComparator.html
 http://www.groovy-lang.org/groovy-dev-kit.html#Collections-Lists
 
 http://www.groovy-lang.org/groovy-dev-kit.html#Collections-Maps
+
+JDBI DAO NOTES
+
+Our goal is to map the query ResultSet to our POJO
+

@@ -35,6 +35,17 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.dropwizard/dropwizard-jdbi/0.8.1/dc5b8034e5250eb88fc36c4e8dd48e0435aa6f97/dropwizard-jdbi-0.8.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.dropwizard/dropwizard-jdbi/0.8.1/3653d39fac672fcb601cfd11809f3b06533caa15/dropwizard-jdbi-0.8.1-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
           <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.dropwizard/dropwizard-util/0.8.1/5dbcfad14593f4d47a9a8d927df14cafdbae9a22/dropwizard-util-0.8.1.jar!/" />
         </CLASSES>
         <JAVADOC />
@@ -205,6 +216,39 @@
         <JAVADOC />
         <SOURCES>
           <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.toolchain.setuid/jetty-setuid-java/1.0.2/9196cb4b7dc551d6c3756335e01c015dcb671f0e/jetty-setuid-java-1.0.2-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.dropwizard/dropwizard-db/0.8.1/dd24f04c373f662e41326145e70e5dd307edcf7e/dropwizard-db-0.8.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.dropwizard/dropwizard-db/0.8.1/5fd7130652028fd9f222821a118bb711f1a34652/dropwizard-db-0.8.1-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jdbi/jdbi/2.59/8aed153a3470985bfe0b22d53e6e7939dfafeb9a/jdbi-2.59.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jdbi/jdbi/2.59/eb3314364faa3e1a93569452aeb875c34544b37f/jdbi-2.59-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.dropwizard.metrics/metrics-jdbi/3.1.1/2620dc6871c3b4fbb7d46a6bde3b8c5c93944333/metrics-jdbi-3.1.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.dropwizard.metrics/metrics-jdbi/3.1.1/1eb13d16012b3014bbef46206008ea236750c7c/metrics-jdbi-3.1.1-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -607,6 +651,17 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.tomcat/tomcat-jdbc/8.0.18/76d5ef02d818a78024677ae517f1a150220b3bdd/tomcat-jdbc-8.0.18.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.tomcat/tomcat-jdbc/8.0.18/70aeb26fc2085569b6741ea8cda704ec38ebca12/tomcat-jdbc-8.0.18-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
           <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.validation/validation-api/1.1.0.Final/8613ae82954779d518631e05daa73a6a954817d5/validation-api-1.1.0.Final.jar!/" />
         </CLASSES>
         <JAVADOC />
@@ -810,6 +865,17 @@
         <JAVADOC />
         <SOURCES>
           <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-security/9.2.9.v20150224/459ae1bdaf43415c1af7086bf800a15477b2d0dd/jetty-security-9.2.9.v20150224-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.tomcat/tomcat-juli/8.0.18/70b0c9864a1460876904bf064601659b8fe63c93/tomcat-juli-8.0.18.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.tomcat/tomcat-juli/8.0.18/42b56b18b97987ae7bdff36d4563a4b63a0aa59f/tomcat-juli-8.0.18-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
