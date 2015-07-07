@@ -17,8 +17,8 @@ public class UserMapper implements ResultSetMapper<User>{
     user.with {
 
       user_id       = rs.getInt     'USER_ID'
-      display_name  = rs.getString  'USER_LOGIN'
-      user_login    = rs.getString  'DISPLAY_NAME'
+      display_name  = rs.getString  'DISPLAY_NAME'
+      user_login    = rs.getString  'USER_LOGIN'
 
     }
 
