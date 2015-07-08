@@ -1,1 +1,12 @@
 configuration.yaml
+.class
+.DS_Store
+.bin
+/bin/
+/build/classes/
+/build/distributions/
+/build/libs/
+/build/reports/
+/build/scripts/
+/build/test-results/
+/build/tmp/
