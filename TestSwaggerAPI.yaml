@@ -41,8 +41,6 @@ paths:
           description: Successful response
           schema:
             $ref: "#/definitions/user"
-        "404":
-          description: Resource not found
         "500":
           description: Internal server error
     post:
