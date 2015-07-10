@@ -45,5 +45,8 @@ public interface UserDAO extends Closeable {
             WHERE USER_ID = :user_id
             """)
   User getUserById(@Bind("user_id") Integer user_id);
+
+  @SqlUpdate("insert into PR_USER (USER_ID, USER_LOGIN, DISPLAY_NAME) values (:user_id, :user_login, :display_name)")
+  void postUserToUserId(@Bind("user_id") Integer user_id , @Bind("user_login") String user_login , @Bind("display_name") String display_name)
 }
 
