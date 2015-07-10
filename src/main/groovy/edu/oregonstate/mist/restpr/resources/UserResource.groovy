@@ -32,6 +32,10 @@ class UserResource {
     this.userDAO = userDAO;
   }
 
+  def debugPrintUser(User user) {
+    System.out.println("*** DEBUG USERLOGIN:\""+ user.getUserLogin() + "\" DISPLAYNAME:\"" + user.getDisplayName() + "\"***")
+  }
+
   @Path("/all")
   @GET
   @Produces (MediaType.APPLICATION_JSON)
