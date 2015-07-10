@@ -29,7 +29,7 @@ public interface UserDAO extends Closeable {
             """)
   List<User> allRESTPRUsers()
 
-  @SqlUpdate("insert into PR_USER (USER_ID, USER_LOGIN, DISPLAY_NAME) values (PLAYER_SEQ.NEXTVAL, :display_name, :user_login)")
+  @SqlUpdate("insert into PR_USER (USER_ID, USER_LOGIN, DISPLAY_NAME) values (PR_USER_SEQ.NEXTVAL, :user_login, :display_name)")
   void postUser(@Bind("user_login") String user_login, @Bind("display_name") String display_name);
 
   @SqlUpdate()
