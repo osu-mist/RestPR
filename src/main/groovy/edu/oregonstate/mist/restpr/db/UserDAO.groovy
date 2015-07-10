@@ -24,7 +24,7 @@ public interface UserDAO extends Closeable {
   List<User> getPRUSERSmatch(@Bind("user_login_match") String user_login_match, @Bind("display_name_match") String display_name_match);
 
   @SqlQuery("""
-            SELECT *
+            SELECT DISPLAY_NAME, USER_ID, USER_LOGIN
             FROM PR_USER
             """)
   List<User> allRESTPRUsers()
