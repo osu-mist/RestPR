@@ -152,4 +152,16 @@ class UserResource {
     return returnResponse
   }
 
+  @Path("/{user_id}")
+  @DELETE
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response deleteUserById(@PathParam("user_id") Integer user_id){
+    //TODO add authentication for this method
+    userDAO.deleteUserById(user_id)
+    def returnResponse = Response.ok().build()
+
+    return returnResponse;
+
+  }
+
 }
