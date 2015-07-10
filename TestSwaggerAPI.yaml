@@ -170,8 +170,8 @@ paths:
       responses:
         "200":
           description: Successful response
-        "202":
-          description: Representation accepted
+        "201":
+          description: Resource created
         "400":
           description: Invalid ID supplied
         "401":
