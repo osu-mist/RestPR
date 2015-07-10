@@ -63,12 +63,11 @@ paths:
             $ref: "#/definitions/user"
  
       responses:
-        "200":
-          description: Successful response
         "201":
           description: Resource created
-        "202":
-          description: Representation accepted
+          schema:
+            $ref: "#/definitions/urilocation"
+
         "401":
           description: User is not authorized to perform this action
         "405":
@@ -1065,7 +1064,14 @@ definitions:
         type: string
       display_name:
         type: string
-        
+
+  urilocation:
+    required:
+      - uri_location
+    properties:
+      uri_location:
+        type: string
+
   season:
     required:
       - community_name
