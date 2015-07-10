@@ -124,4 +124,32 @@ class UserResource {
     return returnResponse;
 
   }
+
+  @Path("/{user_id}")
+  @PUT
+  @Produces(MediaType.APPLICATION_JSON)
+  @Consumes(MediaType.APPLICATION_JSON)
+  public Response putUserById(@PathParam("user_id") Integer user_id , User newUser){
+
+    //TODO TEST RESPONSE CODES
+
+    def returnResponse;
+
+    User checkForUser_id = userDAO.getUserById(user_id);
+    if(checkForUser_id == null){
+      userDAO.postUserToUserId(user_id, newUser.getUserLogin(),newUser.getDisplayName())
+      returnResponse = Response.created().build()
+    }else{
+      Optional<String> newDisplayName = Optional.of( newUser.getDisplayName() )
+      Optional<String> newUserLogin = Optional.of( newUser.getUserLogin())
+
+      //If the user is updating just their login or their display name we can use whats already in the DB using the
+      //optional class or method.
+      userDAO.putUser(user_id ,newUserLogin.or(checkForUser_id.getUserLogin()) ,newDisplayName.or(checkForUser_id.getDisplayName()));
+      returnResponse = Response.ok().build()
+    }
+
+    return returnResponse
+  }
+
 }
