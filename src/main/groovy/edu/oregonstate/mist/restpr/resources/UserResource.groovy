@@ -38,9 +38,15 @@ class UserResource {
 
   @Path("/all")
   @GET
-  @Produces (MediaType.APPLICATION_JSON)
-  public List<User> getAll(){
-    return userDAO.allRESTPRUsers()
+  @Produces(MediaType.APPLICATION_JSON)
+  //Entity Type: List<User>
+  public Response getAll() {
+    List<User> returnList = userDAO.allRESTPRUsers()
+
+    returnList.each { debugPrintUser(it) }
+
+    def returnResponse = Response.ok(returnList).build()
+    return returnResponse;
   }
 
   @GET
