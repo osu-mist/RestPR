@@ -1,14 +1,21 @@
 configuration.yaml
 
-.gradle/
 .class
-.DS_Store
 .bin
-/bin/
-/build/classes/
-/build/distributions/
-/build/libs/
-/build/reports/
-/build/scripts/
-/build/test-results/
-/build/tmp/
+
+# Oracle Driver
+bin/
+
+# Gradle
+.gradle/
+
+# Dropwizard
+build/
+
+# IntelliJ IDEA
+*.iml
+*.ipr
+*.iws
+
+# Mac OS X
+.DS_Store
