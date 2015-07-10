@@ -65,9 +65,44 @@ class UserResource {
 
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
-  public void postUser(@NotNull User newUser){
-    userDAO.postUser(newUser.getUserLogin(),newUser.getDisplayName())
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response postUser(@NotNull User newUser) {
+    Response returnResponse;
+    def createdURI;
 
+    System.out.println("*** DEBUG "+ newUser.getUserLogin() + " " + newUser.getDisplayName() + "***")
+
+    try {
+      userDAO.postUser(newUser.getUserLogin() , newUser.getDisplayName())
+      //createdURI = URI.create("/"+userDAO)
+
+      //201 CREATED
+      //TODO add in the URI of newly created resource
+      returnResponse = Response.created().build()
+
+    } catch (org.skife.jdbi.v2.exceptions.UnableToExecuteStatementException e){
+
+      def constraintError = e.cause.toString()
+      //System.out.println("*** DEBUG " + constraintError + "***")
+      def returnError;
+      if(constraintError.contains("PR_USER_U_USER_LOGIN")){//USER LOGIN IS NOT UNIQUE
+
+        returnError = new ErrorPOJO("User login is not unique", Response.Status.CONFLICT.getStatusCode())
+      }else if(constraintError.contains("PR_USER_U_DISPLAY_NAME")){//DISPLAY NAME IS NOT UNIQUE
+
+        returnError = new ErrorPOJO("Display name is not unique", Response.Status.CONFLICT.getStatusCode())
+
+      }else{//Some other error, should be logged
+        //System.out.println(e.localizedMessage)
+        returnError = new ErrorPOJO("Unknown error.", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode())
+      }
+
+      return Response.status(Response.Status.CONFLICT).entity(returnError).build()
+
+      //System.out.println(returnError.getErrorMessage())
+    }
+
+    return returnResponse;
   }
 
   @Path("/{userid}")
