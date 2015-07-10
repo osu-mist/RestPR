@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement
  * Created by georgecrary on 6/26/15.
  */
 
-@XmlRootElement
+@XmlRootElement(name = "user")
 class User{
   private Integer user_id
   private String user_login
