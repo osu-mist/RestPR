@@ -76,7 +76,39 @@ paths:
           description: Internal server error
       security:
         - api_key: []
-  
+
+  /user/all:
+    get:
+        tags:
+          - user
+        summary: A list of users and their info
+        description: "This returns the information obtained about the users, can be filtered using parameters"
+        operationId: getUser
+        produces:
+          - application/json
+          - application/xml
+        parameters:
+          - name: user_login
+            in: query
+            description: This is the user's login name
+            required: false
+            type: string
+            format: string
+          - name: display_name
+
+            in: query
+            description: This is the user's display name
+            required: false
+            type: string
+            format: string
+
+        responses:
+          "200":
+            description: Successful response
+            schema:
+              $ref: "#/definitions/user"
+          "500":
+            description: Internal server error
   /user/{user_id}:
     get:
       tags:
