@@ -14,13 +14,14 @@ import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper
 @RegisterMapper(UserMapper)
 public interface UserDAO extends Closeable {
   @SqlQuery("""
-            SELECT *
+            SELECT DISPLAY_NAME, USER_ID, USER_LOGIN
             FROM PR_USER
             WHERE DISPLAY_NAME LIKE '%'||:display_name_match||'%'
+            AND USER_LOGIN LIKE '%'||:user_login_match||'%'
             """)
 
   // || is the concat operator for Oracle
-  List<User> getPRUSERSmatch(@Bind("display_name_match") String display_name_match);
+  List<User> getPRUSERSmatch(@Bind("user_login_match") String user_login_match, @Bind("display_name_match") String display_name_match);
 
   @SqlQuery("""
             SELECT *
