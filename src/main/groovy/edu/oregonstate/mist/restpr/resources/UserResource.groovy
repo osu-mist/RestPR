@@ -105,17 +105,23 @@ class UserResource {
     return returnResponse;
   }
 
-  @Path("/{userid}")
+  @Path("/{user_id}")
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  public User findUserById(@PathParam("userid") Integer userid){
-    User returnUser = userDAO.getUserById(userid);
+  //Entity Type: User
+  public Response findUserById(@PathParam("user_id") Integer user_id) {
+    User returnUser = userDAO.getUserById(user_id);
+    def returnResponse;
+    if (returnUser == null) {
+      def returnError = new ErrorPOJO("Resource not found.",Response.Status.NOT_FOUND.getStatusCode())
+      returnResponse = Response.status(Response.Status.NOT_FOUND).entity(returnError).build()
 
-    if(returnUser == null){
-      throw new WebApplicationException(404)
+    }else{
+
+      returnResponse = Response.ok(returnUser).build()
     }
 
-    return returnUser;
+    return returnResponse;
 
   }
 }
