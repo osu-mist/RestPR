@@ -57,7 +57,7 @@ paths:
       parameters:
         - name: body
           in: body
-          description: "user object that needs to be added to the database"
+          description: "User representation that will be added to the database. display_name and user_login must be unique."
           required: true
           schema:
             $ref: "#/definitions/user"
