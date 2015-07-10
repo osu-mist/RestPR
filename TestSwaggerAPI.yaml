@@ -70,7 +70,7 @@ paths:
 
         "401":
           description: User is not authorized to perform this action
-        "405":
+        "409":
           description: Invalid input
         "500":
           description: Internal server error
