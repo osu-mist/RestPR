@@ -172,14 +172,10 @@ paths:
           description: Successful response
         "201":
           description: Resource created
-        "400":
-          description: Invalid ID supplied
         "401":
           description: User not authorized to perform this action
         "404":
           description: Resourse not found
-        "405":
-          description: Validation exception
         "500":
           description: Internal server error
       security:
