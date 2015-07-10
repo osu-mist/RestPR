@@ -54,5 +54,10 @@ public interface UserDAO extends Closeable {
               WHERE USER_ID = :user_id
               """)
   void deleteUserById(@Bind("user_id") Integer user_id)
+
+  @SqlQuery("""
+            SELECT PR_USER_SEQ.CURRVAL FROM DUAL
+            """)
+  Integer getLatestUserId()
 }
 
