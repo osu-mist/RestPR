@@ -2,24 +2,26 @@ package edu.oregonstate.mist.restpr.resources
 /**
  * Created by georgecrary on 6/27/15.
  */
-import edu.oregonstate.mist.restpr.api.User;
 import com.google.common.base.Optional
+
+import edu.oregonstate.mist.restpr.api.ErrorPOJO
+import edu.oregonstate.mist.restpr.api.User;
+
 import edu.oregonstate.mist.restpr.db.UserDAO
-import javassist.NotFoundException
-import org.eclipse.jetty.server.Response
 
 import javax.validation.constraints.NotNull
-import javax.ws.rs.Consumes;
+
+import javax.ws.rs.Consumes
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET
-import javax.ws.rs.POST;
+import javax.ws.rs.POST
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.MediaType;
-
-
+import javax.ws.rs.core.MediaType
+import javax.ws.rs.core.Response;
 
 @Path("/User")
 @Produces(MediaType.APPLICATION_JSON)
