@@ -1,4 +1,6 @@
 configuration.yaml
+
+.gradle/
 .class
 .DS_Store
 .bin
