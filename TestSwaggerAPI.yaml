@@ -193,8 +193,6 @@ paths:
       responses:
         "200":
           description: Successful response
-        "202":
-          description: Delete request accepted
         "400":
           description: Invalid user value
         "401":
