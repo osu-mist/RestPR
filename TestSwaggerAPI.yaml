@@ -87,21 +87,6 @@ paths:
         produces:
           - application/json
           - application/xml
-        parameters:
-          - name: user_login
-            in: query
-            description: This is the user's login name
-            required: false
-            type: string
-            format: string
-          - name: display_name
-
-            in: query
-            description: This is the user's display name
-            required: false
-            type: string
-            format: string
-
         responses:
           "200":
             description: Successful response
