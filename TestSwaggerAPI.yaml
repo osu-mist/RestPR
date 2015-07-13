@@ -193,8 +193,6 @@ paths:
       responses:
         "200":
           description: Successful response
-        "400":
-          description: Invalid user value
         "401":
           description: User is not authorized to perform this action
         "500":
