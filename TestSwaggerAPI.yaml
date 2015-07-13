@@ -1120,6 +1120,9 @@ definitions:
         type: number
         format: integer
         
+      Year:
+        type: number
+        format: integer
   tournament:
     required:
       - series_name
