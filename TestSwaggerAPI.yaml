@@ -295,7 +295,25 @@ paths:
           description: Internal server error
       security:
         - api_key: []
-        
+
+  /season/all:
+    get:
+        tags:
+          - season
+        summary: A list of all seasons and their info
+        description: "This returns the information obtained about the seasons"
+        operationId: getSeason
+        produces:
+          - application/json
+          - application/xml
+        responses:
+          "200":
+            description: Successful response
+            schema:
+              $ref: "#/definitions/season"
+          "500":
+            description: Internal server error
+
   /season/{season_id}:
     get:
       tags:
