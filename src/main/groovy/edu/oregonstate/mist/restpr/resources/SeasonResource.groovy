@@ -35,6 +35,18 @@ class SeasonResource {
     this.seasonDAO = seasonDAO
   }
 
+  @Path("/all")
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  //Entity Type: List<Season>
+  public Response getAll(){
+    List<Season> returnList = seasonDAO.allSeasons()
 
+    //TODO make debug print season method
+    //returnList.each { debugPrintSeason(it) }
+
+    def returnResponse = Response.ok(returnList).build()
+    return returnResponse;
+  }
 
 }
