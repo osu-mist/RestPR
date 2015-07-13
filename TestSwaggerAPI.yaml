@@ -81,9 +81,9 @@ paths:
     get:
         tags:
           - user
-        summary: A list of users and their info
-        description: "This returns the information obtained about the users, can be filtered using parameters"
-        operationId: getUser
+        summary: A list of all users and their info
+        description: "This returns the information obtained about all the users"
+        operationId: allRESTPRUsers
         produces:
           - application/json
           - application/xml
