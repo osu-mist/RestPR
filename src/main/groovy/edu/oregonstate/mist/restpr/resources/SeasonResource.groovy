@@ -49,4 +49,24 @@ class SeasonResource {
     return returnResponse;
   }
 
+  @Path("/{season_id}")
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  //Entity Type: Season
+  public Response getSeasonById(@NotNull Integer season_id){
+    Season returnSeason = seasonDAO.getSeasonById(season_id)
+    def returnResponse
+
+    if (returnSeason == null) {
+      def returnError = new ErrorPOJO("Resource not found.",Response.Status.NOT_FOUND.getStatusCode())
+      returnResponse = Response.status(Response.Status.NOT_FOUND).entity(returnError).build()
+
+    }else{
+
+      returnResponse = Response.ok(returnSeason).build()
+    }
+
+    return returnResponse
+  }
+
 }
