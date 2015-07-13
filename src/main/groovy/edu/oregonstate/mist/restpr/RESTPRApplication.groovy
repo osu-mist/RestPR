@@ -1,8 +1,10 @@
 package edu.oregonstate.mist.restpr
 
 import com.fasterxml.jackson.databind.SerializationFeature
+import edu.oregonstate.mist.restpr.db.SeasonDAO
 import edu.oregonstate.mist.restpr.db.UserDAO
 import edu.oregonstate.mist.restpr.resources.SampleResource
+import edu.oregonstate.mist.restpr.resources.SeasonResource
 import edu.oregonstate.mist.restpr.resources.UserResource
 import io.dropwizard.Application
 import io.dropwizard.Configuration
@@ -23,9 +25,11 @@ class RESTPRApplication extends Application<RESTPRConfiguration>{
         final DBIFactory factory = new DBIFactory()
         final DBI jdbi = factory.build(environment, configuration.getDataSourceFactory(),"jdbi")
         final UserDAO myUserDao = jdbi.onDemand(UserDAO.class)
+        final SeasonDAO mySeasonDao = jdbi.onDemand(SeasonDAO.class)
 
         environment.jersey().register(new SampleResource())
         environment.jersey().register(new UserResource(myUserDao))
+        environment.jersey().register(new SeasonResource(mySeasonDao))
     }
 
     public static void main(String[] arguments) throws Exception {
