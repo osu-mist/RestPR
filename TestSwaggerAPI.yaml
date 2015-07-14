@@ -246,8 +246,6 @@ paths:
           description: Successful response
           schema:
             $ref: "#/definitions/season"
-        "404":
-          description: Resource not found
         "500":
           description: Internal server error
       security:
