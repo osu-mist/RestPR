@@ -137,7 +137,7 @@ class UserResource {
   @Consumes(MediaType.APPLICATION_JSON)
   public Response putUserById(@PathParam("user_id") Integer user_id , User newUser){
 
-    //TODO TEST RESPONSE CODES
+    //TODO CREATE TESTS TO TEST RESPONSE CODES
 
     def returnResponse;
 
