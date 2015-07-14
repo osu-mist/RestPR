@@ -26,7 +26,7 @@ import javax.ws.rs.core.Response;
  * Created by georgecrary on 7/13/15.
  */
 
-@Path("/Season")
+@Path("/season")
 @Produces(MediaType.APPLICATION_JSON)
 class SeasonResource {
   private final SeasonDAO seasonDAO;
