@@ -212,13 +212,6 @@ paths:
         - application/json
         - application/xml
       parameters:
-      
-        - name: season_id
-          in: query
-          description: The id of the selected season.
-          required: false
-          type: number
-          format: integer
           
         - name: community_name
           in: query
