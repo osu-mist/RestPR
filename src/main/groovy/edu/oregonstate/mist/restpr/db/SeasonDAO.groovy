@@ -37,8 +37,9 @@ public interface SeasonDAO extends Closeable  {
   @SqlUpdate("""INSERT INTO SEASON (SEASON_ID, COMMUNITY_NAME, CYCLE_FORMAT, CYCLE_COUNT, ELO_DEFAULT_SEED, YEAR)
                 VALUES (SEASON_SEQ.NEXTVAL, :community_name, :cycle_format, :cycle_count, :elo_default_seed, :year)
              """)
-  void postSeason(@Bind("community_name") community_name, @Bind("cycle_format") cycle_format,
-                  @Bind("cycle_count") cycle_count, @Bind("elo_default_seed") elo_default_seed, @Bind("year") year)
+  void postSeason(@Bind("community_name") String community_name, @Bind("cycle_format") String cycle_format,
+                  @Bind("cycle_count") String cycle_count, @Bind("elo_default_seed") String elo_default_seed,
+                  @Bind("year") String year)
 
   @SqlUpdate( """
               UPDATE SEASON
@@ -46,9 +47,9 @@ public interface SeasonDAO extends Closeable  {
                   CYCLE_COUNT = :cycle_count, ELO_DEFAULT_SEED = :elo_default_seed, YEAR = :year)
               WHERE SEASON_ID = :season_id
               """)
-  void putUser(@Bind("season_id") Integer season_id, @Bind("community_name") community_name,
-               @Bind("cycle_format") cycle_format, @Bind("cycle_count") cycle_count,
-               @Bind("elo_default_seed") elo_default_seed, @Bind("year") year)
+  void putUser(@Bind("season_id") Integer season_id, @Bind("community_name") String community_name,
+               @Bind("cycle_format") String cycle_format, @Bind("cycle_count") String cycle_count,
+               @Bind("elo_default_seed") String elo_default_seed, @Bind("year") String year)
 
   @SqlQuery("""
             SELECT *
@@ -60,9 +61,9 @@ public interface SeasonDAO extends Closeable  {
   @SqlUpdate("""INSERT INTO SEASON (SEASON_ID, COMMUNITY_NAME, CYCLE_FORMAT, CYCLE_COUNT, ELO_DEFAULT_SEED, YEAR)
                 VALUES (:season_id, :community_name, :cycle_format, :cycle_count, :elo_default_seed, :year)
              """)
-  void postUserToUserId(@Bind("season_id") Integer season_id, @Bind("community_name") community_name,
-                        @Bind("cycle_format") cycle_format, @Bind("cycle_count") cycle_count,
-                        @Bind("elo_default_seed") elo_default_seed, @Bind("year") year)
+  void postUserToUserId(@Bind("season_id") Integer season_id, @Bind("community_name") String community_name,
+                        @Bind("cycle_format") String cycle_format, @Bind("cycle_count") String cycle_count,
+                        @Bind("elo_default_seed") String elo_default_seed, @Bind("year") String year)
 
   @SqlUpdate( """
               DELETE FROM SEASON
