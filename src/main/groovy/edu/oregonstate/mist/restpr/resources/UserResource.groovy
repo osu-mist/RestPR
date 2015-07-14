@@ -23,7 +23,7 @@ import javax.ws.rs.QueryParam
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response;
 
-@Path("/User")
+@Path("/user")
 @Produces(MediaType.APPLICATION_JSON)
 class UserResource {
   private final UserDAO userDAO;
