@@ -23,7 +23,10 @@ public interface SeasonDAO extends Closeable  {
             """)
 
   // || is the concat operator for Oracle
-  List<Season> getSeasonMatch(@Bind("community_name") community_name_match,@Bind ("cycle_format_match") cycle_format_match, @Bind("cycle_count_match") cycle_count_match, @Bind("year_match") year_match)
+  List<Season> getSeasonMatch(@Bind("community_name_match") String community_name_match,
+                              @Bind ("cycle_format_match") String cycle_format_match,
+                              @Bind("cycle_count_match") String cycle_count_match,
+                              @Bind("year_match") String year_match)
 
   @SqlQuery("""
             SELECT *
