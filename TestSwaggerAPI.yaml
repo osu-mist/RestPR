@@ -233,10 +233,10 @@ paths:
           required: false
           type: number
           format: integer
-          
-        - name: ELO_default_seed
+
+        - name: Year
           in: query
-          description: The ELO default seed.
+          description: The year of the season
           required: false
           type: number
           format: integer
