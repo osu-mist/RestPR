@@ -30,6 +30,9 @@ import javax.ws.rs.core.UriInfo;
 class UserResource {
   private final UserDAO userDAO;
 
+  @Context
+  UriInfo uriInfo;
+
   public UserResource(UserDAO userDAO){
     this.userDAO = userDAO;
   }
