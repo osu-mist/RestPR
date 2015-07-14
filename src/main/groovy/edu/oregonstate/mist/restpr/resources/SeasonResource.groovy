@@ -35,6 +35,11 @@ class SeasonResource {
     this.seasonDAO = seasonDAO
   }
 
+  def debugPrintSeason(Season season) {
+    System.out.println("*** Debug "+season.getSeason_id()+" "+season.getCommunity_name()+" "+season.getCycle_format()
+            +" "+season.getCycle_count()+" "+season.getElo_default_seed()+" "+season.getYear())
+  }
+
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   //Entity Type: List<Season>
@@ -58,8 +63,7 @@ class SeasonResource {
   public Response getAll(){
     List<Season> returnList = seasonDAO.allSeasons()
 
-    //TODO make debug print season method
-    //returnList.each { debugPrintSeason(it) }
+    returnList.each { debugPrintSeason(it) }
 
     def returnResponse = Response.ok(returnList).build()
     return returnResponse;
