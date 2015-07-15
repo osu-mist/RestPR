@@ -58,8 +58,8 @@ class UserResource {
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   //Entity type: List<User>
-  public Response getUsers(@NotNull @QueryParam("user_login") Optional<String> user_login ,
-                             @NotNull @QueryParam("display_name") Optional<String> display_name) {
+  public Response getUsers(@QueryParam("user_login") Optional<String> user_login ,
+                             @QueryParam("display_name") Optional<String> display_name) {
     //System.out.println("DEBUGGING DISPLAY_NAME VARIABLE USER GET %"+ display_name.or("") +"%");
     List<User> returnList = userDAO.getPRUSERSmatch(user_login.or("") , display_name.or(""))
     returnList.each { debugPrintUser(it) }
