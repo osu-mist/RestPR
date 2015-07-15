@@ -26,7 +26,7 @@ public interface SeasonDAO extends Closeable  {
   List<Season> getSeasonMatch(@Bind("community_name_match") String community_name_match,
                               @Bind ("cycle_format_match") String cycle_format_match,
                               @Bind("cycle_count_match") String cycle_count_match,
-                              @Bind("year_match") String year_match)
+                              @Bind("year_match") Integer year_match)
 
   @SqlQuery("""
             SELECT *
@@ -38,8 +38,8 @@ public interface SeasonDAO extends Closeable  {
                 VALUES (SEASON_SEQ.NEXTVAL, :community_name, :cycle_format, :cycle_count, :elo_default_seed, :year)
              """)
   void postSeason(@Bind("community_name") String community_name, @Bind("cycle_format") String cycle_format,
-                  @Bind("cycle_count") String cycle_count, @Bind("elo_default_seed") String elo_default_seed,
-                  @Bind("year") String year)
+                  @Bind("cycle_count") String cycle_count, @Bind("elo_default_seed") Integer elo_default_seed,
+                  @Bind("year") Integer year)
 
   @SqlUpdate( """
               UPDATE SEASON
@@ -49,7 +49,7 @@ public interface SeasonDAO extends Closeable  {
               """)
   void putUser(@Bind("season_id") Integer season_id, @Bind("community_name") String community_name,
                @Bind("cycle_format") String cycle_format, @Bind("cycle_count") String cycle_count,
-               @Bind("elo_default_seed") String elo_default_seed, @Bind("year") String year)
+               @Bind("elo_default_seed") Integer elo_default_seed, @Bind("year") Integer year)
 
   @SqlQuery("""
             SELECT *
@@ -63,7 +63,7 @@ public interface SeasonDAO extends Closeable  {
              """)
   void postUserToUserId(@Bind("season_id") Integer season_id, @Bind("community_name") String community_name,
                         @Bind("cycle_format") String cycle_format, @Bind("cycle_count") String cycle_count,
-                        @Bind("elo_default_seed") String elo_default_seed, @Bind("year") String year)
+                        @Bind("elo_default_seed") Integer elo_default_seed, @Bind("year") Integer year)
 
   @SqlUpdate( """
               DELETE FROM SEASON
