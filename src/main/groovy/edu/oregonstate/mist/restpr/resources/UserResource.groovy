@@ -82,8 +82,8 @@ class UserResource {
     try {
       userDAO.postUser(newUser.getUserLogin() , newUser.getDisplayName())
 
-      createdURI = URI.create(uriInfo.getPath()+userDAO.getLatestUserId())
-      System.out.println("*** DEBUG "+uriInfo.getPath()+userDAO.getLatestUserId())
+      createdURI = URI.create(uriInfo.getPath()+"/"+userDAO.getLatestUserId())
+      System.out.println("*** DEBUG "+ createdURI.toString())
 
       returnResponse = Response.created(createdURI).build()
 
