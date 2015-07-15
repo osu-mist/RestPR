@@ -8,6 +8,7 @@ import edu.oregonstate.mist.restpr.api.User
 import edu.oregonstate.mist.restpr.db.SeasonDAO;
 import edu.oregonstate.mist.restpr.db.UserDAO
 
+import javax.validation.Valid
 import javax.validation.constraints.NotNull
 
 import javax.ws.rs.Consumes
