@@ -20,40 +20,40 @@ class User{
   }
 
   public User(Integer user_id, String user_login,String display_name){
-    this.user_id = user_id;
-    this.user_login = user_login;
-    this.display_name = display_name;
+    this.user_id = user_id
+    this.user_login = user_login
+    this.display_name = display_name
 
   }
 
   @JsonProperty
   Integer getUserId(){
-    return user_id;
+    return user_id
   }
   @JsonProperty
   void setUserId(UserId){
-    this.user_id = UserId;
+    this.user_id = UserId
   }
 
 
   @JsonProperty
   public String getUserLogin(){
-    return user_login;
+    return user_login
   }
 
   @JsonProperty
   public String getDisplayName(){
-    return display_name;
+    return display_name
   }
 
   @JsonProperty
   void setUserLogin(UserLogin){
-    this.user_login = UserLogin;
+    this.user_login = UserLogin
   }
 
   @JsonProperty
   void setDisplayName(DisplayName){
-    this.display_name = DisplayName;
+    this.display_name = DisplayName
   }
 
 }

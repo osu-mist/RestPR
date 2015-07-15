@@ -1,7 +1,7 @@
 package edu.oregonstate.mist.restpr.db
 
 import edu.oregonstate.mist.restpr.api.User
-import edu.oregonstate.mist.restpr.mapper.UserMapper;
+import edu.oregonstate.mist.restpr.mapper.UserMapper
 
 import org.skife.jdbi.v2.sqlobject.SqlUpdate
 import org.skife.jdbi.v2.sqlobject.SqlQuery
@@ -21,7 +21,7 @@ public interface UserDAO extends Closeable {
             """)
 
   // || is the concat operator for Oracle
-  List<User> getPRUSERSmatch(@Bind("user_login_match") String user_login_match, @Bind("display_name_match") String display_name_match);
+  List<User> getPRUSERSmatch(@Bind("user_login_match") String user_login_match, @Bind("display_name_match") String display_name_match)
 
   @SqlQuery("""
             SELECT DISPLAY_NAME, USER_ID, USER_LOGIN
@@ -30,21 +30,21 @@ public interface UserDAO extends Closeable {
   List<User> allRESTPRUsers()
 
   @SqlUpdate("insert into PR_USER (USER_ID, USER_LOGIN, DISPLAY_NAME) values (PR_USER_SEQ.NEXTVAL, :user_login, :display_name)")
-  void postUser(@Bind("user_login") String user_login, @Bind("display_name") String display_name);
+  void postUser(@Bind("user_login") String user_login, @Bind("display_name") String display_name)
 
   @SqlUpdate( """
               UPDATE PR_USER
               SET USER_LOGIN = :user_login , DISPLAY_NAME = :display_name
               WHERE USER_ID = :user_id
               """)
-  void putUser(@Bind("user_id") Integer user_id,@Bind("user_login") String user_login, @Bind("display_name") String display_name);
+  void putUser(@Bind("user_id") Integer user_id,@Bind("user_login") String user_login, @Bind("display_name") String display_name)
 
   @SqlQuery("""
             SELECT *
             FROM PR_USER
             WHERE USER_ID = :user_id
             """)
-  User getUserById(@Bind("user_id") Integer user_id);
+  User getUserById(@Bind("user_id") Integer user_id)
 
   @SqlUpdate("insert into PR_USER (USER_ID, USER_LOGIN, DISPLAY_NAME) values (:user_id, :user_login, :display_name)")
   void postUserToUserId(@Bind("user_id") Integer user_id , @Bind("user_login") String user_login , @Bind("display_name") String display_name)

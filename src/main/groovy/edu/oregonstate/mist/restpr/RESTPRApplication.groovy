@@ -29,6 +29,6 @@ class RESTPRApplication extends Application<RESTPRConfiguration>{
     }
 
     public static void main(String[] arguments) throws Exception {
-        new RESTPRApplication().run(arguments);
+        new RESTPRApplication().run(arguments)
     }
 }

@@ -5,31 +5,31 @@ package edu.oregonstate.mist.restpr.resources
 import com.google.common.base.Optional
 
 import edu.oregonstate.mist.restpr.api.ErrorPOJO
-import edu.oregonstate.mist.restpr.api.User;
+import edu.oregonstate.mist.restpr.api.User
 
 import edu.oregonstate.mist.restpr.db.UserDAO
 
 import javax.validation.constraints.NotNull
 
 import javax.ws.rs.Consumes
-import javax.ws.rs.DELETE;
+import javax.ws.rs.DELETE
 import javax.ws.rs.GET
 import javax.ws.rs.POST
-import javax.ws.rs.PUT;
+import javax.ws.rs.PUT
 import javax.ws.rs.Path
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.PathParam
+import javax.ws.rs.Produces
 import javax.ws.rs.QueryParam
 import javax.ws.rs.core.MediaType
-import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response
 
 @Path("/User")
 @Produces(MediaType.APPLICATION_JSON)
 class UserResource {
-  private final UserDAO userDAO;
+  private final UserDAO userDAO
 
   public UserResource(UserDAO userDAO){
-    this.userDAO = userDAO;
+    this.userDAO = userDAO
   }
 
   def debugPrintUser(User user) {
@@ -46,7 +46,7 @@ class UserResource {
     returnList.each { debugPrintUser(it) }
 
     def returnResponse = Response.ok(returnList).build()
-    return returnResponse;
+    return returnResponse
   }
 
   @GET
@@ -67,8 +67,8 @@ class UserResource {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public Response postUser(@NotNull User newUser) {
-    Response returnResponse;
-    def createdURI;
+    Response returnResponse
+    def createdURI
 
     System.out.println("*** DEBUG "+ newUser.getUserLogin() + " " + newUser.getDisplayName() + "***")
 
@@ -84,7 +84,7 @@ class UserResource {
 
       def constraintError = e.cause.toString()
       //System.out.println("*** DEBUG " + constraintError + "***")
-      def returnError;
+      def returnError
       if(constraintError.contains("PR_USER_U_USER_LOGIN")){//USER LOGIN IS NOT UNIQUE
 
         returnError = new ErrorPOJO("User login is not unique", Response.Status.CONFLICT.getStatusCode())
@@ -102,7 +102,7 @@ class UserResource {
       //System.out.println(returnError.getErrorMessage())
     }
 
-    return returnResponse;
+    return returnResponse
   }
 
   @Path("/{user_id}")
@@ -110,8 +110,8 @@ class UserResource {
   @Produces(MediaType.APPLICATION_JSON)
   //Entity Type: User
   public Response findUserById(@PathParam("user_id") Integer user_id) {
-    User returnUser = userDAO.getUserById(user_id);
-    def returnResponse;
+    User returnUser = userDAO.getUserById(user_id)
+    def returnResponse
     if (returnUser == null) {
       def returnError = new ErrorPOJO("Resource not found.",Response.Status.NOT_FOUND.getStatusCode())
       returnResponse = Response.status(Response.Status.NOT_FOUND).entity(returnError).build()
@@ -121,7 +121,7 @@ class UserResource {
       returnResponse = Response.ok(returnUser).build()
     }
 
-    return returnResponse;
+    return returnResponse
 
   }
 
@@ -133,9 +133,9 @@ class UserResource {
 
     //TODO TEST RESPONSE CODES
 
-    def returnResponse;
+    def returnResponse
 
-    User checkForUser_id = userDAO.getUserById(user_id);
+    User checkForUser_id = userDAO.getUserById(user_id)
     if(checkForUser_id == null){
       userDAO.postUserToUserId(user_id, newUser.getUserLogin(),newUser.getDisplayName())
       returnResponse = Response.created().build()
@@ -145,7 +145,7 @@ class UserResource {
 
       //If the user is updating just their login or their display name we can use whats already in the DB using the
       //optional class or method.
-      userDAO.putUser(user_id ,newUserLogin.or(checkForUser_id.getUserLogin()) ,newDisplayName.or(checkForUser_id.getDisplayName()));
+      userDAO.putUser(user_id ,newUserLogin.or(checkForUser_id.getUserLogin()) ,newDisplayName.or(checkForUser_id.getDisplayName()))
       returnResponse = Response.ok().build()
     }
 
@@ -160,7 +160,7 @@ class UserResource {
     userDAO.deleteUserById(user_id)
     def returnResponse = Response.ok().build()
 
-    return returnResponse;
+    return returnResponse
 
   }
 

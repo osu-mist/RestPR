@@ -24,7 +24,7 @@ class ErrorPOJO {
 
   @JsonProperty
   public String getErrorMessage(){
-    return errorMessage;
+    return errorMessage
   }
   @JsonProperty
   public void setErrorMessage(String errorMessage){
@@ -33,12 +33,12 @@ class ErrorPOJO {
 
   @JsonProperty
   public Integer getErrorCode(){
-    return errorCode;
+    return errorCode
   }
 
   @JsonProperty
   public void setErrorCode(Integer errorCode){
-    this.errorCode = errorCode;
+    this.errorCode = errorCode
   }
 
 }
