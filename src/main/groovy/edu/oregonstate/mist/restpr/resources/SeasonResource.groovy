@@ -19,8 +19,10 @@ import javax.ws.rs.Path
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam
+import javax.ws.rs.core.Context
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 /**
  * Created by georgecrary on 7/13/15.
@@ -30,6 +32,9 @@ import javax.ws.rs.core.Response;
 @Produces(MediaType.APPLICATION_JSON)
 class SeasonResource {
   private final SeasonDAO seasonDAO;
+
+  @Context
+  UriInfo uriInfo
 
   SeasonResource(SeasonDAO seasonDAO) {
     this.seasonDAO = seasonDAO
