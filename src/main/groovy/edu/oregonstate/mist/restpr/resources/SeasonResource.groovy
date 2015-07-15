@@ -62,6 +62,47 @@ class SeasonResource {
     return Response.ok(returnList).build()
   }
 
+  @POST
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response postSeason(@Valid Season newSeason){
+    Response returnResponse;
+    def createdURI;
+
+    try {
+      //seasonDAO.postSeason(newSeason.getCommunity_name(),newSeason.getCycle_format(),newSeason.getCycle_count(),newSeason.getElo_default_seed(),newSeason.getYear())
+
+      seasonDAO.postSeason(newSeason.community_name, newSeason.cycle_format, newSeason.cycle_count,
+              newSeason.elo_default_seed, newSeason.year)
+
+      createdURI = URI.create(uriInfo.getPath()+"/"+seasonDAO.getLatestSeasonId())
+      System.out.println("*** DEBUG " + createdURI.toString())
+
+      returnResponse = Response.created(createdURI).build()
+
+    } catch (org.skife.jdbi.v2.exceptions.UnableToExecuteStatementException e){
+
+      def constraintError = e.cause.toString()
+      System.out.println("*** DEBUG " + constraintError + "***")
+
+      def returnError;
+      if(constraintError.contains("SEASON_U_COMMUNITY_NAME")){//USER LOGIN IS NOT UNIQUE
+
+        returnError = new ErrorPOJO("Community name is not unique", Response.Status.CONFLICT.getStatusCode())
+
+      }else{//Some other error, should be logged
+
+        System.out.println(e.localizedMessage)
+        returnError = new ErrorPOJO("Unknown error.", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode())
+      }
+
+      return Response.status(returnError.getErrorCode()).entity(returnError).build()
+      //System.out.println(returnError.getErrorMessage())
+    }
+
+    return returnResponse;
+  }
+
   @Path("/all")
   @GET
   @Produces(MediaType.APPLICATION_JSON)
