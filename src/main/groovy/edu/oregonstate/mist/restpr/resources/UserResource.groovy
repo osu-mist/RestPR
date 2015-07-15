@@ -9,6 +9,7 @@ import edu.oregonstate.mist.restpr.api.User;
 
 import edu.oregonstate.mist.restpr.db.UserDAO
 
+import javax.validation.Valid
 import javax.validation.constraints.NotNull
 
 import javax.ws.rs.Consumes
@@ -72,7 +73,7 @@ class UserResource {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   //Entity Type: URI
-  public Response postUser(@NotNull User newUser) {
+  public Response postUser(@Valid User newUser) {
     Response returnResponse;
     def createdURI;
 
@@ -135,7 +136,7 @@ class UserResource {
   @PUT
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
-  public Response putUserById(@PathParam("user_id") Integer user_id , User newUser){
+  public Response putUserById(@PathParam("user_id") Integer user_id ,@Valid User newUser){
 
     //TODO CREATE TESTS TO TEST RESPONSE CODES
 
