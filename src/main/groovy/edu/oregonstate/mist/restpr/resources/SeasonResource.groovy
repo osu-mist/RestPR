@@ -137,4 +137,42 @@ class SeasonResource {
     return returnResponse
   }
 
+  @Path("/{season_id}")
+  @PUT
+  @Consumes(MediaType.APPLICATION_JSON)
+  public Response putSeasonById(@PathParam("season_id") Integer season_id , Season newSeason){
+    def returnResponse
+
+    Season checkForSeason_id = seasonDAO.getSeasonById(season_id)
+    if(checkForSeason_id == null){
+      seasonDAO.postUserToUserId(season_id,newSeason.community_name,newSeason.cycle_format,
+              newSeason.cycle_count,newSeason.elo_default_seed,newSeason.year)
+
+      def createdURI = URI.create(uriInfo.getPath()+"/"+season_id)
+      returnResponse = Response.created(createdURI).build()
+    }else{
+
+
+      //If the user is updating just their login or their display name we can use whats already in the DB using the
+      //optional class or method.
+
+      //TODO Edit specification to mention this detail
+      //TODO Check swagger spec for header responses
+      //TODO Check swagger spec for detailing constraints in the database
+
+      String    newCommunity_name     = Optional.of(newSeason.community_name).or(checkForSeason_id.community_name)
+      String    newCycle_format       = Optional.of(newSeason.cycle_format).or(checkForSeason_id.cycle_format)
+      String    newCycle_count        = Optional.of(newSeason.cycle_count).or(checkForSeason_id.cycle_count)
+      Integer   newElo_default_seed   = Optional.of(newSeason.elo_default_seed).or(checkForSeason_id.elo_default_seed)
+      Integer   newYear               = Optional.of(newSeason.year).or(checkForSeason_id.year)
+
+      seasonDAO.putUser(season_id,newCommunity_name,newCycle_format,newCycle_count,newElo_default_seed,newYear)
+      returnResponse = Response.ok().build()
+
+    }
+
+    return returnResponse;
+
+  }
+
 }
