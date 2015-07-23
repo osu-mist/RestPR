@@ -144,7 +144,8 @@ class UserResource {
     User checkForUser_id = userDAO.getUserById(user_id);
     if(checkForUser_id == null){
       userDAO.postUserToUserId(user_id, newUser.getUserLogin(),newUser.getDisplayName())
-      returnResponse = Response.created().build()
+      def createdURI = URI.create(uriInfo.getPath()+"/"+user_id)
+      returnResponse = Response.created(createdURI).build()
     }else{
       Optional<String> newDisplayName = Optional.of( newUser.getDisplayName() )
       Optional<String> newUserLogin = Optional.of( newUser.getUserLogin())
