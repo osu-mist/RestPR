@@ -11,12 +11,12 @@ import javax.xml.bind.annotation.XmlRootElement
 @XmlRootElement(name = "season")
 class Season {
 
-  private Integer season_id
-  private String  community_name
-  private String  cycle_format
-  private String  cycle_count
-  private Integer elo_default_seed
-  private Integer year
+  Integer season_id
+  String  community_name
+  String  cycle_format
+  String  cycle_count
+  Integer elo_default_seed
+  Integer year
 
   public Season(){
     // Jackson deserialization
