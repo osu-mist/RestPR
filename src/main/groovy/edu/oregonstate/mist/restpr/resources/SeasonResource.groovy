@@ -52,12 +52,13 @@ class SeasonResource {
   public Response getSeasons(@QueryParam("community_name") Optional<String> community_name,
                              @QueryParam("cycle_format") Optional<String> cycle_format,
                              @QueryParam("cycle_count") Optional<String> cycle_count,
-                             @QueryParam("elo_default_seed") Integer year){
+                             @QueryParam("year") Integer year){
 
-    def yearQueryString = (year == null) ? "" : year.toString();
+    //def yearQueryString = (year == null) ? "" : year.toString();
 
     List<Season> returnList = seasonDAO.getSeasonMatch(community_name.or(""),cycle_format.or(""),
-            cycle_count.or(""),yearQueryString)
+            cycle_count.or(""),year)
+
 
     return Response.ok(returnList).build()
   }
