@@ -19,7 +19,7 @@ public interface SeasonDAO extends Closeable  {
             WHERE COMMUNITY_NAME LIKE '%'||:community_name_match||'%'
               AND CYCLE_FORMAT LIKE '%'||:cycle_format_match||'%'
               AND CYCLE_COUNT LIKE '%'||:cycle_count_match||'%'
-              AND YEAR LIKE '%'||:year_match||'%'
+              AND SYEAR LIKE '%'||:year_match||'%'
             """)
 
   // || is the concat operator for Oracle
@@ -34,7 +34,7 @@ public interface SeasonDAO extends Closeable  {
             """)
   List<Season> allSeasons()
 
-  @SqlUpdate("""INSERT INTO SEASON (SEASON_ID, COMMUNITY_NAME, CYCLE_FORMAT, CYCLE_COUNT, ELO_DEFAULT_SEED, YEAR)
+  @SqlUpdate("""INSERT INTO SEASON (SEASON_ID, COMMUNITY_NAME, CYCLE_FORMAT, CYCLE_COUNT, ELO_DEFAULT_SEED, SYEAR)
                 VALUES (SEASON_SEQ.NEXTVAL, :community_name, :cycle_format, :cycle_count, :elo_default_seed, :year)
              """)
   void postSeason(@Bind("community_name") String community_name, @Bind("cycle_format") String cycle_format,
@@ -44,7 +44,7 @@ public interface SeasonDAO extends Closeable  {
   @SqlUpdate( """
               UPDATE SEASON
               SET SEASON_ID = :season_id , COMMUNITY_NAME = :community_name , CYCLE_FORMAT = :cycle_format ,
-                  CYCLE_COUNT = :cycle_count, ELO_DEFAULT_SEED = :elo_default_seed, YEAR = :year)
+                  CYCLE_COUNT = :cycle_count, ELO_DEFAULT_SEED = :elo_default_seed, SYEAR = :year)
               WHERE SEASON_ID = :season_id
               """)
   void putUser(@Bind("season_id") Integer season_id, @Bind("community_name") String community_name,
@@ -58,7 +58,7 @@ public interface SeasonDAO extends Closeable  {
             """)
   Season getSeasonById(@Bind("season_id") Integer season_id)
 
-  @SqlUpdate("""INSERT INTO SEASON (SEASON_ID, COMMUNITY_NAME, CYCLE_FORMAT, CYCLE_COUNT, ELO_DEFAULT_SEED, YEAR)
+  @SqlUpdate("""INSERT INTO SEASON (SEASON_ID, COMMUNITY_NAME, CYCLE_FORMAT, CYCLE_COUNT, ELO_DEFAULT_SEED, SYEAR)
                 VALUES (:season_id, :community_name, :cycle_format, :cycle_count, :elo_default_seed, :year)
              """)
   void postUserToUserId(@Bind("season_id") Integer season_id, @Bind("community_name") String community_name,

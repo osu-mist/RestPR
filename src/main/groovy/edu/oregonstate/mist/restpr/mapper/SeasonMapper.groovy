@@ -20,7 +20,7 @@ public class SeasonMapper implements ResultSetMapper<Season> {
       cycle_format      = rs.getString  'CYCLE_FORMAT'
       cycle_count       = rs.getString  'CYCLE_COUNT'
       elo_default_seed  = rs.getInt     'ELO_DEFAULT_SEED'
-      year              = rs.getInt     'YEAR'
+      year              = rs.getInt     'SYEAR'
     }
 
     return season;
