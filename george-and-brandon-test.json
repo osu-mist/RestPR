@@ -1,0 +1,355 @@
+{
+  "id" : "3bf92ea3-e7ea-417f-be1d-487121f750a4",
+  "revisionNumber" : 7,
+  "baseUrl" : "http://osu-test.apigee.net/v1/restpr",
+  "releaseVersion" : "0.0.1",
+  "resources" : [ {
+    "id" : "5dc36aac-9431-4e26-9454-87877ce720c9",
+    "name" : "/User/all",
+    "baseUrl" : "http://osu-test.apigee.net/v1/restpr",
+    "path" : "/User/all",
+    "parameters" : [ {
+      "dataType" : "string",
+      "name" : "Content-Type",
+      "options" : [ "application/json" ],
+      "type" : "header"
+    } ],
+    "methods" : [ {
+      "id" : "ac0d2044-ae46-4cd7-a56f-96a4fa91ab49",
+      "name" : "getUserAll",
+      "displayName" : "getUserAll",
+      "description" : "This returns the information obtained about the users, can be filtered using parameters",
+      "verb" : "GET",
+      "security" : [ "api_key" ],
+      "parameters" : [ {
+        "allowMultiple" : false,
+        "dataType" : "string",
+        "description" : "This is the user's login name",
+        "name" : "user_login",
+        "required" : false,
+        "type" : "query"
+      }, {
+        "allowMultiple" : false,
+        "dataType" : "string",
+        "description" : "This is the user's display name",
+        "name" : "display_name",
+        "required" : false,
+        "type" : "query"
+      }, {
+        "allowMultiple" : false,
+        "dataType" : "string",
+        "description" : "test",
+        "name" : "x-testHeaderParam",
+        "required" : false,
+        "type" : "header"
+      } ],
+      "body" : {
+        "accept" : "application/json,application/xml",
+        "attachments" : [ ],
+        "parameters" : [ ]
+      },
+      "response" : {
+        "errors" : [ {
+          "code" : "500",
+          "description" : "Internal server error"
+        } ],
+        "parameters" : [ ],
+        "schema" : {
+          "dataType" : "{\n  \"$ref\" : \"#/definitions/user\"\n}"
+        }
+      },
+      "tags" : [ "null" ],
+      "customAttributes" : {
+        "SWAGGER_PRODUCES" : "[ \"application/json\", \"application/xml\" ]",
+        "SWAGGER_METHOD_SUMMARY" : "A list of users and their info",
+        "SWAGGER_METHOD_AUTH" : "[ {\n  \"api_key\" : [ ]\n} ]"
+      },
+      "createdTime" : 1438800963548,
+      "modifiedTime" : 1438800977517,
+      "apiRevisionId" : "3bf92ea3-e7ea-417f-be1d-487121f750a4",
+      "baseUrl" : "http://osu-test.apigee.net/v1/restpr",
+      "methods" : [ ],
+      "path" : "/User/all",
+      "resourceId" : "5dc36aac-9431-4e26-9454-87877ce720c9",
+      "resourceName" : "/User/all",
+      "resources" : [ ],
+      "revisionNumber" : 7
+    } ],
+    "customAttributes" : {
+      "SWAGGER_RESOURCE_PATH" : "/User/all",
+      "SWAGGER_PRODUCES" : "[ \"application/json\", \"application/xml\" ]",
+      "SWAGGER_PROTOCOLS" : "[ \"http\" ]"
+    },
+    "createdTime" : 1438800963546,
+    "apiRevisionId" : "3bf92ea3-e7ea-417f-be1d-487121f750a4",
+    "resources" : [ ],
+    "revisionNumber" : 7
+  }, {
+    "id" : "4996875d-3602-46d2-9217-af206d7fb37c",
+    "name" : "/User/{user_id}",
+    "baseUrl" : "http://osu-test.apigee.net/v1/restpr",
+    "path" : "/User/{user_id}",
+    "parameters" : [ {
+      "dataType" : "string",
+      "name" : "Content-Type",
+      "options" : [ "application/json" ],
+      "type" : "header"
+    } ],
+    "methods" : [ {
+      "id" : "34770a9c-c6d2-4b71-9fb6-c1d390c5a99e",
+      "name" : "getUserbyID",
+      "displayName" : "getUserbyID",
+      "description" : "This returns the information obtained about the users including user_id, user_login, and display_name",
+      "verb" : "GET",
+      "security" : [ "api_key" ],
+      "parameters" : [ {
+        "allowMultiple" : false,
+        "dataType" : "number",
+        "description" : "The user's id number",
+        "name" : "user_id",
+        "required" : true,
+        "type" : "template"
+      } ],
+      "body" : {
+        "accept" : "application/json,application/xml",
+        "attachments" : [ ],
+        "parameters" : [ ]
+      },
+      "response" : {
+        "errors" : [ {
+          "code" : "404",
+          "description" : "Resource not found"
+        }, {
+          "code" : "500",
+          "description" : "Internal server error"
+        } ],
+        "parameters" : [ ],
+        "schema" : {
+          "dataType" : "{\n  \"$ref\" : \"#/definitions/user\"\n}"
+        }
+      },
+      "tags" : [ "null" ],
+      "customAttributes" : {
+        "SWAGGER_PRODUCES" : "[ \"application/json\", \"application/xml\" ]",
+        "SWAGGER_METHOD_SUMMARY" : "gets a specific user by their id",
+        "SWAGGER_METHOD_AUTH" : "[ {\n  \"api_key\" : [ ]\n} ]"
+      },
+      "createdTime" : 1438800963549,
+      "modifiedTime" : 1438800978150,
+      "apiRevisionId" : "3bf92ea3-e7ea-417f-be1d-487121f750a4",
+      "baseUrl" : "http://osu-test.apigee.net/v1/restpr",
+      "methods" : [ ],
+      "path" : "/User/{user_id}",
+      "resourceId" : "4996875d-3602-46d2-9217-af206d7fb37c",
+      "resourceName" : "/User/{user_id}",
+      "resources" : [ ],
+      "revisionNumber" : 7
+    }, {
+      "id" : "95deb47b-6450-44b9-9f85-dff669e69e05",
+      "name" : "deleteUser",
+      "displayName" : "deleteUser",
+      "description" : "Deletes user from database.",
+      "verb" : "DELETE",
+      "security" : [ "api_key" ],
+      "parameters" : [ {
+        "allowMultiple" : false,
+        "dataType" : "string",
+        "description" : "",
+        "name" : "api_key",
+        "required" : true,
+        "type" : "header"
+      }, {
+        "allowMultiple" : false,
+        "dataType" : "number",
+        "description" : "User id to delete",
+        "name" : "user_id",
+        "required" : true,
+        "type" : "template"
+      } ],
+      "body" : {
+        "accept" : "application/json,application/xml",
+        "attachments" : [ ],
+        "parameters" : [ ]
+      },
+      "response" : {
+        "errors" : [ {
+          "code" : "202",
+          "description" : "Delete request accepted"
+        }, {
+          "code" : "400",
+          "description" : "Invalid user value"
+        }, {
+          "code" : "401",
+          "description" : "User is not authorized to perform this action"
+        }, {
+          "code" : "500",
+          "description" : "Internal server error"
+        } ],
+        "parameters" : [ ]
+      },
+      "tags" : [ "null" ],
+      "customAttributes" : {
+        "SWAGGER_PRODUCES" : "[ \"application/json\", \"application/xml\" ]",
+        "SWAGGER_METHOD_SUMMARY" : "Deletes a user",
+        "SWAGGER_METHOD_AUTH" : "[ {\n  \"api_key\" : [ ]\n} ]"
+      },
+      "createdTime" : 1438800963549,
+      "modifiedTime" : 1438800978872,
+      "apiRevisionId" : "3bf92ea3-e7ea-417f-be1d-487121f750a4",
+      "baseUrl" : "http://osu-test.apigee.net/v1/restpr",
+      "methods" : [ ],
+      "path" : "/User/{user_id}",
+      "resourceId" : "4996875d-3602-46d2-9217-af206d7fb37c",
+      "resourceName" : "/User/{user_id}",
+      "resources" : [ ],
+      "revisionNumber" : 7
+    }, {
+      "id" : "49f67ac2-9c31-4870-9626-1282195eb014",
+      "name" : "updateUser",
+      "displayName" : "updateUser",
+      "description" : "Adds updates to existing users",
+      "verb" : "PUT",
+      "security" : [ "api_key" ],
+      "parameters" : [ {
+        "allowMultiple" : false,
+        "dataType" : "number",
+        "description" : "The user's id number",
+        "name" : "user_id",
+        "required" : true,
+        "type" : "template"
+      } ],
+      "body" : {
+        "accept" : "application/json,application/xml",
+        "attachments" : [ ],
+        "contentType" : "application/json,application/xml",
+        "doc" : "This is the user object being added to database",
+        "parameters" : [ {
+          "allowMultiple" : false,
+          "dataType" : "object",
+          "description" : "",
+          "name" : "body",
+          "required" : true,
+          "type" : "body"
+        } ]
+      },
+      "response" : {
+        "errors" : [ {
+          "code" : "401",
+          "description" : "User not authorized to perform this action"
+        }, {
+          "code" : "404",
+          "description" : "Resourse not found"
+        }, {
+          "code" : "500",
+          "description" : "Internal server error"
+        } ],
+        "parameters" : [ ]
+      },
+      "tags" : [ "null" ],
+      "customAttributes" : {
+        "SWAGGER_PRODUCES" : "[ \"application/json\", \"application/xml\" ]",
+        "SWAGGER_METHOD_SUMMARY" : "Update an existing user",
+        "SWAGGER_METHOD_AUTH" : "[ {\n  \"api_key\" : [ ]\n} ]"
+      },
+      "createdTime" : 1438800963548,
+      "modifiedTime" : 1438800979555,
+      "apiRevisionId" : "3bf92ea3-e7ea-417f-be1d-487121f750a4",
+      "baseUrl" : "http://osu-test.apigee.net/v1/restpr",
+      "methods" : [ ],
+      "path" : "/User/{user_id}",
+      "resourceId" : "4996875d-3602-46d2-9217-af206d7fb37c",
+      "resourceName" : "/User/{user_id}",
+      "resources" : [ ],
+      "revisionNumber" : 7
+    } ],
+    "customAttributes" : {
+      "SWAGGER_RESOURCE_PATH" : "/User/{user_id}",
+      "SWAGGER_PRODUCES" : "[ \"application/json\", \"application/xml\" ]",
+      "SWAGGER_PROTOCOLS" : "[ \"http\" ]"
+    },
+    "createdTime" : 1438800963546,
+    "apiRevisionId" : "3bf92ea3-e7ea-417f-be1d-487121f750a4",
+    "resources" : [ ],
+    "revisionNumber" : 7
+  }, {
+    "id" : "2de07b3b-607e-46a5-b371-e37e1329a650",
+    "name" : "/User",
+    "baseUrl" : "http://osu-test.apigee.net/v1/restpr",
+    "path" : "/User",
+    "parameters" : [ {
+      "dataType" : "string",
+      "name" : "Content-Type",
+      "options" : [ "application/json" ],
+      "type" : "header"
+    } ],
+    "methods" : [ {
+      "id" : "e595e935-1e9b-4533-94b9-b144b72f4235",
+      "name" : "updateUserWithForm",
+      "displayName" : "updateUserWithForm",
+      "description" : "Creates and updates a user into the database",
+      "verb" : "POST",
+      "security" : [ "api_key" ],
+      "body" : {
+        "accept" : "application/json,application/xml",
+        "attachments" : [ ],
+        "contentType" : "application/json",
+        "doc" : "User representation that will be added to the database. display_name and user_login must be unique.",
+        "parameters" : [ {
+          "allowMultiple" : false,
+          "dataType" : "object",
+          "description" : "",
+          "name" : "body",
+          "required" : true,
+          "type" : "body"
+        } ]
+      },
+      "response" : {
+        "errors" : [ {
+          "code" : "401",
+          "description" : "User is not authorized to perform this action"
+        }, {
+          "code" : "409",
+          "description" : "Invalid input"
+        }, {
+          "code" : "500",
+          "description" : "Internal server error"
+        } ],
+        "parameters" : [ ],
+        "schema" : {
+          "dataType" : "{\n  \"$ref\" : \"#/definitions/urilocation\"\n}"
+        }
+      },
+      "tags" : [ "null" ],
+      "customAttributes" : {
+        "SWAGGER_PRODUCES" : "[ \"application/json\", \"application/xml\" ]",
+        "SWAGGER_METHOD_SUMMARY" : "Updates a user in the database with form data",
+        "SWAGGER_METHOD_AUTH" : "[ {\n  \"api_key\" : [ ]\n} ]"
+      },
+      "createdTime" : 1438800963548,
+      "modifiedTime" : 1438800980899,
+      "apiRevisionId" : "3bf92ea3-e7ea-417f-be1d-487121f750a4",
+      "baseUrl" : "http://osu-test.apigee.net/v1/restpr",
+      "methods" : [ ],
+      "path" : "/User",
+      "resourceId" : "2de07b3b-607e-46a5-b371-e37e1329a650",
+      "resourceName" : "/User",
+      "resources" : [ ],
+      "revisionNumber" : 7
+    } ],
+    "customAttributes" : {
+      "SWAGGER_RESOURCE_PATH" : "/User",
+      "SWAGGER_PRODUCES" : "[ \"application/json\", \"application/xml\" ]",
+      "SWAGGER_PROTOCOLS" : "[ \"http\" ]"
+    },
+    "createdTime" : 1438800963546,
+    "apiRevisionId" : "3bf92ea3-e7ea-417f-be1d-487121f750a4",
+    "resources" : [ ],
+    "revisionNumber" : 7
+  } ],
+  "customAttributes" : {
+    "SWAGGER_INFO" : "{\n  \"description\" : \"RestPR is a RESTful web api that enables competitive communities to create player leaderboard seasons using tournament match data from services like Challonge.com\",\n  \"version\" : \"0.0.1\",\n  \"title\" : \"RestPR\",\n  \"license\" : {\n    \"name\" : \"Apache 2.0\",\n    \"url\" : \"http://www.apache.org/licenses/LICENSE-2.0.html\"\n  }\n}",
+    "SWAGGER_VERSION" : "2.0",
+    "SWAGGER_AUTH" : "{\n  \"api_key\" : {\n    \"type\" : \"apiKey\",\n    \"name\" : \"api_key\",\n    \"in\" : \"query\"\n  }\n}"
+  },
+  "createdTime" : 1438800963512
+}
