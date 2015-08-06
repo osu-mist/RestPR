@@ -29,10 +29,6 @@ class UserResource {
     this.userDAO = userDAO
   }
 
-  def debugPrintUser(User user) {
-    System.out.println("*** DEBUG USERLOGIN:\""+ user.getUserLogin() + "\" DISPLAYNAME:\"" + user.getDisplayName() + "\"***")
-  }
-
   @Path("/all")
   @GET
   @Produces(MediaType.APPLICATION_JSON)
@@ -51,9 +47,7 @@ class UserResource {
   //Entity type: List<User>
   public Response getUsers(@NotNull @QueryParam("user_login") Optional<String> user_login ,
                              @NotNull @QueryParam("display_name") Optional<String> display_name) {
-    //System.out.println("DEBUGGING DISPLAY_NAME VARIABLE USER GET %"+ display_name.or("") +"%");
     List<User> returnList = userDAO.getPRUSERSmatch(user_login.or("") , display_name.or(""))
-    returnList.each { debugPrintUser(it) }
 
     def returnResponse = Response.ok(returnList).build()
     return returnResponse
@@ -67,8 +61,6 @@ class UserResource {
     Response returnResponse
     def createdURI
 
-    System.out.println("*** DEBUG "+ newUser.getUserLogin() + " " + newUser.getDisplayName() + "***")
-
     try {
       userDAO.postUser(newUser.getUserLogin() , newUser.getDisplayName())
       //createdURI = URI.create("/"+userDAO)
@@ -80,7 +72,6 @@ class UserResource {
     } catch (org.skife.jdbi.v2.exceptions.UnableToExecuteStatementException e){
 
       def constraintError = e.cause.toString()
-      //System.out.println("*** DEBUG " + constraintError + "***")
       def returnError
       if(constraintError.contains("PR_USER_U_USER_LOGIN")){//USER LOGIN IS NOT UNIQUE
 
@@ -90,13 +81,11 @@ class UserResource {
         returnError = new ErrorPOJO("Display name is not unique", Response.Status.CONFLICT.getStatusCode())
 
       }else{//Some other error, should be logged
-        //System.out.println(e.localizedMessage)
         returnError = new ErrorPOJO("Unknown error.", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode())
       }
 
       return Response.status(Response.Status.CONFLICT).entity(returnError).build()
 
-      //System.out.println(returnError.getErrorMessage())
     }
 
     return returnResponse
