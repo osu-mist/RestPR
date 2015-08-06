@@ -1,7 +1,6 @@
 package edu.oregonstate.mist.restpr.api
 
 import com.fasterxml.jackson.annotation.JsonProperty
-
 import javax.xml.bind.annotation.XmlRootElement
 
 /**

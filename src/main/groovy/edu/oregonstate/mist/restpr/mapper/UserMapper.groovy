@@ -1,9 +1,9 @@
 package edu.oregonstate.mist.restpr.mapper
 
 import edu.oregonstate.mist.restpr.api.User
+
 import org.skife.jdbi.v2.StatementContext
 import org.skife.jdbi.v2.tweak.ResultSetMapper
-
 import java.sql.ResultSet
 import java.sql.SQLException
 

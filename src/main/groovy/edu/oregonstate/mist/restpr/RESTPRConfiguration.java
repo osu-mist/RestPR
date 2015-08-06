@@ -1,10 +1,11 @@
 package edu.oregonstate.mist.restpr;
 
+import io.dropwizard.Configuration;
+import io.dropwizard.db.DataSourceFactory;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.ImmutableMap;
-import io.dropwizard.Configuration;
 import org.hibernate.validator.constraints.NotEmpty;
-import io.dropwizard.db.DataSourceFactory;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.Collections;

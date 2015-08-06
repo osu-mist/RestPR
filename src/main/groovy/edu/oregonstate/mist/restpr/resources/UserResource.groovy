@@ -2,15 +2,13 @@ package edu.oregonstate.mist.restpr.resources
 /**
  * Created by georgecrary on 6/27/15.
  */
-import com.google.common.base.Optional
 
 import edu.oregonstate.mist.restpr.api.ErrorPOJO
 import edu.oregonstate.mist.restpr.api.User
-
 import edu.oregonstate.mist.restpr.db.UserDAO
 
+import com.google.common.base.Optional
 import javax.validation.constraints.NotNull
-
 import javax.ws.rs.Consumes
 import javax.ws.rs.DELETE
 import javax.ws.rs.GET
