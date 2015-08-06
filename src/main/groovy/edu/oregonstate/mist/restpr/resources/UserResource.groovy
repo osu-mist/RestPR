@@ -36,8 +36,6 @@ class UserResource {
   public Response getAll() {
     List<User> returnList = userDAO.allRESTPRUsers()
 
-    returnList.each { debugPrintUser(it) }
-
     def returnResponse = Response.ok(returnList).build()
     return returnResponse
   }
