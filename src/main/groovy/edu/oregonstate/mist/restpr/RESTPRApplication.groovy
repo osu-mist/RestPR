@@ -1,7 +1,6 @@
 package edu.oregonstate.mist.restpr
 
 import edu.oregonstate.mist.restpr.db.UserDAO
-import edu.oregonstate.mist.restpr.resources.SampleResource
 import edu.oregonstate.mist.restpr.resources.UserResource
 import io.dropwizard.Application
 import io.dropwizard.Configuration
@@ -23,7 +22,6 @@ class RESTPRApplication extends Application<RESTPRConfiguration>{
         final DBI jdbi = factory.build(environment, configuration.getDataSourceFactory(),"jdbi")
         final UserDAO myUserDao = jdbi.onDemand(UserDAO.class)
 
-        environment.jersey().register(new SampleResource())
         environment.jersey().register(new UserResource(myUserDao))
     }
 
