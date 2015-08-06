@@ -3,7 +3,6 @@ package edu.oregonstate.mist.restpr
 import edu.oregonstate.mist.restpr.db.UserDAO
 import edu.oregonstate.mist.restpr.resources.SampleResource
 import edu.oregonstate.mist.restpr.resources.UserResource
-
 import io.dropwizard.Application
 import io.dropwizard.Configuration
 import io.dropwizard.jdbi.DBIFactory

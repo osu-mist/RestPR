@@ -2,7 +2,6 @@ package edu.oregonstate.mist.restpr.db
 
 import edu.oregonstate.mist.restpr.api.User
 import edu.oregonstate.mist.restpr.mapper.UserMapper
-
 import org.skife.jdbi.v2.sqlobject.SqlUpdate
 import org.skife.jdbi.v2.sqlobject.SqlQuery
 import org.skife.jdbi.v2.sqlobject.Bind

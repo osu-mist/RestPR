@@ -6,7 +6,6 @@ package edu.oregonstate.mist.restpr.resources
 import edu.oregonstate.mist.restpr.api.ErrorPOJO
 import edu.oregonstate.mist.restpr.api.User
 import edu.oregonstate.mist.restpr.db.UserDAO
-
 import com.google.common.base.Optional
 import javax.validation.constraints.NotNull
 import javax.ws.rs.Consumes

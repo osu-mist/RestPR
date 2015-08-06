@@ -2,7 +2,6 @@ package edu.oregonstate.mist.restpr
 
 import io.dropwizard.Configuration
 import io.dropwizard.db.DataSourceFactory
-
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.google.common.collect.ImmutableMap
 import org.hibernate.validator.constraints.NotEmpty
