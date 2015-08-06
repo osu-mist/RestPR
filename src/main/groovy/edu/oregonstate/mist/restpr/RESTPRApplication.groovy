@@ -1,6 +1,5 @@
 package edu.oregonstate.mist.restpr
 
-import com.fasterxml.jackson.databind.SerializationFeature
 import edu.oregonstate.mist.restpr.db.UserDAO
 import edu.oregonstate.mist.restpr.resources.SampleResource
 import edu.oregonstate.mist.restpr.resources.UserResource
