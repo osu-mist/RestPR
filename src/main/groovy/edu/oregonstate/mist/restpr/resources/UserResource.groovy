@@ -40,7 +40,7 @@ class UserResource {
   public Response getAll() {
     List<User> returnList = userDAO.allRESTPRUsers()
 
-    def returnResponse = Response.ok(returnList).build()
+    Response returnResponse = Response.ok(returnList).build()
     return returnResponse
   }
 
@@ -58,7 +58,7 @@ class UserResource {
                              @NotNull @QueryParam("display_name") Optional<String> display_name) {
     List<User> returnList = userDAO.getPRUSERSmatch(user_login.or("") , display_name.or(""))
 
-    def returnResponse = Response.ok(returnList).build()
+    Response returnResponse = Response.ok(returnList).build()
     return returnResponse
 
   }
@@ -73,11 +73,9 @@ class UserResource {
   @Produces(MediaType.APPLICATION_JSON)
   public Response postUser(@NotNull User newUser) {
     Response returnResponse
-    def createdURI
-
     try {
       userDAO.postUser(newUser.getUserLogin() , newUser.getDisplayName())
-      //createdURI = URI.create("/"+userDAO)
+      //URI createdURI = URI.create("/"+userDAO)
 
       //201 CREATED
       //TODO add in the URI of newly created resource
@@ -85,8 +83,8 @@ class UserResource {
 
     } catch (org.skife.jdbi.v2.exceptions.UnableToExecuteStatementException e){
 
-      def constraintError = e.cause.toString()
-      def returnError
+      String constraintError = e.cause.toString()
+      ErrorPOJO returnError
       if(constraintError.contains("PR_USER_U_USER_LOGIN")){//USER LOGIN IS NOT UNIQUE
 
         returnError = new ErrorPOJO("User login is not unique", Response.Status.CONFLICT.getStatusCode())
@@ -116,9 +114,9 @@ class UserResource {
   //Entity Type: User
   public Response findUserById(@PathParam("user_id") Integer user_id) {
     User returnUser = userDAO.getUserById(user_id)
-    def returnResponse
+    Response returnResponse
     if (returnUser == null) {
-      def returnError = new ErrorPOJO("Resource not found.",Response.Status.NOT_FOUND.getStatusCode())
+      ErrorPOJO returnError = new ErrorPOJO("Resource not found.",Response.Status.NOT_FOUND.getStatusCode())
       returnResponse = Response.status(Response.Status.NOT_FOUND).entity(returnError).build()
 
     }else{
@@ -144,7 +142,7 @@ class UserResource {
 
     //TODO TEST RESPONSE CODES
 
-    def returnResponse
+    Response returnResponse
 
     User checkForUser_id = userDAO.getUserById(user_id)
     if(checkForUser_id == null){
@@ -174,7 +172,7 @@ class UserResource {
   public Response deleteUserById(@PathParam("user_id") Integer user_id){
     //TODO add authentication for this method
     userDAO.deleteUserById(user_id)
-    def returnResponse = Response.ok().build()
+    Response returnResponse = Response.ok().build()
 
     return returnResponse
 
