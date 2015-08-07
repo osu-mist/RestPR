@@ -15,15 +15,15 @@ import java.util.Map
  */
 public class RESTPRConfiguration extends Configuration {
     @NotEmpty
-    private String template
+    String template
 
     @NotEmpty
-    private String defaultName = "Stranger"
+    String defaultName = "Stranger"
 
     @Valid
     @NotNull
     @JsonProperty("database")
-    private DataSourceFactory database = new DataSourceFactory()
+    DataSourceFactory database = new DataSourceFactory()
 
     @JsonProperty("database")
     public DataSourceFactory getDataSourceFactory() {
