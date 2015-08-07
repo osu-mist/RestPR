@@ -45,3 +45,19 @@ Panelists involved in the subjective power rankings can utilize the upset filter
 - 500 Internal Error.
 
 See RestPRApi.yaml for Swagger specification.
+
+#Configure
+Define a database connection in configuration.yaml using the database: key.
+
+You'll need to use ojdbc6_g.jar from Oracle in your /bin folder.
+
+#Build
+Run the build gradle task:
+	$ gradle build
+
+#Run
+To run the application you must execute this command:
+	$ java -classpath bin/ojdbc6_g.jar:build/libs/RESTPR-all.jar edu.oregonstate.mist.restpr.RESTPRApplication server configuration.yaml
+
+or just run manualjavacall.sh:
+	$ ./manualjavacall.sh
