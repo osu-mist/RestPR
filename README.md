@@ -44,6 +44,7 @@ Panelists involved in the subjective power rankings can utilize the upset filter
 - 409 Duplicate tournament submission.
 - 500 Internal Error.
 
+#Swagger
 See RestPRApi.yaml for Swagger specification.
 
 #Configure
