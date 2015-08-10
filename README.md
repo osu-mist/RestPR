@@ -108,9 +108,26 @@ Get User by ID
 #POST
 Post user
 
+	$POST /User/ HTTP/1.0
+	$Content-Type: application/json
+	$Content-Length:56
+	$
+	${
+	$  "display_name": "TEST#5",
+	$  "user_login": "TEST#6"
+	$}
+
 #PUT
 Update user by id
 
+	$PUT /User/52 HTTP/1.0
+	$Content-Type: application/json
+	$Content-Length:56
+	$
+	${
+	$  "display_name": "TEST44",
+	$  "user_login": "TESTAA"
+	$}
 
 #DELETE
 
