@@ -4,8 +4,8 @@ info:
   version: "0.0.1"
   title: RestPR
   license:
-    name: GNU AFFERO GENERAL PUBLIC LICENSE
-    url: http://www.gnu.org/licenses/agpl-3.0.en.html
+    name: GNU AGPL v3
+    url: http://www.gnu.org/licenses/agpl-3.0.en.html 
 host: localhost:8080
 basePath: /v1
 schemes:
@@ -20,7 +20,6 @@ paths:
       operationId: getUser
       produces:
         - application/json
-        - application/xml
       parameters:
         - name: user_login
           in: query
@@ -53,7 +52,6 @@ paths:
         - application/x-www-form-urlencoded
       produces:
         - application/json
-        - application/xml
       parameters:
         - name: body
           in: body
@@ -86,8 +84,7 @@ paths:
         operationId: allRESTPRUsers
         produces:
           - application/json
-          - application/xml
-        responses:
+       responses:
           "200":
             description: Successful response
             schema:
@@ -103,7 +100,6 @@ paths:
       operationId: getUserbyID
       produces:
         - application/json
-        - application/xml
       parameters:
      
         - in: path 
@@ -133,10 +129,8 @@ paths:
       operationId: updateUser
       consumes:
         - application/json
-        - application/xml
       produces:
         - application/json
-        - application/xml
       parameters:
       
         - name: user_id
@@ -174,7 +168,6 @@ paths:
       operationId: deleteUser
       produces:
         - application/json
-        - application/xml
       parameters:
       
         - in: header
@@ -210,7 +203,6 @@ paths:
       operationId: getSeason
       produces:
         - application/json
-        - application/xml
       parameters:
           
         - name: community_name
@@ -261,7 +253,6 @@ paths:
         - application/x-www-form-urlencoded
       produces:
         - application/json
-        - application/xml
       parameters:
       
         - name: body
@@ -314,7 +305,6 @@ paths:
       operationId: getSeason
       produces:
         - application/json
-        - application/xml
       parameters:
       
         - name: season_id
@@ -344,10 +334,8 @@ paths:
       operationId: updateSeason
       consumes:
         - application/json
-        - application/xml
       produces:
         - application/json
-        - application/xml
       parameters:
       
         - name: season_id
@@ -390,7 +378,6 @@ paths:
       operationId: deleteSeason
       produces:
         - application/json
-        - application/xml
       parameters:
         - in: header
           name: api_key
@@ -427,7 +414,6 @@ paths:
       operationId: getTournament
       produces:
         - application/json
-        - application/xml
       parameters:
       
         - name: tournament_id
@@ -480,8 +466,6 @@ paths:
         - application/x-www-form-urlencoded
       produces:
         - application/json
-        - application/xml
-
       security:
         - api_key: []
         - challonge_api_key: []
@@ -525,7 +509,6 @@ paths:
       operationId: getTournament
       produces:
         - application/json
-        - application/xml
       parameters:
       
         - name: tournament_id
@@ -555,10 +538,8 @@ paths:
       operationId: updateTournament
       consumes:
         - application/json
-        - application/xml
       produces:
         - application/json
-        - application/xml
       parameters:
       
         - name: tournament_id
@@ -601,7 +582,6 @@ paths:
       operationId: deleteTournament
       produces:
         - application/json
-        - application/xml
       parameters:
       
         - in: header
@@ -640,7 +620,6 @@ paths:
       operationId: getMatch
       produces:
         - application/json
-        - application/xml
       parameters:
       
         - name: match_id
@@ -700,7 +679,6 @@ paths:
         - application/x-www-form-urlencoded
       produces:
         - application/json
-        - application/xml
       parameters:
       
         - name: body
@@ -735,7 +713,6 @@ paths:
       operationId: getMatch
       produces:
         - application/json
-        - application/xml
       parameters:
       
         - name: match_id
@@ -765,10 +742,8 @@ paths:
       operationId: updateMatch
       consumes:
         - application/json
-        - application/xml
       produces:
         - application/json
-        - application/xml
       parameters:
       
         - name: match_id
@@ -811,7 +786,6 @@ paths:
       operationId: deleteMatch
       produces:
         - application/json
-        - application/xml
       parameters:
       
         - in: header
@@ -850,7 +824,6 @@ paths:
       operationId: getPlayer
       produces:
         - application/json
-        - application/xml
       parameters:
       
         - name: player_id
@@ -917,7 +890,6 @@ paths:
         - application/x-www-form-urlencoded
       produces:
         - application/json
-        - application/xml
       parameters:
       
         - name: body
@@ -952,7 +924,6 @@ paths:
       operationId: getPlayer
       produces:
         - application/json
-        - application/xml
       parameters:
       
         - name: player_id
@@ -982,10 +953,8 @@ paths:
       operationId: updatePlayer
       consumes:
         - application/json
-        - application/xml
       produces:
         - application/json
-        - application/xml
       parameters:
       
         - name: player_id
@@ -1028,7 +997,6 @@ paths:
       operationId: deletePlayer
       produces:
         - application/json
-        - application/xml
       parameters:
       
         - in: query

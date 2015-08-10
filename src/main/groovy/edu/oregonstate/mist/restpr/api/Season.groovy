@@ -32,7 +32,7 @@ class Season {
 
   @JsonProperty
   Integer getSeason_id() {
-    return season_id
+    season_id
   }
 
   @JsonProperty
@@ -42,7 +42,7 @@ class Season {
 
   @JsonProperty
   String getCommunity_name() {
-    return community_name
+    community_name
   }
 
   @JsonProperty
@@ -52,7 +52,7 @@ class Season {
 
   @JsonProperty
   String getCycle_format() {
-    return cycle_format
+    cycle_format
   }
 
   @JsonProperty
@@ -62,7 +62,7 @@ class Season {
 
   @JsonProperty
   String getCycle_count() {
-    return cycle_count
+    cycle_count
   }
 
   @JsonProperty
@@ -72,7 +72,7 @@ class Season {
 
   @JsonProperty
   Integer getElo_default_seed() {
-    return elo_default_seed
+    elo_default_seed
   }
 
   @JsonProperty
@@ -82,7 +82,7 @@ class Season {
 
   @JsonProperty
   Integer getYear() {
-    return year
+    year
   }
 
   @JsonProperty

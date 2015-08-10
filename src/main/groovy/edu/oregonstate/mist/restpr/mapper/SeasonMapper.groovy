@@ -23,6 +23,6 @@ public class SeasonMapper implements ResultSetMapper<Season> {
       year              = rs.getInt     'SYEAR'
     }
 
-    return season;
+    season
   }
 }
