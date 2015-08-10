@@ -27,7 +27,7 @@ public class RESTPRConfiguration extends Configuration {
 
     @JsonProperty("database")
     public DataSourceFactory getDataSourceFactory() {
-        return database
+        database
     }
 
     @JsonProperty("database")
@@ -41,7 +41,7 @@ public class RESTPRConfiguration extends Configuration {
 
     @JsonProperty
     public String getTemplate() {
-        return template
+        template
     }
 
     @JsonProperty
@@ -51,7 +51,7 @@ public class RESTPRConfiguration extends Configuration {
 
     @JsonProperty
     public String getDefaultName() {
-        return defaultName
+        defaultName
     }
 
     @JsonProperty
@@ -62,7 +62,7 @@ public class RESTPRConfiguration extends Configuration {
 
     @JsonProperty("viewRendererConfiguration")
     public Map<String, Map<String, String>> getViewRendererConfiguration() {
-        return viewRendererConfiguration
+        viewRendererConfiguration
     }
 
     @JsonProperty("viewRendererConfiguration")

@@ -41,7 +41,7 @@ class UserResource {
     List<User> returnList = userDAO.allRESTPRUsers()
 
     Response returnResponse = Response.ok(returnList).build()
-    return returnResponse
+    returnResponse
   }
 
   /**
@@ -59,7 +59,7 @@ class UserResource {
     List<User> returnList = userDAO.getPRUSERSmatch(user_login.or("") , display_name.or(""))
 
     Response returnResponse = Response.ok(returnList).build()
-    return returnResponse
+    returnResponse
 
   }
 
@@ -100,7 +100,7 @@ class UserResource {
 
     }
 
-    return returnResponse
+    returnResponse
   }
 
   /**
@@ -124,7 +124,7 @@ class UserResource {
       returnResponse = Response.ok(returnUser).build()
     }
 
-    return returnResponse
+    returnResponse
 
   }
 
@@ -158,7 +158,7 @@ class UserResource {
       returnResponse = Response.ok().build()
     }
 
-    return returnResponse
+    returnResponse
   }
 
   /**
@@ -174,7 +174,7 @@ class UserResource {
     userDAO.deleteUserById(user_id)
     Response returnResponse = Response.ok().build()
 
-    return returnResponse
+    returnResponse
 
   }
 
