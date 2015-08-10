@@ -74,12 +74,12 @@ class UserResource {
   public Response postUser(@NotNull User newUser) {
     Response returnResponse
     try {
-      userDAO.postUser(newUser.getUserLogin() , newUser.getDisplayName())
-      //URI createdURI = URI.create("/"+userDAO)
+      userDAO.postUser(newUser.getUser_login(),newUser.getDisplay_name())
+      URI createdURI = URI.create("/"+userDAO.getLatestUserId())
 
       //201 CREATED
       //TODO add in the URI of newly created resource
-      returnResponse = Response.created().build()
+      returnResponse = Response.created(createdURI).build()
 
     } catch (org.skife.jdbi.v2.exceptions.UnableToExecuteStatementException e){
 
@@ -146,15 +146,15 @@ class UserResource {
 
     User checkForUser_id = userDAO.getUserById(user_id)
     if(checkForUser_id == null){
-      userDAO.postUserToUserId(user_id, newUser.getUserLogin(),newUser.getDisplayName())
+      userDAO.postUserToUserId(user_id, newUser.getUser_login(),newUser.getDisplay_name())
       returnResponse = Response.created().build()
     }else{
-      Optional<String> newDisplayName = Optional.of( newUser.getDisplayName() )
-      Optional<String> newUserLogin = Optional.of( newUser.getUserLogin())
+      Optional<String> newDisplayName = Optional.of( newUser.getDisplay_name() )
+      Optional<String> newUserLogin = Optional.of( newUser.getUser_login())
 
       //If the user is updating just their login or their display name we can use whats already in the DB using the
       //optional class or method.
-      userDAO.putUser(user_id ,newUserLogin.or(checkForUser_id.getUserLogin()) ,newDisplayName.or(checkForUser_id.getDisplayName()))
+      userDAO.putUser(user_id ,newUserLogin.or(checkForUser_id.getUser_login()) ,newDisplayName.or(checkForUser_id.getDisplay_name()))
       returnResponse = Response.ok().build()
     }
 
