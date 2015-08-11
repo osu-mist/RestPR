@@ -1,16 +1,11 @@
 package edu.oregonstate.mist.restpr.resources
 
-import com.google.common.base.Optional
-
 import edu.oregonstate.mist.restpr.api.ErrorPOJO
 import edu.oregonstate.mist.restpr.api.Season
-import edu.oregonstate.mist.restpr.api.User
 import edu.oregonstate.mist.restpr.db.SeasonDAO
-import edu.oregonstate.mist.restpr.db.UserDAO
-
+import com.google.common.base.Optional
 import javax.validation.Valid
 import javax.validation.constraints.NotNull
-
 import javax.ws.rs.Consumes
 import javax.ws.rs.DELETE
 import javax.ws.rs.GET
@@ -54,7 +49,7 @@ class SeasonResource {
                              @QueryParam("cycle_count") Optional<String> cycle_count,
                              @QueryParam("year") Integer year){
 
-    //def yearQueryString = (year == null) ? "" : year.toString()
+    //String yearQueryString = (year == null) ? "" : year.toString()
 
     List<Season> returnList = seasonDAO.getSeasonMatch(community_name.or(""),cycle_format.or(""),
             cycle_count.or(""),year)
@@ -68,22 +63,19 @@ class SeasonResource {
   @Produces(MediaType.APPLICATION_JSON)
   public Response postSeason(@Valid Season newSeason){
     Response returnResponse
-    URI createdURI
 
     try {
-      //seasonDAO.postSeason(newSeason.getCommunity_name(),newSeason.getCycle_format(),newSeason.getCycle_count(),newSeason.getElo_default_seed(),newSeason.getYear())
-
       seasonDAO.postSeason(newSeason.community_name, newSeason.cycle_format, newSeason.cycle_count,
               newSeason.elo_default_seed, newSeason.year)
 
-      createdURI = URI.create(uriInfo.getPath()+"/"+seasonDAO.getLatestSeasonId())
+      URI createdURI = URI.create("/"+seasonDAO.getLatestSeasonId())
       System.out.println("*** DEBUG " + createdURI.toString())
 
       returnResponse = Response.created(createdURI).build()
 
     } catch (org.skife.jdbi.v2.exceptions.UnableToExecuteStatementException e){
 
-      def constraintError = e.cause.toString()
+      String constraintError = e.cause.toString()
       System.out.println("*** DEBUG " + constraintError + "***")
 
       ErrorPOJO returnError
