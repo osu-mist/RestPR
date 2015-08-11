@@ -161,7 +161,7 @@ class SeasonResource {
   @Path("/{season_id}")
   @PUT
   @Consumes(MediaType.APPLICATION_JSON)
-  public Response putSeasonById(@PathParam("season_id") Integer season_id , Season newSeason){
+  public Response putSeasonById(@PathParam("season_id") Integer season_id ,@Valid Season newSeason){
     Response returnResponse
 
     Season checkForSeason_id = seasonDAO.getSeasonById(season_id)
