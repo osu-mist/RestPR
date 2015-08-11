@@ -19,7 +19,7 @@ class RESTPRApplication extends Application<RESTPRConfiguration>{
     @Override
     public void run(RESTPRConfiguration configuration, Environment environment) {
         final DBIFactory factory = new DBIFactory()
-        final DBI jdbi = factory.build(environment, configuration.getDataSourceFactory(),"jdbi")
+        final DBI jdbi = factory.build(environment, configuration.getDatabase(),"jdbi")
         final UserDAO myUserDao = jdbi.onDemand(UserDAO.class)
 
         environment.jersey().register(new UserResource(myUserDao))
