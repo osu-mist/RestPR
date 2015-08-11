@@ -169,7 +169,7 @@ class SeasonResource {
       seasonDAO.postUserToUserId(season_id,newSeason.community_name,newSeason.cycle_format,
               newSeason.cycle_count,newSeason.elo_default_seed,newSeason.year)
 
-      URI createdURI = URI.create(uriInfo.getPath()+"/"+season_id)
+      URI createdURI = URI.create("/"+season_id)
       returnResponse = Response.created(createdURI).build()
     }else{
 
