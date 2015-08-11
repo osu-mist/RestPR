@@ -100,8 +100,7 @@ class UserResource {
         returnError = new ErrorPOJO("Unknown error.", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode())
       }
 
-      return Response.status(Response.Status.CONFLICT).entity(returnError).build()
-
+      return Response.status(returnError.getErrorCode()).entity(returnError).build()
     }
 
     returnResponse
