@@ -196,4 +196,21 @@ class SeasonResource {
 
   }
 
+  /**
+   * Deletes the specified season with the given season_id
+   * @param User_id   season_id of the season to be deleted
+   * @return An okay response
+   */
+  @Path("/{season_id}")
+  @DELETE
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response deleteSeasonById(@PathParam("season_id") Integer season_id){
+    //TODO add authentication for this method
+    seasonDAO.deleteSeasonById(season_id)
+    Response returnResponse = Response.ok().build()
+
+    returnResponse
+
+  }
+
 }
