@@ -153,12 +153,12 @@ class UserResource {
       URI createdURI = URI.create("/"+user_id)
       returnResponse = Response.created(createdURI).build()
     }else{
-      Optional<String> newDisplayName = Optional.of( newUser.getDisplay_name() )
-      Optional<String> newUserLogin = Optional.of( newUser.getUser_login())
+      String newDisplayName = Optional.of( newUser.getDisplay_name()).or(checkForUser_id.getDisplay_name())
+      String newUserLogin = Optional.of( newUser.getUser_login()).or(checkForUser_id.getUser_login())
 
       //If the user is updating just their login or their display name we can use whats already in the DB using the
       //optional class or method.
-      userDAO.putUser(user_id ,newUserLogin.or(checkForUser_id.getUser_login()) ,newDisplayName.or(checkForUser_id.getDisplay_name()))
+      userDAO.putUser(user_id ,newUserLogin,newDisplayName)
       returnResponse = Response.ok().build()
     }
 
