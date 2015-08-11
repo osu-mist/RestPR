@@ -45,7 +45,7 @@ Panelists involved in the subjective power rankings can utilize the upset filter
 - 500 Internal Error.
 
 #Swagger
-See RestPRApi.yaml for Swagger specification.
+See [RestPRApi.yaml](https://github.com/osu-mist/RestPR/blob/master/RestPRApi.yaml) for Swagger specification.
 
 #Configure
 Define a database connection in configuration.yaml using the database: key.
