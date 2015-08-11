@@ -41,6 +41,15 @@ class SeasonResource {
             +" "+season.getCycle_count()+" "+season.getElo_default_seed()+" "+season.getYear())
   }
 
+  /**
+   * Returns all the seasons that partially match the parameters using sql like %PARAM% clauses
+   * @param community_name  Name of the community to partially match by
+   * //TODO Consider changing format and count from partial matching to strict matching
+   * @param cycle_format    Format of the season to partially match by
+   * @param cycle_count     Cycle count of the season to partially match by
+   * @param year            Year of the season to partially match by
+   * @return                all the seasons that partially match the parameters
+   */
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   //Entity Type: List<Season>
@@ -58,6 +67,11 @@ class SeasonResource {
     Response.ok(returnList).build()
   }
 
+  /**
+   *  Posts new season into season table as long as its community name is unique
+   * @param newSeason The new season to be posted to the table
+   * @return Response code with uri of the newly created season
+   */
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
@@ -96,6 +110,10 @@ class SeasonResource {
     returnResponse
   }
 
+  /**
+   * Returns all the seasons in the table
+   * @return all the seasons in the table within response body
+   */
   @Path("/all")
   @GET
   @Produces(MediaType.APPLICATION_JSON)
@@ -109,6 +127,11 @@ class SeasonResource {
     returnResponse
   }
 
+  /**
+   * Returns the specified season using the season_id
+   * @param season_id The season id of the season to be returned
+   * @return the season specified using the season_id
+   */
   @Path("/{season_id}")
   @GET
   @Produces(MediaType.APPLICATION_JSON)
@@ -129,6 +152,12 @@ class SeasonResource {
     returnResponse
   }
 
+  /**
+   * Updates a specified season with a new season representation
+   * @param season_id The season id of the specified season
+   * @param newSeason The representation of the new season
+   * @return An okay response on success
+   */
   @Path("/{season_id}")
   @PUT
   @Consumes(MediaType.APPLICATION_JSON)
