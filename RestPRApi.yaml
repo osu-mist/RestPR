@@ -1,0 +1,1153 @@
+swagger: "2.0"
+info:
+  description: RestPR is a RESTful web api that enables competitive communities to create player leaderboard seasons using tournament match data from services like Challonge.com
+  version: "0.0.1"
+  title: RestPR
+  license:
+    name: GNU AGPL v3
+    url: http://www.gnu.org/licenses/agpl-3.0.en.html 
+host: localhost:8080
+basePath: /v1
+schemes:
+  - http
+paths:
+  /user:
+    get:
+      tags:
+        - user
+      summary: A list of users and their info
+      description: "This returns the information obtained about the users, can be filtered using parameters"
+      operationId: getUser
+      produces:
+        - application/json
+      parameters:
+        - name: user_login
+          in: query
+          description: This is the user's login name
+          required: false
+          type: string
+          format: string
+        - name: display_name
+        
+          in: query
+          description: This is the user's display name
+          required: false
+          type: string
+          format: string
+          
+      responses:
+        "200":
+          description: Successful response
+          schema:
+            $ref: "#/definitions/user"
+        "500":
+          description: Internal server error
+    post:
+      tags:
+        - user
+      summary: Updates a user in the database with form data
+      description: "Creates and updates a user into the database"
+      operationId: updateUserWithForm
+      consumes:
+        - application/x-www-form-urlencoded
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          description: "User representation that will be added to the database. display_name and user_login must be unique."
+          required: true
+          schema:
+            $ref: "#/definitions/user"
+ 
+      responses:
+        "201":
+          description: Resource created
+          schema:
+            $ref: "#/definitions/urilocation"
+
+        "401":
+          description: User is not authorized to perform this action
+        "409":
+          description: Invalid input
+        "500":
+          description: Internal server error
+      security:
+        - api_key: []
+
+  /user/all:
+    get:
+        tags:
+          - user
+        summary: A list of users and their info
+        description: "This returns the information obtained about the users, can be filtered using parameters"
+        operationId: getUser
+        produces:
+          - application/json
+        parameters:
+          - name: user_login
+            in: query
+            description: This is the user's login name
+            required: false
+            type: string
+            format: string
+          - name: display_name
+
+            in: query
+            description: This is the user's display name
+            required: false
+            type: string
+            format: string
+
+        responses:
+          "200":
+            description: Successful response
+            schema:
+              $ref: "#/definitions/user"
+          "500":
+            description: Internal server error
+  /user/{user_id}:
+    get:
+      tags:
+        - user
+      summary: gets a specific user by their id
+      description: "This returns the information obtained about the users including user_id, user_login, and display_name"
+      operationId: getUserbyID
+      produces:
+        - application/json
+      parameters:
+     
+        - in: path 
+          name: user_id
+          description: The user's id number
+          required: true
+          type: number
+          format: integer
+          
+      responses:
+        "200":
+          description: Successful response
+          schema:
+            $ref: "#/definitions/user"
+        "404":
+          description: Resource not found
+        "500":
+          description: Internal server error
+      security:
+        - api_key: []
+        
+    put:
+      tags:
+        - user
+      summary: Update an existing user
+      description: "Adds updates to existing users"
+      operationId: updateUser
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      
+        - name: user_id
+          in: path
+          description: The user's id number
+          required: true
+          type: number
+          format: integer
+          
+        - name: body
+          in: body
+          description: This is the user object being added to database
+          required: true
+          schema:
+            $ref: "#/definitions/user"
+      responses:
+        "200":
+          description: Successful response
+        "201":
+          description: Resource created
+        "401":
+          description: User not authorized to perform this action
+        "404":
+          description: Resourse not found
+        "500":
+          description: Internal server error
+      security:
+        - api_key: []
+  
+    delete:
+      tags:
+        - user
+      summary: Deletes a user
+      description: "Deletes user from database."
+      operationId: deleteUser
+      produces:
+        - application/json
+      parameters:
+      
+        - in: header
+          name: api_key
+          description: ""
+          required: true
+          type: string
+          
+        - in: path
+          name: user_id
+          description: User id to delete
+          required: true
+          type: number
+          format: integer
+          
+      responses:
+        "200":
+          description: Successful response
+        "202":
+          description: Delete request accepted
+        "400":
+          description: Invalid user value
+        "401":
+          description: User is not authorized to perform this action
+        "500":
+          description: Internal server error
+
+      security:
+        - api_key: []  
+  
+  /season:
+    get:
+      tags:
+          - season
+      summary: A list of seasons and their info
+      description: The season request returns a full list of season information including season_id, community_name, cycle_format, cycle_count, and ELO_default_seed.
+      operationId: getSeason
+      produces:
+        - application/json
+      parameters:
+      
+        - name: season_id
+          in: query
+          description: The id of the selected season.
+          required: false
+          type: number
+          format: integer
+          
+        - name: community_name
+          in: query
+          description: The name of the community.
+          required: false
+          type: string
+          format: string
+          
+        - name: cycle_format
+          in: query
+          description: The cycle format of the season.
+          required: false
+          type: string
+          format: string
+          
+        - name: cycle_count
+          in: query
+          description: A count of cycles in the season.
+          required: false
+          type: number
+          format: integer
+          
+        - name: ELO_default_seed
+          in: query
+          description: The ELO default seed.
+          required: false
+          type: number
+          format: integer
+          
+      responses:
+        "200":
+          description: Successful response
+          schema:
+            $ref: "#/definitions/season"
+        "404":
+          description: Resource not found
+        "500":
+          description: Internal server error
+      security:
+        - api_key: []
+        
+    post:
+      tags:
+        - season
+      summary: Updates a season in the database with form data
+      description: "Creates and updates a season into the database"
+      operationId: updateSeasonWithForm
+      consumes:
+        - application/x-www-form-urlencoded
+      produces:
+        - application/json
+      parameters:
+      
+        - name: body
+          in: body
+          description: "Season object that needs to be added to the catalog"
+          required: true
+          schema:
+            $ref: "#/definitions/season"
+          
+      responses:
+        "200":
+          description: Successful response
+        "201":
+          description: Resource created
+        "202":
+          description: Representation accepted
+        "401":
+          description: User is not authorized to perform this action
+        "405":
+          description: Invalid input
+        "500":
+          description: Internal server error
+      security:
+        - api_key: []
+        
+  /season/{season_id}:
+    get:
+      tags:
+          - season
+      summary: A list of seasons and their info
+      description: The season request returns a full list of season information including season_id, community_name, cycle_format, cycle_count, and ELO_default_seed.
+      operationId: getSeason
+      produces:
+        - application/json
+      parameters:
+      
+        - name: season_id
+          in: path
+          description: The id of the selected season.
+          required: true
+          type: number
+          format: integer
+          
+      responses:
+        "200":
+          description: Successful response
+          schema:
+            $ref: "#/definitions/season"
+        "404":
+          description: Resource not found
+        "500":
+          description: Internal server error
+      security:
+        - api_key: []
+        
+    put:
+      tags:
+        - season
+      summary: Update an existing season
+      description: "Adds updates to existing seasons"
+      operationId: updateSeason
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      
+        - name: season_id
+          in: path
+          description: The season's id number.
+          required: true
+          type: number
+          format: integer
+          
+        - name: body
+          in: body
+          description: "Course object that needs to be added to the catalog"
+          required: true
+          schema:
+            $ref: "#/definitions/season"
+            
+      responses:
+        "200":
+          description: Successful response
+        "202":
+          description: Representation accepted
+        "400":
+          description: Invalid ID supplied
+        "401":
+          description: User not authorized to perform this action
+        "404":
+          description: Resourse not found
+        "405":
+          description: Validation exception
+        "500":
+          description: Internal server error
+      security:
+        - api_key: []
+        
+    delete:
+      tags:
+        - season
+      summary: Deletes a season
+      description: "Deletes season from database."
+      operationId: deleteSeason
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: api_key
+          description: ""
+          required: true
+          type: string
+        - in: path
+          name: season_id
+          description: Season id to delete
+          required: true
+          type: number
+          format: integer
+      responses:
+        "200":
+          description: Successful response
+        "202":
+          description: Delete request accepted
+        "400":
+          description: Invalid user value
+        "401":
+          description: User is not authorized to perform this action
+        "500":
+          description: Internal server error
+      security:
+        - api_key: []
+        
+  
+  /tournament:
+    get:
+      tags:
+          - tournament
+      summary: A list of tournaments and their info
+      description: The tournament request returns a full list of tournament information including tournament_id, series_name, series_number, and season_id
+      operationId: getTournament
+      produces:
+        - application/json
+      parameters:
+      
+        - name: tournament_id
+          in: query
+          description: The id of the selected tournament.
+          required: false
+          type: number
+          format: integer
+          
+        - name: series_name
+          in: query
+          description: The name of the series.
+          required: false
+          type: string
+          format: string
+          
+        - name: series_number
+          in: query
+          description: The series number of the tournament.
+          required: false
+          type: number
+          format: integer
+          
+        - name: season_id
+          in: query
+          description: The id number of the season.
+          required: false
+          type: number
+          format: integer
+          
+      responses:
+        "200":
+          description: Successful response
+          schema:
+            $ref: "#/definitions/tournament"
+        "404":
+          description: Resource not found
+        "500":
+          description: Internal server error
+      security:
+        - api_key: []
+        
+    post:
+      tags:
+        - tournament
+      summary: Updates a tournament in the database with form data
+      description: "Creates and updates a tournament into the database"
+      operationId: updateTournamentWithForm
+      consumes:
+        - application/x-www-form-urlencoded
+      produces:
+        - application/json
+      security:
+        - api_key: []
+        - challonge_api_key: []
+
+      parameters:
+        - name: tournament_url_id
+          in: query
+          description: Tournament ID of challonge bracket url
+          type: string
+          required: true
+
+        - name: tournament_url_subdomain
+          in: query
+          description: Subdomain of challonge bracket url if assigned
+          type: string
+          required: false
+
+
+      responses:
+        "200":
+          description: Successful response
+        "201":
+          description: Resource created
+        "202":
+          description: Representation accepted
+        "401":
+          description: User is not authorized to perform this action
+        "405":
+          description: Invalid input
+        "500":
+          description: Internal server error
+      security:
+        - challonge_api_key: []
+  
+  /tournament/{tournament_id}:
+    get:
+      tags:
+          - tournament
+      summary: A list of tournaments and their info
+      description: The tournament request returns a full list of tournament information including tournament_id, series_name, series_number, and season_id
+      operationId: getTournament
+      produces:
+        - application/json
+      parameters:
+      
+        - name: tournament_id
+          in: path
+          description: The id of the selected tournament.
+          required: true
+          type: number
+          format: integer
+          
+      responses:
+        "200":
+          description: Successful response
+          schema:
+            $ref: "#/definitions/tournament"
+        "404":
+          description: Resource not found
+        "500":
+          description: Internal server error
+      security:
+        - api_key: []
+        
+    put:
+      tags:
+        - tournament
+      summary: Update an existing tournament
+      description: "Adds updates to existing tournaments"
+      operationId: updateTournament
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      
+        - name: tournament_id
+          in: path
+          description: The tournament's id number.
+          required: true
+          type: number
+          format: integer
+          
+        - name: body
+          in: body
+          description: "Course object that needs to be added to the catalog"
+          required: true
+          schema:
+            $ref: "#/definitions/tournament"
+
+      responses:
+        "200":
+          description: Successful response
+        "202":
+          description: Representation accepted
+        "400":
+          description: Invalid ID supplied
+        "401":
+          description: User not authorized to perform this action
+        "404":
+          description: Resourse not found
+        "405":
+          description: Validation exception
+        "500":
+          description: Internal server error
+      security:
+        - challonge_api_key: []
+
+    delete:
+      tags:
+        - tournament
+      summary: Deletes a tournament
+      description: "Deletes tournament from database."
+      operationId: deleteTournament
+      produces:
+        - application/json
+      parameters:
+      
+        - in: header
+          name: api_key
+          description: ""
+          required: true
+          type: string
+          
+        - in: path
+          name: tournament_id
+          description: Tournament id to delete
+          required: true
+          type: number
+          format: integer
+          
+      responses:
+        "200":
+          description: Successful response
+        "202":
+          description: Delete request accepted
+        "400":
+          description: Invalid user value
+        "401":
+          description: User is not authorized to perform this action
+        "500":
+          description: Internal server error
+      security:
+        - api_key: []
+          
+  /match:
+    get:
+      tags:
+          - match
+      summary: A list of matches and their info
+      description: The match request returns a full list of match information including match_id, player_1, player_2, winner, and tournament_id.
+      operationId: getMatch
+      produces:
+        - application/json
+      parameters:
+      
+        - name: match_id
+          in: query
+          description: The id of the selected match.
+          required: false
+          type: number
+          format: integer
+          
+        - name: player_1
+          in: query
+          description: Player 1 of the match.
+          required: false
+          type: number
+          format: integer
+          
+        - name: player_2
+          in: query
+          description: Player 2 of the match.
+          required: false
+          type: number
+          format: integer
+          
+        - name: winner
+          in: query
+          description: The winner of the match.
+          required: false
+          type: number
+          format: integer
+          
+        - name: tournament_id
+          in: query
+          description: The id number of the tournament.
+          required: false
+          type: number
+          format: integer
+          
+      responses:
+        "200":
+          description: Successful response
+          schema:
+            $ref: "#/definitions/match"
+        "404":
+          description: Resource not found
+        "500":
+          description: Internal server error
+      security:
+        - api_key: []
+        
+    post:
+      tags:
+        - match
+      summary: Updates a match in the database with form data
+      description: "Creates and updates a match into the database"
+      operationId: updateMatchWithForm
+      consumes:
+        - application/x-www-form-urlencoded
+      produces:
+        - application/json
+      parameters:
+      
+        - name: body
+          in: body
+          description: "Match object that needs to be added to the catalog"
+          required: true
+          schema:
+            $ref: "#/definitions/match"
+          
+      responses:
+        "200":
+          description: Successful response
+        "201":
+          description: Resource created
+        "202":
+          description: Representation accepted
+        "401":
+          description: User is not authorized to perform this action
+        "405":
+          description: Invalid input
+        "500":
+          description: Internal server error
+      security:
+        - api_key: []
+    
+  /match/{match_id}:
+    get:
+      tags:
+          - match
+      summary: A list of matches and their info
+      description: The match request returns a full list of match information including match_id, player_1, player_2, winner, and tournament_id.
+      operationId: getMatch
+      produces:
+        - application/json
+      parameters:
+      
+        - name: match_id
+          in: path
+          description: The id of the selected match.
+          required: true
+          type: number
+          format: integer
+          
+      responses:
+        "200":
+          description: Successful response
+          schema:
+            $ref: "#/definitions/match"
+        "404":
+          description: Resource not found
+        "500":
+          description: Internal server error
+      security:
+        - api_key: []
+        
+    put:
+      tags:
+        - match
+      summary: Update an existing match
+      description: "Adds updates to existing matches"
+      operationId: updateMatch
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      
+        - name: match_id
+          in: path
+          description: The match's id number.
+          required: true
+          type: number
+          format: integer
+
+        - name: body
+          in: body
+          description: "Match object that needs to be added to the catalog"
+          required: true
+          schema:
+            $ref: "#/definitions/match"
+
+      responses:
+        "200":
+          description: Successful response
+        "202":
+          description: Representation accepted
+        "400":
+          description: Invalid ID supplied
+        "401":
+          description: User not authorized to perform this action
+        "404":
+          description: Resourse not found
+        "405":
+          description: Validation exception
+        "500":
+          description: Internal server error
+      security:
+        - api_key: []
+        
+    delete:
+      tags:
+        - match
+      summary: Deletes a match
+      description: "Deletes tournament from database."
+      operationId: deleteMatch
+      produces:
+        - application/json
+      parameters:
+      
+        - in: header
+          name: api_key
+          description: ""
+          required: true
+          type: string
+          
+        - in: path
+          name: match_id
+          description: Match id to delete
+          required: true
+          type: number
+          format: integer
+          
+      responses:
+        "200":
+          description: Successful response
+        "202":
+          description: Delete request accepted
+        "400":
+          description: Invalid user value
+        "401":
+          description: User is not authorized to perform this action
+        "500":
+          description: Internal server error
+      security:
+        - api_key: []
+          
+  /player:
+    get:
+      tags:
+          - player
+      summary: A list of players and their info
+      description: The match request returns a full list of match information including player_id, name, ELO_rating, initial_ELO_seed, win_count, and loss_count.
+      operationId: getPlayer
+      produces:
+        - application/json
+      parameters:
+      
+        - name: player_id
+          in: query
+          description: The id of the selected player.
+          required: false
+          type: number
+          format: integer
+          
+        - name: name
+          in: query
+          description: The player's name.
+          required: false
+          type: string
+          format: string
+          
+        - name: ELO_rating
+          in: query
+          description: The player's ELO rating.
+          required: false
+          type: number
+          format: integer
+          
+        - name: initial_ELO_seed
+          in: query
+          description: The player's initial ELO seed.
+          required: false
+          type: number
+          format: integer
+          
+        - name: win_count
+          in: query
+          description: The number of wins the player has.
+          required: false
+          type: number
+          format: integer
+          
+        - name: loss_count
+          in: query
+          description: The number of losses the player has.
+          required: false
+          type: number
+          format: integer
+          
+      responses:
+        "200":
+          description: Successful response
+          schema:
+            $ref: "#/definitions/player"
+        "404":
+          description: Resource not found
+        "500":
+          description: Internal server error
+      security:
+        - api_key: []
+
+    post:
+      tags:
+        - player
+      summary: Updates a player in the database with form data
+      description: "Creates and updates a player into the database"
+      operationId: updatePlayerWithForm
+      consumes:
+        - application/x-www-form-urlencoded
+      produces:
+        - application/json
+      parameters:
+      
+        - name: body
+          in: body
+          description: "Player object that needs to be added to the catalog"
+          required: true
+          schema:
+            $ref: "#/definitions/player"
+          
+      responses:
+        "200":
+          description: Successful response
+        "201":
+          description: Resource created
+        "202":
+          description: Representation accepted
+        "401":
+          description: User is not authorized to perform this action
+        "405":
+          description: Invalid input
+        "500":
+          description: Internal server error
+      security:
+        - api_key: []
+        
+  /player/{player_id}:
+    get:
+      tags:
+          - player
+      summary: A list of players and their info
+      description: The match request returns a full list of match information including player_id, name, ELO_rating, initial_ELO_seed, win_count, and loss_count.
+      operationId: getPlayer
+      produces:
+        - application/json
+      parameters:
+      
+        - name: player_id
+          in: path
+          description: The id of the selected player.
+          required: true
+          type: number
+          format: integer
+
+      responses:
+        "200":
+          description: Successful response
+          schema:
+            $ref: "#/definitions/player"
+        "404":
+          description: Resource not found
+        "500":
+          description: Internal server error
+      security:
+        - api_key: []
+  
+    put:
+      tags:
+        - player
+      summary: Update an existing player
+      description: "Adds updates to existing players"
+      operationId: updatePlayer
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      
+        - name: player_id
+          in: path
+          description: The player's id number.
+          required: true
+          type: number
+          format: integer
+          
+        - name: body
+          in: body
+          description: "Player object that needs to be added to the catalog"
+          required: true
+          schema:
+            $ref: "#/definitions/player"
+
+      responses:
+        "200":
+          description: Successful response
+        "202":
+          description: Representation accepted
+        "400":
+          description: Invalid ID supplied
+        "401":
+          description: User not authorized to perform this action
+        "404":
+          description: Resourse not found
+        "405":
+          description: Validation exception
+        "500":
+          description: Internal server error
+      security:
+        - api_key: []
+
+    delete:
+      tags:
+        - player
+      summary: Deletes a player
+      description: "Deletes player from database."
+      operationId: deletePlayer
+      produces:
+        - application/json
+      parameters:
+      
+        - in: query
+          name: api_key
+          description: ""
+          required: true
+          type: string
+          
+        - in: path
+          name: player_id
+          description: Player id to delete
+          required: true
+          type: number
+          format: integer
+          
+      responses:
+        "200":
+          description: Successful response
+        "202":
+          description: Delete request accepted
+        "400":
+          description: Invalid user value
+        "401":
+          description: User is not authorized to perform this action
+        "500":
+          description: Internal server error
+      security:
+        - api_key: []
+        
+securityDefinitions:
+    api_key:
+        type: apiKey
+        name: api_key
+        description: Rest PR API Key for general authentication
+        in:   header
+    challonge_api_key:
+        type: apiKey
+        name: challonge_api_key
+        description: User API Key for Challonge for performing data collection.
+        in:   query
+definitions:
+  user:
+    required:
+      - user_login
+      - display_name
+    properties:
+      user_id:
+        type: number
+        format: integer
+      user_login:
+        type: string
+      display_name:
+        type: string
+
+  urilocation:
+    required:
+      - uri_location
+    properties:
+      uri_location:
+        type: string
+
+  season:
+    required:
+      - community_name
+      - cycle_format
+      - cycle_count
+      - ELO_default_seed
+    properties:
+      season_id:
+        type: number
+        format: integer
+      community_name:
+        type: string
+      cycle_format:
+        type: string
+      cycle_count:
+        type: number
+        format: integer
+      ELO_default_seed:
+        type: number
+        format: integer
+        
+  tournament:
+    required:
+      - series_name
+      - series_number
+      - season_id
+    properties:
+      tournament_id:
+        type: number
+        format: integer
+      series_name:
+        type: string
+      series_number:
+        type: number
+        format: integer
+      season_id:
+        type: number
+        format: integer
+        
+  match:
+    required:
+      - player_1
+      - player_2
+      - winner
+      - tournament_id
+    properties:
+      match_id:
+        type: number
+        format: integer
+      player_1:
+        type: string
+      player_2:
+        type: string
+      winner:
+        type: string
+      tournament_id:
+        $ref: "#/definitions/tournament"
+        
+  player:
+    required:
+      - name
+      - ELO_ranking
+      - initial_ELO_seed
+      - win_count
+      - loss_count
+    properties:
+      player_id:
+        type: number
+        format: integer
+      name:
+        type: string
+      ELO_ranking:
+        type: number
+        format: integer
+      initial_ELO_seed:
+        type: number
+        format: integer
+      win_count:
+        type: number
+        format: integer
+      loss_count:
+        type: number
+        format: integer

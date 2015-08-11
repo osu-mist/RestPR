@@ -1,0 +1,21 @@
+configuration.yaml
+
+.class
+.bin
+
+# Oracle Driver
+bin/
+
+# Gradle
+.gradle/
+
+# Dropwizard
+build/
+
+# IntelliJ IDEA
+*.iml
+*.ipr
+*.iws
+
+# Mac OS X
+.DS_Store
