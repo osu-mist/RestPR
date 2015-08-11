@@ -83,6 +83,7 @@ public interface UserDAO extends Closeable {
 
   /**
    * Deletes user from user table with the given user_id
+   * FIXME: possible race condition
    * @param user_id The user_id of the user that is to be deleted from the table
    */
   @SqlUpdate( """
