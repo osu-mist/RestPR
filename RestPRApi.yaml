@@ -84,7 +84,7 @@ paths:
         operationId: allRESTPRUsers
         produces:
           - application/json
-       responses:
+        responses:
           "200":
             description: Successful response
             schema:
