@@ -136,7 +136,7 @@ class UserResource {
    * Updates the user specified with the user_id within the table to be updated with the newUser representation.
    * @param user_id   User_id of the user to be updated
    * @param newUser   Representation of the new User to be updated with
-   * @return
+   * @return An okay response on success
    */
   @Path("/{user_id}")
   @PUT
@@ -168,7 +168,7 @@ class UserResource {
 
   /**
    * Deletes the specified user with the given user_id
-   * @param User_id   User_id of the user to be updated
+   * @param User_id   User_id of the user to be deleted
    * @return An okay response
    */
   @Path("/{user_id}")
