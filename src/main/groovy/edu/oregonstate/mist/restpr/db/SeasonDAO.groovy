@@ -75,7 +75,7 @@ public interface SeasonDAO extends Closeable  {
   @SqlUpdate( """
               UPDATE SEASON
               SET SEASON_ID = :season_id , COMMUNITY_NAME = :community_name , CYCLE_FORMAT = :cycle_format ,
-                  CYCLE_COUNT = :cycle_count, ELO_DEFAULT_SEED = :elo_default_seed, SYEAR = :year)
+                  CYCLE_COUNT = :cycle_count, ELO_DEFAULT_SEED = :elo_default_seed, SYEAR = :year
               WHERE SEASON_ID = :season_id
               """)
   void putUser(@Bind("season_id") Integer season_id, @Bind("community_name") String community_name,
