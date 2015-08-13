@@ -57,12 +57,9 @@ class SeasonResource {
                              @QueryParam("cycle_format") Optional<String> cycle_format,
                              @QueryParam("cycle_count") Optional<String> cycle_count,
                              @QueryParam("year") Integer year){
-
     //String yearQueryString = (year == null) ? "" : year.toString()
-
     List<Season> returnList = seasonDAO.getSeasonMatch(community_name.or(""),cycle_format.or(""),
             cycle_count.or(""),year)
-
 
     Response.ok(returnList).build()
   }
@@ -172,8 +169,6 @@ class SeasonResource {
       URI createdURI = URI.create("/"+season_id)
       returnResponse = Response.created(createdURI).build()
     }else{
-
-
       //If the user is updating just their login or their display name we can use whats already in the DB using the
       //optional class or method.
 
@@ -189,11 +184,9 @@ class SeasonResource {
 
       seasonDAO.putUser(season_id,newCommunity_name,newCycle_format,newCycle_count,newElo_default_seed,newYear)
       returnResponse = Response.ok().build()
-
     }
 
     returnResponse
-
   }
 
   /**
@@ -210,7 +203,6 @@ class SeasonResource {
     Response returnResponse = Response.ok().build()
 
     returnResponse
-
   }
 
 }
