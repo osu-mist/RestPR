@@ -11,15 +11,11 @@ import java.sql.SQLException
  */
 public class UserMapper implements ResultSetMapper<User>{
   public User map(int i, ResultSet rs, StatementContext sc) throws SQLException{
-    User user = new User()
-
-    user.with {
-
-      user_id       = rs.getInt     'USER_ID'
-      display_name  = rs.getString  'DISPLAY_NAME'
-      user_login    = rs.getString  'USER_LOGIN'
-
-    }
+    User user = new User(
+      user_id       : rs.getInt('USER_ID'),
+      display_name  : rs.getString('DISPLAY_NAME'),
+      user_login    : rs.getString('USER_LOGIN')
+    )
 
      user
   }
