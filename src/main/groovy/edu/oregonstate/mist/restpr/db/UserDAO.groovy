@@ -83,7 +83,6 @@ public interface UserDAO extends Closeable {
 
   /**
    * Deletes user from user table with the given user_id
-   * FIXME: possible race condition
    * @param user_id The user_id of the user that is to be deleted from the table
    */
   @SqlUpdate( """
@@ -94,6 +93,7 @@ public interface UserDAO extends Closeable {
 
   /**
    * Returns the userid of the latest user created using the User sequence
+   * //FIXME possible race condition
    * @return the userid of the latest user created using the User sequence
    */
   @SqlQuery("""
