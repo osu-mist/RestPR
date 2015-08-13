@@ -35,6 +35,7 @@ Panelists involved in the subjective power rankings can utilize the upset filter
 #Resources
 
 - User
+- Season
 
 #Response Codes
 
@@ -74,7 +75,7 @@ The following examples can be excuted with netcat using heredocs like this:
 #GET
 Get Users and partial match user_login and display_name query parameters
 
-	GET /User?user_login=LOGIN&display_name=DISPLAY HTTP/1.0
+	GET /user?user_login=LOGIN&display_name=DISPLAY HTTP/1.0
 
 	HTTP/1.1 200 OK
 	Date: Sat, 08 Aug 2015 18:56:14 GMT
@@ -85,7 +86,7 @@ Get Users and partial match user_login and display_name query parameters
 
 Get all Users
 
-	GET /User/all HTTP/1.0
+	GET /user/all HTTP/1.0
 
 	HTTP/1.1 200 OK
 	Date: Sat, 08 Aug 2015 18:58:30 GMT
@@ -97,7 +98,7 @@ Get all Users
 
 Get User by ID
 
-	GET /User/16 HTTP/1.0
+	GET /user/16 HTTP/1.0
 
 	HTTP/1.1 200 OK
 	Date: Sat, 08 Aug 2015 19:02:37 GMT
@@ -106,10 +107,45 @@ Get User by ID
 
 	{"user_id":16,"user_login":"16 SER LOGIN","display_name":"16 DISPLAY NAME"}
 
+Get Seasons
+
+  GET /season HTTP/1.0
+
+  HTTP/1.1 200 OK
+  Date: Thu, 13 Aug 2015 21:25:08 GMT
+  Content-Type: application/json
+  Vary: Accept-Encoding
+  Content-Length: 1450
+
+  [{"season_id":6,"community_name":"GOINGO LLALALA","cycle_format":"Jan","cycle_count":"Monthly","elo_default_seed":1200,"year":1200},{"season_id":5,"community_name":"GOINGO wet","cycle_format":"Jan","cycle_count":"Monthly","elo_default_seed":1200,"year":1200},{"season_id":41,"community_name":"RAW TOPH","cycle_format":"Jan","cycle_count":"Monthly","elo_default_seed":1200,"year":1200},{"season_id":2,"community_name":"S96385kk JANK","cycle_format":"Jan","cycle_count":"Monthly","elo_default_seed":1200,"year":1200},{"season_id":3,"community_name":"S99876385kk wet","cycle_format":"Jan","cycle_count":"Monthly","elo_default_seed":1200,"year":1200},{"season_id":4,"community_name":"S998767777385kk wet","cycle_format":"Jan","cycle_count":"Monthly","elo_default_seed":1200,"year":1200},{"season_id":27,"community_name":"SS654 kk wet","cycle_format":"Jan","cycle_count":"Monthly","elo_default_seed":1200,"year":1200},{"season_id":22,"community_name":"SSBM Oregon Kermugens","cycle_format":"Jan","cycle_count":"Monthly","elo_default_seed":1200,"year":1200},{"season_id":25,"community_name":"SSBM kk Kermugens","cycle_format":"Jan","cycle_count":"Monthly","elo_default_seed":1200,"year":1200},{"season_id":23,"community_name":"SSBM rrr Kermugens","cycle_format":"Jan","cycle_count":"Monthly","elo_default_seed":1200,"year":1200},{"season_id":1,"community_name":"dankmemers","cycle_format":"Jan","cycle_count":"Monthly","elo_default_seed":1200,"year":1200}]%
+
+Get all Seasons
+
+  GET /season/all HTTP/1.0
+
+  HTTP/1.1 200 OK
+  Date: Thu, 13 Aug 2015 21:28:36 GMT
+  Content-Type: application/json
+  Vary: Accept-Encoding
+  Content-Length: 1450
+
+  [{"season_id":22,"community_name":"SSBM Oregon Kermugens","cycle_format":"Jan","cycle_count":"Monthly","elo_default_seed":1200,"year":1200},{"season_id":23,"community_name":"SSBM rrr Kermugens","cycle_format":"Jan","cycle_count":"Monthly","elo_default_seed":1200,"year":1200},{"season_id":1,"community_name":"dankmemers","cycle_format":"Jan","cycle_count":"Monthly","elo_default_seed":1200,"year":1200},{"season_id":25,"community_name":"SSBM kk Kermugens","cycle_format":"Jan","cycle_count":"Monthly","elo_default_seed":1200,"year":1200},{"season_id":27,"community_name":"SS654 kk wet","cycle_format":"Jan","cycle_count":"Monthly","elo_default_seed":1200,"year":1200},{"season_id":2,"community_name":"S96385kk JANK","cycle_format":"Jan","cycle_count":"Monthly","elo_default_seed":1200,"year":1200},{"season_id":3,"community_name":"S99876385kk wet","cycle_format":"Jan","cycle_count":"Monthly","elo_default_seed":1200,"year":1200},{"season_id":4,"community_name":"S998767777385kk wet","cycle_format":"Jan","cycle_count":"Monthly","elo_default_seed":1200,"year":1200},{"season_id":5,"community_name":"GOINGO wet","cycle_format":"Jan","cycle_count":"Monthly","elo_default_seed":1200,"year":1200},{"season_id":6,"community_name":"GOINGO LLALALA","cycle_format":"Jan","cycle_count":"Monthly","elo_default_seed":1200,"year":1200},{"season_id":41,"community_name":"RAW TOPH","cycle_format":"Jan","cycle_count":"Monthly","elo_default_seed":1200,"year":1200}]%
+
+Get Season by ID
+
+  GET /season/61 HTTP/1.0
+
+  HTTP/1.1 200 OK
+  Date: Thu, 13 Aug 2015 21:56:07 GMT
+  Content-Type: application/json
+  Content-Length: 126
+
+  {"season_id":61,"community_name":"Test POST","cycle_format":"Feb","cycle_count":"Monthly","elo_default_seed":1200,"year":1200}%
+
 #POST
 Post user
 
-	POST /User/ HTTP/1.0
+	POST /user/ HTTP/1.0
 	Content-Type: application/json
 	Content-Length:56
 
@@ -118,10 +154,35 @@ Post user
 	  "user_login": "TEST#6"
 	}
 
+  HTTP/1.1 201 Created
+  Date: Thu, 13 Aug 2015 21:52:51 GMT
+  Location: http://127.0.0.1:8008/56
+  Content-Length: 0
+
+Post Season
+
+  POST /season/ HTTP/1.0
+  Content-Length:163
+  Content-Type: application/json
+
+  {
+      "season_id": 22,
+      "community_name": "Test POST",
+      "cycle_format": "Feb",
+      "cycle_count": "Monthly",
+      "elo_default_seed": 1200,
+      "year": 1200
+  }
+
+  HTTP/1.1 201 Created
+  Date: Thu, 13 Aug 2015 21:48:16 GMT
+  Location: http://127.0.0.1:8008/61
+  Content-Length: 0
+
 #PUT
 Update user by id
 
-	PUT /User/52 HTTP/1.0
+	PUT /user/52 HTTP/1.0
 	Content-Type: application/json
 	Content-Length:56
 
@@ -130,11 +191,30 @@ Update user by id
 	  "user_login": "TESTAA"
 	}
 
+Update season by id
+
+  PUT /season/61 HTTP/1.0
+  Content-Type: application/json
+  Content-Length:126
+
+  {"season_id":61,"community_name":"Test POST","cycle_format":"Feb","cycle_count":"Monthly","elo_default_seed":1200,"year":1200}
+
+  HTTP/1.1 200 OK
+  Date: Thu, 13 Aug 2015 22:07:25 GMT
+  Content-Length: 0
+
 #DELETE
 
 Delete user by id
-	DELETE /User/32 HTTP/1.0
+	DELETE /user/32 HTTP/1.0
 
 	HTTP/1.1 200 OK
 	Date: Sat, 08 Aug 2015 19:04:59 GMT
 	Content-Length: 0
+
+Delete season by id
+  DELETE /season/61 HTTP/1.0
+
+  HTTP/1.1 200 OK
+  Date: Thu, 13 Aug 2015 22:10:01 GMT
+  Content-Length: 0
