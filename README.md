@@ -204,16 +204,16 @@ Update season by id
   Content-Length: 0
 ```
 #DELETE
-```
 Delete user by id
+```
 	DELETE /user/32 HTTP/1.0
 
 	HTTP/1.1 200 OK
 	Date: Sat, 08 Aug 2015 19:04:59 GMT
 	Content-Length: 0
 ```
-```
 Delete season by id
+```
   DELETE /season/61 HTTP/1.0
 
   HTTP/1.1 200 OK
