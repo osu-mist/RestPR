@@ -133,7 +133,7 @@ class SeasonResource {
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   //Entity Type: Season
-  public Response getSeasonById(@NotNull Integer season_id){
+  public Response getSeasonById(@PathParam("season_id") Integer season_id){
     Season returnSeason = seasonDAO.getSeasonById(season_id)
     Response returnResponse
 
