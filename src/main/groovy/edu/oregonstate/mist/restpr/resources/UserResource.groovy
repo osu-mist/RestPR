@@ -91,13 +91,13 @@ class UserResource {
       ErrorPOJO returnError
       if(constraintError.contains("PR_USER_U_USER_LOGIN")){//USER LOGIN IS NOT UNIQUE
 
-        returnError = new ErrorPOJO("User login is not unique", Response.Status.CONFLICT.getStatusCode())
+        returnError = new ErrorPOJO(errorMessage: "User login is not unique",errorCode: Response.Status.CONFLICT.getStatusCode())
       }else if(constraintError.contains("PR_USER_U_DISPLAY_NAME")){//DISPLAY NAME IS NOT UNIQUE
 
-        returnError = new ErrorPOJO("Display name is not unique", Response.Status.CONFLICT.getStatusCode())
+        returnError = new ErrorPOJO(errorMessage: "Display name is not unique",errorCode: Response.Status.CONFLICT.getStatusCode())
 
       }else{//Some other error, should be logged
-        returnError = new ErrorPOJO("Unknown error.", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode())
+        returnError = new ErrorPOJO(errorMessage: "Unknown error.", errorCode: Response.Status.INTERNAL_SERVER_ERROR.getStatusCode())
       }
 
       return Response.status(returnError.getErrorCode()).entity(returnError).build()
@@ -119,7 +119,7 @@ class UserResource {
     User returnUser = userDAO.getUserById(user_id)
     Response returnResponse
     if (returnUser == null) {
-      ErrorPOJO returnError = new ErrorPOJO("Resource not found.",Response.Status.NOT_FOUND.getStatusCode())
+      ErrorPOJO returnError = new ErrorPOJO(errorMessage:  "Resource not found.",errorCode:  Response.Status.NOT_FOUND.getStatusCode())
       returnResponse = Response.status(Response.Status.NOT_FOUND).entity(returnError).build()
 
     }else{
