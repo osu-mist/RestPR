@@ -19,3 +19,5 @@ build/
 
 # Mac OS X
 .DS_Store
+
+out/
