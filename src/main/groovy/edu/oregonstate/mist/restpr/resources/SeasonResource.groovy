@@ -5,7 +5,6 @@ import edu.oregonstate.mist.restpr.api.Season
 import edu.oregonstate.mist.restpr.db.SeasonDAO
 import com.google.common.base.Optional
 import javax.validation.Valid
-import javax.validation.constraints.NotNull
 import javax.ws.rs.Consumes
 import javax.ws.rs.DELETE
 import javax.ws.rs.GET
