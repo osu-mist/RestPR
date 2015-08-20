@@ -26,7 +26,7 @@ class SeasonTest {
     String actual = MAPPER.writeValueAsString(season)
 
     String expected = MAPPER.writeValueAsString(
-            MAPPER.readValue(fixture("fixtures/season.json"), season.class))
+            MAPPER.readValue(fixture("fixtures/season.json"), Season.class))
 
 
 
