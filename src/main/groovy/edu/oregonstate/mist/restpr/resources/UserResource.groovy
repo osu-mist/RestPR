@@ -23,6 +23,9 @@ import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 import javax.ws.rs.core.UriInfo
 
+//TODO look up VALID annotation
+//TODO look up NotNull annoation
+
 @Path("/user")
 @Produces(MediaType.APPLICATION_JSON)
 class UserResource {
