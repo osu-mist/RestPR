@@ -1,0 +1,25 @@
+    //TODO move onto integration once this API has interaction (integration) accross resources (units) that are already tested
+    //NOTE: Integration testing dependancies on the current prototype of the API
+    //USER resource is independant
+    //User permissions depends on users and seasons
+    //Season is independant
+    //Tournament depends on season due to eventOf foriegn key
+
+    //The main interaction flow of RestPR:
+      //Create user, create season, post tournaments
+         //Posted tournaments kick off a logic heavy process of hitting the challonge site
+            //Adding new players, adding new matches and then processing the elo's of all the players within the season
+
+    //Season authorized User posts new tournament
+    //Tournament row entry is created
+      //All of these new matches from the tournament need to added
+        //With each match addition players have to be looked up if they already exist and matched to
+          //If they dont exist they get made
+
+    //TODO add date to tournament record so when rankings get calculated the resultset of matches for the season can get
+    //sorted by tournament date and then within each tournament they're ordered by tournament depth
+    //Figure out sql order by to sort tournaments by depth
+        //MOST IMPORTANT THING is that matches get put in with correct tournament id, depth into tournament (WR1, LR1, GF, GFR)
+
+        //TODO design way to handle match addition job queue
+        //This really is a batch addition process done by the tournament resource.
