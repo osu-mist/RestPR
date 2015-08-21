@@ -20,16 +20,16 @@ import org.mockito.runners.MockitoJUnitRunner
 
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat
 import static org.mockito.Mockito.*
 
 class UserResourceTest{
-  UserDAO dao = mock(UserDAO.class)
+  static UserDAO dao = mock(UserDAO.class)
 
 
 
   @ClassRule
-  ResourceTestRule resources = ResourceTestRule.builder()
+  public static ResourceTestRule resources = ResourceTestRule.builder()
           .addResource(new UserResource(dao))
           .build()
 
@@ -76,8 +76,7 @@ class UserResourceTest{
             .request(MediaType.APPLICATION_JSON_TYPE)
             .get()
 
-    //assertThat(response.getStatusInfo()).isEqualTo(Response.Status.OK)
-    assertThat(response.getStatusInfo()).isNotEqualTo(Response.Status.OK)
+    assertThat(response.getStatusInfo()).isEqualTo(Response.Status.OK)
     assertThat(response.hasEntity()).isTrue()
 
 
