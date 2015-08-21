@@ -6,6 +6,8 @@ package edu.oregonstate.mist.restpr.resources
 import edu.oregonstate.mist.restpr.api.ErrorPOJO
 import edu.oregonstate.mist.restpr.api.User
 import edu.oregonstate.mist.restpr.db.UserDAO
+import org.skife.jdbi.v2.exceptions.UnableToExecuteStatementException
+
 import javax.validation.Valid
 import com.google.common.base.Optional
 import javax.validation.constraints.NotNull
@@ -83,29 +85,39 @@ class UserResource {
   //Entity Type: URI
   public Response postUser(@Valid User newUser) {
     Response returnResponse
-    try {
-      userDAO.postUser(newUser.getUser_login(),newUser.getDisplay_name())
-      URI createdURI = URI.create("/"+userDAO.getLatestUserId())
-      returnResponse = Response.created(createdURI).build()
-
-    } catch (org.skife.jdbi.v2.exceptions.UnableToExecuteStatementException e){
-
-      String constraintError = e.cause.toString()
-      ErrorPOJO returnError
-      if(constraintError.contains("PR_USER_U_USER_LOGIN")){//USER LOGIN IS NOT UNIQUE
-
-        returnError = new ErrorPOJO(errorMessage: "User login is not unique",errorCode: Response.Status.CONFLICT.getStatusCode())
-      }else if(constraintError.contains("PR_USER_U_DISPLAY_NAME")){//DISPLAY NAME IS NOT UNIQUE
-
-        returnError = new ErrorPOJO(errorMessage: "Display name is not unique",errorCode: Response.Status.CONFLICT.getStatusCode())
-
-      }else{//Some other error, should be logged
-        returnError = new ErrorPOJO(errorMessage: "Unknown error.", errorCode: Response.Status.INTERNAL_SERVER_ERROR.getStatusCode())
-      }
-
+    if(newUser.getUser_login() == newUser.getDisplay_name()){
+      ErrorPOJO returnError = new ErrorPOJO(errorMessage:  "user_login and display_name fields are not unique.", errorCode: Response.Status.CONFLICT.getStatusCode())
       return Response.status(returnError.getErrorCode()).entity(returnError).build()
-    }
 
+    }else{
+      try {
+        userDAO.postUser(newUser.getUser_login(),newUser.getDisplay_name())
+        URI createdURI = URI.create("/"+userDAO.getLatestUserId())
+        //TODO TEST 201 RESPONSE CODE
+        returnResponse = Response.created(createdURI).build()
+        //TODO TEST CREATED URI BEING SET CORRECTLY, MOCK GETLATESTUSERID RETURNVALUE
+      } catch (UnableToExecuteStatementException e){
+        String constraintError = e.getMessage()
+
+        ErrorPOJO returnError
+        if(constraintError.contains("PR_USER_U_USER_LOGIN")){//USER LOGIN IS NOT UNIQUE
+          //e.cause will contain this
+          //"java.sql.SQLIntegrityConstraintViolationException: ORA-00001: unique constraint (MISTSTU1.PR_USER_U_USER_LOGIN) violated"
+
+          returnError = new ErrorPOJO(errorMessage: "User login is not unique.",errorCode: Response.Status.CONFLICT.getStatusCode())
+        }else if(constraintError.contains("PR_USER_U_DISPLAY_NAME")){//DISPLAY NAME IS NOT UNIQUE
+          //e.cause will contain this
+          //"java.sql.SQLIntegrityConstraintViolationException: ORA-00001: unique constraint (MISTSTU1.PR_USER_U_DISPLAY_NAME) violated"
+          
+          returnError = new ErrorPOJO(errorMessage: "Display name is not unique.",errorCode: Response.Status.CONFLICT.getStatusCode())
+
+        }else{//Some other error, should be logged
+          returnError = new ErrorPOJO(errorMessage: "Unknown error.", errorCode: Response.Status.INTERNAL_SERVER_ERROR.getStatusCode())
+        }
+
+        return Response.status(returnError.getErrorCode()).entity(returnError).build()
+      }
+    }
     returnResponse
   }
 
