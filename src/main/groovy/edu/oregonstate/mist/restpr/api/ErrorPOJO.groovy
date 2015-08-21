@@ -8,15 +8,24 @@ class ErrorPOJO {
   Integer errorCode
 
   boolean equals(o) {
-    if (this.is(o)) return true
-    if (getClass() != o.class) return false
+    if (this.is(o)){
+      return true
+    }
+    if (getClass() != o.class){
+      return false
+    }
 
     ErrorPOJO errorPOJO = (ErrorPOJO) o
 
-    if (errorCode != errorPOJO.errorCode) return false
-    if (errorMessage != errorPOJO.errorMessage) return false
+    if (errorCode != errorPOJO.errorCode) {
+      return false
+    }
+    if (errorMessage != errorPOJO.errorMessage){
+      return false
+    }
 
-    return true
+
+    true
   }
 
 }
