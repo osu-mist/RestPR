@@ -3,30 +3,32 @@ package edu.oregonstate.mist.restpr.resources
 import edu.oregonstate.mist.restpr.api.ErrorPOJO
 import edu.oregonstate.mist.restpr.api.User
 import edu.oregonstate.mist.restpr.db.UserDAO
-import edu.oregonstate.mist.restpr.resources.UserResource
 import io.dropwizard.jackson.Jackson
-import io.dropwizard.testing.ResourceHelpers
 import io.dropwizard.testing.junit.ResourceTestRule
-
-import org.junit.After
-import io.dropwizard.testing.junit.DropwizardAppRule
 import com.fasterxml.jackson.databind.ObjectMapper
-import org.junit.AfterClass
+import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException
+import org.junit.After
 import org.junit.Before
 import org.junit.BeforeClass
 import org.junit.ClassRule
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.runners.MockitoJUnitRunner
 import org.skife.jdbi.v2.exceptions.UnableToExecuteStatementException
-
 import javax.ws.rs.client.Entity
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 
-import static io.dropwizard.testing.FixtureHelpers.fixture
 import static org.assertj.core.api.Assertions.assertThat
+import static org.assertj.core.api.Assertions.fail
+import static org.junit.Assert.assertEquals
+import static org.mockito.Matchers.anyString
 import static org.mockito.Mockito.*
+
+/*
+  Using mock testing provided by mockito we can isolate the behavior of the DAO.
+  This means we won't have to rely on test data from a db connection or anything like that.
+  By mocking the dao class we can feed the mock the behavior (db responses) we want.
+  Using this isolation we can unit test the resource code and assert we get the expected responses.
+*/
 
 class UserResourceTest{
   static UserDAO dao = mock(UserDAO.class)
@@ -64,13 +66,6 @@ class UserResourceTest{
   public void testGetAll_200() {
     //TODO make database model
 
-    //Using mocking we isolate the behavior of the database by mocking the dao class
-    //We can feed the mock the behavior (db responses) we want.
-    //Using this isolation we can unit test the resource code and the responses we get back
-
-    //DAO behavior we need to mock
-    //List<User> allRESTPRUsers()
-    //Mock the DAO to test the resource's usage of the mocked DAO
     when(dao.allRESTPRUsers()).thenReturn(returnMockList)
 
     Response response = resources.client().target("/user/all")
