@@ -99,11 +99,16 @@ class UserResourceTest{
     assertThat(response.getStatusInfo()).isEqualTo(Response.Status.CONFLICT)
     assertThat(response.hasEntity()).isTrue()
 
-    //If the response entity type isn't of the expected type the Mapper will fail (along with the whole test) and most likely throw an UnrecognizedPropertyException
-    //FIXME There might be a better way to assert the JSON we recieve is the right type
-    ErrorPOJO responseError = MAPPER.readValue(response.getEntity(),ErrorPOJO.class)
-    assertThat(responseError.getErrorCode()).isEqualTo(Response.Status.CONFLICT.getStatusCode())
-    assertThat(responseError.getErrorMessage()).isEqualTo("user_login and display_name fields are not unique.")
+    try {
+      ErrorPOJO actual = MAPPER.readValue(response.getEntity() , ErrorPOJO.class)
+      ErrorPOJO expected = new ErrorPOJO(errorMessage:  "user_login and display_name fields are not unique.", errorCode: Response.Status.CONFLICT.getStatusCode())
+
+      assertEquals(expected, actual)
+    }catch (com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException e ){
+      //extends com.fasterxml.jackson.databind.JsonMappingException
+      fail("Mapping to ErrorPOJO failed. Received unexpected Response Entity JSON Schema")
+    }
+
   }
 
   @Test
@@ -119,16 +124,20 @@ class UserResourceTest{
     assertThat(response.getStatusInfo()).isEqualTo(Response.Status.CONFLICT)
     assertThat(response.hasEntity()).isTrue()
 
-    //FIXME There might be a better way to assert the JSON we recieve is the right type
-    ErrorPOJO responseError = MAPPER.readValue(response.getEntity(),ErrorPOJO.class)
-    assertThat(responseError.getErrorCode()).isEqualTo(Response.Status.CONFLICT.getStatusCode())
-    assertThat(responseError.getErrorMessage()).isEqualTo("User login is not unique.")
+    try {
+      ErrorPOJO actual = MAPPER.readValue(response.getEntity() , ErrorPOJO.class)
+      ErrorPOJO expected = new ErrorPOJO(errorMessage: "User login is not unique." , errorCode: Response.Status.CONFLICT.getStatusCode())
+
+      assertEquals(expected, actual)
+    }catch (UnrecognizedPropertyException e){
+      fail("Mapping to ErrorPOJO failed. Received unexpected Response Entity JSON Schema")
+    }
+
 
     //MAPPER.writeValueAsString(MAPPER.readValue(response.getEntity(),ErrorPOJO.class))
   }
-
   @Test
-  public void testPost_409_Unique_Constraint_Violation(){
+  public void testPost_409_Display_name_Unique_Constraint_Violation(){
     UnableToExecuteStatementException nonUniqueDisplay_nameException = new UnableToExecuteStatementException("java.sql.SQLIntegrityConstraintViolationException: ORA-00001: unique constraint (MISTSTU1.PR_USER_U_DISPLAY_NAME) violated")
 
     when(dao.postUser(anyString(),anyString())).thenThrow(nonUniqueDisplay_nameException)
@@ -140,10 +149,15 @@ class UserResourceTest{
     assertThat(response.getStatusInfo()).isEqualTo(Response.Status.CONFLICT)
     assertThat(response.hasEntity()).isTrue()
 
-    //FIXME There might be a better way to assert the JSON we recieve is the right type
-    ErrorPOJO responseError = MAPPER.readValue(response.getEntity(),ErrorPOJO.class)
-    assertThat(responseError.getErrorCode()).isEqualTo(Response.Status.CONFLICT.getStatusCode())
-    assertThat(responseError.getErrorMessage()).isEqualTo("Display name is not unique.")
+    try {
+      ErrorPOJO actual = MAPPER.readValue(response.getEntity() , ErrorPOJO.class)
+      ErrorPOJO expected = new ErrorPOJO(errorMessage: "Display name is not unique.",errorCode: Response.Status.CONFLICT.getStatusCode())
+
+      assertEquals(expected, actual)
+    }catch (UnrecognizedPropertyException e){
+      fail("Mapping to ErrorPOJO failed. Received unexpected Response Entity JSON Schema")
+    }
+
   }
 
 
