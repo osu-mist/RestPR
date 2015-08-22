@@ -82,7 +82,7 @@ class UserResource {
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  //Entity Type: URI
+  //Entity Type: URI or ErrorPOJO
   public Response postUser(@Valid User newUser) {
     Response returnResponse
     if(newUser.getUser_login() == newUser.getDisplay_name()){
