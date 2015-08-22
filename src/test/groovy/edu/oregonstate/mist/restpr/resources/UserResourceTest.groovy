@@ -160,6 +160,20 @@ class UserResourceTest{
 
   }
 
+  @Test
+  public void testPost_201(){
+    when(dao.getLatestUserId()).thenReturn(1)
+
+    Response response = resources.client().target("/user/")
+            .request(MediaType.APPLICATION_JSON_TYPE)
+            .post(Entity.entity(user,MediaType.APPLICATION_JSON_TYPE))
+
+    assertThat(response.getStatusInfo()).isEqualTo(Response.Status.CREATED)
+    System.out.println(response.getHeaders())
+    System.out.println(response.getHeaderString("Location"))
+    //assertThat(response.getHeaderString("Location")).isEqualTo("/user/"+user.getUser_id())
+
+  }
 
 
 
