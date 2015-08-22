@@ -93,9 +93,9 @@ class UserResource {
       try {
         userDAO.postUser(newUser.getUser_login(),newUser.getDisplay_name())
         URI createdURI = URI.create("/"+userDAO.getLatestUserId())
-        //TODO TEST 201 RESPONSE CODE
         returnResponse = Response.created(createdURI).build()
-        //TODO TEST CREATED URI BEING SET CORRECTLY, MOCK GETLATESTUSERID RETURNVALUE
+        //TODO TEST CREATED URI BEING SET CORRECTLY
+        //TODO Make sure the location header is being set to the correct URI that can be GETTED to
       } catch (UnableToExecuteStatementException e){
         String constraintError = e.getMessage()
 
@@ -130,7 +130,7 @@ class UserResource {
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   //Entity Type: User
-  public Response findUserById(@PathParam("user_id") Integer user_id) {
+  public Response findUserById(@PathParam("user_id") Integer user_id) { //TODO UNIT TEST THIS
     User returnUser = userDAO.getUserById(user_id)
     Response returnResponse
     if (returnUser == null) {
@@ -156,7 +156,7 @@ class UserResource {
   @PUT
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
-  public Response putUserById(@PathParam("user_id") Integer user_id ,@Valid User newUser){
+  public Response putUserById(@PathParam("user_id") Integer user_id ,@Valid User newUser){ //TODO UNIT TEST THIS
 
     //TODO CREATE TESTS TO TEST RESPONSE CODES
 
@@ -188,7 +188,7 @@ class UserResource {
   @Path("/{user_id}")
   @DELETE
   @Produces(MediaType.APPLICATION_JSON)
-  public Response deleteUserById(@PathParam("user_id") Integer user_id){
+  public Response deleteUserById(@PathParam("user_id") Integer user_id){ //TODO UNIT TEST THIS
     //TODO add authentication for this method
     userDAO.deleteUserById(user_id)
     Response returnResponse = Response.ok().build()
