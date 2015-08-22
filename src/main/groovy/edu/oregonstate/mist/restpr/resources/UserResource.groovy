@@ -130,7 +130,7 @@ class UserResource {
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   //Entity Type: User
-  public Response findUserById(@PathParam("user_id") Integer user_id) { //TODO UNIT TEST THIS
+  public Response findUserById(@PathParam("user_id") Integer user_id) {
     User returnUser = userDAO.getUserById(user_id)
     Response returnResponse
     if (returnUser == null) {
@@ -156,15 +156,14 @@ class UserResource {
   @PUT
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
-  public Response putUserById(@PathParam("user_id") Integer user_id ,@Valid User newUser){ //TODO UNIT TEST THIS
-
-    //TODO CREATE TESTS TO TEST RESPONSE CODES
-
+  public Response putUserById(@PathParam("user_id") Integer user_id ,@Valid User newUser){ 
     Response returnResponse
 
     User checkForUser_id = userDAO.getUserById(user_id)
     if(checkForUser_id == null){
       userDAO.postUserToUserId(user_id, newUser.getUser_login(),newUser.getDisplay_name())
+      //TODO TEST CREATED URI BEING SET CORRECTLY
+      //TODO Make sure the location header is being set to the correct URI that can be GETTED to
       URI createdURI = URI.create("/"+user_id)
       returnResponse = Response.created(createdURI).build()
     }else{
@@ -188,7 +187,7 @@ class UserResource {
   @Path("/{user_id}")
   @DELETE
   @Produces(MediaType.APPLICATION_JSON)
-  public Response deleteUserById(@PathParam("user_id") Integer user_id){ //TODO UNIT TEST THIS
+  public Response deleteUserById(@PathParam("user_id") Integer user_id){
     //TODO add authentication for this method
     userDAO.deleteUserById(user_id)
     Response returnResponse = Response.ok().build()

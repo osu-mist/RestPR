@@ -72,6 +72,7 @@ class UserResourceTest{
             .request(MediaType.APPLICATION_JSON_TYPE)
             .get()
 
+    verify(dao).allRESTPRUsers()
     assertThat(response.getStatusInfo()).isEqualTo(Response.Status.OK)
     assertThat(response.hasEntity()).isTrue()
   }
@@ -84,6 +85,7 @@ class UserResourceTest{
             .request(MediaType.APPLICATION_JSON_TYPE)
             .get()
 
+    verify(dao).getPRUSERSmatch(anyString(),anyString())
     assertThat(response.getStatusInfo()).isEqualTo(Response.Status.OK)
     assertThat(response.hasEntity()).isTrue()
   }
@@ -121,6 +123,8 @@ class UserResourceTest{
             .request(MediaType.APPLICATION_JSON_TYPE)
             .post(Entity.entity(user,MediaType.APPLICATION_JSON_TYPE))
 
+    verify(dao).postUser(anyString(),anyString())
+
     assertThat(response.getStatusInfo()).isEqualTo(Response.Status.CONFLICT)
     assertThat(response.hasEntity()).isTrue()
 
@@ -146,6 +150,8 @@ class UserResourceTest{
             .request(MediaType.APPLICATION_JSON_TYPE)
             .post(Entity.entity(user,MediaType.APPLICATION_JSON_TYPE))
 
+    verify(dao).postUser(anyString(),anyString())
+
     assertThat(response.getStatusInfo()).isEqualTo(Response.Status.CONFLICT)
     assertThat(response.hasEntity()).isTrue()
 
@@ -159,7 +165,6 @@ class UserResourceTest{
     }
 
   }
-
   @Test
   public void testPost_201(){
     when(dao.getLatestUserId()).thenReturn(1)
@@ -168,6 +173,7 @@ class UserResourceTest{
             .request(MediaType.APPLICATION_JSON_TYPE)
             .post(Entity.entity(user,MediaType.APPLICATION_JSON_TYPE))
 
+    verify(dao).getLatestUserId()
     assertThat(response.getStatusInfo()).isEqualTo(Response.Status.CREATED)
     System.out.println(response.getHeaders())
     System.out.println(response.getHeaderString("Location"))
