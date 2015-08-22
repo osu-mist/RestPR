@@ -181,6 +181,93 @@ class UserResourceTest{
 
   }
 
+  @Test
+  public void testGetUserById_404(){
+    when(dao.getUserById(1)).thenReturn(null)
+
+    Response response = resources.client().target("/user/1")
+            .request(MediaType.APPLICATION_JSON_TYPE)
+            .get()
+
+    verify(dao).getUserById(1)
+    assertThat(response.getStatusInfo()).isEqualTo(Response.Status.NOT_FOUND)
+    assertThat(response.hasEntity()).isTrue()
+    try {
+      ErrorPOJO actual    = MAPPER.readValue(response.getEntity(), ErrorPOJO.class)
+      ErrorPOJO expected  = new ErrorPOJO(errorMessage: "Resource not found." , errorCode: Response.Status.NOT_FOUND.getStatusCode())
+
+      assertEquals(expected, actual)
+    }catch(UnrecognizedPropertyException e ){
+      fail("Mapping to ErrorPOJO failed. Received unexpected Response Entity JSON Schema")
+    }
+  }
+
+  @Test
+  public void testGetUserById_200(){
+    when(dao.getUserById(1)).thenReturn(user)
+
+    Response response = resources.client().target("/user/1")
+            .request(MediaType.APPLICATION_JSON_TYPE)
+            .get()
+
+    verify(dao).getUserById(1)
+    assertThat(response.getStatusInfo()).isEqualTo(Response.Status.OK)
+    assertThat(response.hasEntity()).isTrue()
+
+    try{
+      User actual = MAPPER.readValue(response.getEntity(), User.class)
+      User expected = user
+
+      assertEquals(expected, actual)
+    }catch(UnrecognizedPropertyException e ){
+      fail("Mapping to User failed. Received unexpected Response Entity JSON Schema")
+    }
+  }
+
+  @Test
+  public void testPutUserById_CheckForUser_id_null(){
+    when(dao.getUserById(anyInt())).thenReturn(null)
+    doNothing().when(dao).postUserToUserId(anyInt(),anyString(),anyString())
+
+    Response response = resources.client().target("/user/1")
+            .request(MediaType.APPLICATION_JSON_TYPE)
+            .put(Entity.entity(user,MediaType.APPLICATION_JSON_TYPE))
+
+    verify(dao).getUserById(anyInt())
+    verify(dao).postUserToUserId(anyInt(),anyString(),anyString())
+
+    assertThat(response.getStatusInfo()).isEqualTo(Response.Status.CREATED)
+    //assertThat(response.getHeaderString("Location")).isEqualTo("/user/1")
+  }
+
+  @Test
+  public void testPutUserById_200(){
+    when(dao.getUserById(anyInt())).thenReturn(user)
+    doNothing().when(dao).putUser(anyInt(),anyString(),anyString())
+
+    Response response = resources.client().target("/user/"+1)
+            .request(MediaType.APPLICATION_JSON_TYPE)
+            .put(Entity.entity(user,MediaType.APPLICATION_JSON_TYPE))
+
+    verify(dao).getUserById(anyInt())
+    verify(dao).putUser(anyInt(),anyString(),anyString())
+
+    assertThat(response.getStatusInfo()).isEqualTo(Response.Status.OK)
+  }
+
+  @Test
+  public void testDeleteUser_200(){
+    doNothing().when(dao).deleteUserById(1)
+
+    Response response = resources.client().target("/user/1")
+            .request(MediaType.APPLICATION_JSON_TYPE)
+            .delete()
+
+    verify(dao).deleteUserById(1)
+
+    assertThat(response.getStatusInfo()).isEqualTo(Response.Status.OK)
+  }
 
 
+  //TODO remove any matching for mock behavior to make sure tests are strict about nothing happening to passed vars
 }
