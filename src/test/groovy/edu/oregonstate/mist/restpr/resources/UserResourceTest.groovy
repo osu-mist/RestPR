@@ -41,8 +41,6 @@ class UserResourceTest{
   List<User> returnMockList
   User user = new User(user_id: 1,  display_name: "DISPLAY_NAME_TEST", user_login: "USER_LOGIN_TEST")
 
-
-  //TODO ASSERT THAT POST FAILS ON USER_LOGIN AND DISPLAY_NAME BEING THE SAME
   @BeforeClass
   public static void setUpClass() throws Exception {
     // Code executed before the first test method
@@ -81,11 +79,11 @@ class UserResourceTest{
   public void testGetMatch_200(){
     when(dao.getPRUSERSmatch(anyString(),anyString())).thenReturn(returnMockList)
 
-    Response response = resources.client().target("/user/")
+    Response response = resources.client().target("/user/").queryParam("user_login","Match1").queryParam("display_name","Match2")
             .request(MediaType.APPLICATION_JSON_TYPE)
             .get()
 
-    verify(dao).getPRUSERSmatch(anyString(),anyString())
+    verify(dao).getPRUSERSmatch("Match1","Match2")
     assertThat(response.getStatusInfo()).isEqualTo(Response.Status.OK)
     assertThat(response.hasEntity()).isTrue()
   }
@@ -123,7 +121,7 @@ class UserResourceTest{
             .request(MediaType.APPLICATION_JSON_TYPE)
             .post(Entity.entity(user,MediaType.APPLICATION_JSON_TYPE))
 
-    verify(dao).postUser(anyString(),anyString())
+    verify(dao).postUser(user.getUser_login(),user.getDisplay_name())
 
     assertThat(response.getStatusInfo()).isEqualTo(Response.Status.CONFLICT)
     assertThat(response.hasEntity()).isTrue()
@@ -136,9 +134,6 @@ class UserResourceTest{
     }catch (UnrecognizedPropertyException e){
       fail("Mapping to ErrorPOJO failed. Received unexpected Response Entity JSON Schema")
     }
-
-
-    //MAPPER.writeValueAsString(MAPPER.readValue(response.getEntity(),ErrorPOJO.class))
   }
   @Test
   public void testPost_409_Display_name_Unique_Constraint_Violation(){
@@ -150,7 +145,7 @@ class UserResourceTest{
             .request(MediaType.APPLICATION_JSON_TYPE)
             .post(Entity.entity(user,MediaType.APPLICATION_JSON_TYPE))
 
-    verify(dao).postUser(anyString(),anyString())
+    verify(dao).postUser(user.getUser_login(),user.getDisplay_name())
 
     assertThat(response.getStatusInfo()).isEqualTo(Response.Status.CONFLICT)
     assertThat(response.hasEntity()).isTrue()
@@ -175,15 +170,15 @@ class UserResourceTest{
 
     verify(dao).getLatestUserId()
     assertThat(response.getStatusInfo()).isEqualTo(Response.Status.CREATED)
-    System.out.println(response.getHeaders())
-    System.out.println(response.getHeaderString("Location"))
+    //LOCATION HEADER TEST
+    //System.out.println(response.getHeaderString("Location"))
     //assertThat(response.getHeaderString("Location")).isEqualTo("/user/"+user.getUser_id())
 
   }
 
   @Test
   public void testGetUserById_404(){
-    when(dao.getUserById(1)).thenReturn(null)
+    when(dao.getUserById(anyInt())).thenReturn(null)
 
     Response response = resources.client().target("/user/1")
             .request(MediaType.APPLICATION_JSON_TYPE)
@@ -204,7 +199,7 @@ class UserResourceTest{
 
   @Test
   public void testGetUserById_200(){
-    when(dao.getUserById(1)).thenReturn(user)
+    when(dao.getUserById(anyInt())).thenReturn(user)
 
     Response response = resources.client().target("/user/1")
             .request(MediaType.APPLICATION_JSON_TYPE)
@@ -233,8 +228,8 @@ class UserResourceTest{
             .request(MediaType.APPLICATION_JSON_TYPE)
             .put(Entity.entity(user,MediaType.APPLICATION_JSON_TYPE))
 
-    verify(dao).getUserById(anyInt())
-    verify(dao).postUserToUserId(anyInt(),anyString(),anyString())
+    verify(dao).getUserById(1)
+    verify(dao).postUserToUserId(1,user.getUser_login(),user.getDisplay_name())
 
     assertThat(response.getStatusInfo()).isEqualTo(Response.Status.CREATED)
     //assertThat(response.getHeaderString("Location")).isEqualTo("/user/1")
@@ -245,12 +240,12 @@ class UserResourceTest{
     when(dao.getUserById(anyInt())).thenReturn(user)
     doNothing().when(dao).putUser(anyInt(),anyString(),anyString())
 
-    Response response = resources.client().target("/user/"+1)
+    Response response = resources.client().target("/user/1")
             .request(MediaType.APPLICATION_JSON_TYPE)
             .put(Entity.entity(user,MediaType.APPLICATION_JSON_TYPE))
 
-    verify(dao).getUserById(anyInt())
-    verify(dao).putUser(anyInt(),anyString(),anyString())
+    verify(dao).getUserById(1)
+    verify(dao).putUser(1,user.getUser_login(),user.getDisplay_name())
 
     assertThat(response.getStatusInfo()).isEqualTo(Response.Status.OK)
   }
@@ -267,7 +262,4 @@ class UserResourceTest{
 
     assertThat(response.getStatusInfo()).isEqualTo(Response.Status.OK)
   }
-
-
-  //TODO remove any matching for mock behavior to make sure tests are strict about nothing happening to passed vars
 }
