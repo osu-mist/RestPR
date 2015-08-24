@@ -23,6 +23,7 @@ import javax.ws.rs.QueryParam
 import javax.ws.rs.core.Context
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
+import javax.ws.rs.core.UriBuilder
 import javax.ws.rs.core.UriInfo
 
 //TODO look up VALID annotation
@@ -92,10 +93,11 @@ class UserResource {
     }else{
       try {
         userDAO.postUser(newUser.getUser_login(),newUser.getDisplay_name())
-        URI createdURI = URI.create("/"+userDAO.getLatestUserId())
+        URI createdURI = UriBuilder.fromResource(UserResource.class).path("{user_id}").build(userDAO.getLatestUserId())
+
         returnResponse = Response.created(createdURI).build()
-        //TODO TEST CREATED URI BEING SET CORRECTLY
-        //TODO Make sure the location header is being set to the correct URI that can be GETTED to
+        //FIXME NOTE https://github.com/dropwizard/dropwizard/issues/878
+        //Created uri can't be set correctly due to a Jersey bug.
       } catch (UnableToExecuteStatementException e){
         String constraintError = e.getMessage()
 
@@ -162,8 +164,8 @@ class UserResource {
     User checkForUser_id = userDAO.getUserById(user_id)
     if(checkForUser_id == null){
       userDAO.postUserToUserId(user_id, newUser.getUser_login(),newUser.getDisplay_name())
-      //TODO TEST CREATED URI BEING SET CORRECTLY
-      //TODO Make sure the location header is being set to the correct URI that can be GETTED to
+      //FIXME NOTE https://github.com/dropwizard/dropwizard/issues/878
+      //Created uri can't be set correctly due to a Jersey bug.
       URI createdURI = URI.create("/"+user_id)
       returnResponse = Response.created(createdURI).build()
     }else{
