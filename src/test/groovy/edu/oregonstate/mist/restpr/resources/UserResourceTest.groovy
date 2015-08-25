@@ -104,7 +104,7 @@ class UserResourceTest{
       ErrorPOJO expected = new ErrorPOJO(errorMessage:  "user_login and display_name fields are not unique.", errorCode: Response.Status.CONFLICT.getStatusCode())
 
       assertEquals(expected, actual)
-    }catch (com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException e ){
+    }catch (UnrecognizedPropertyException e ){
       //extends com.fasterxml.jackson.databind.JsonMappingException
       fail("Mapping to ErrorPOJO failed. Received unexpected Response Entity JSON Schema")
     }
