@@ -26,5 +26,16 @@ class ErrorPojoTest {
     assertEquals(expected, actual)
   }
 
-  //TODO ADD DESERIALIZATION TEST
+  @Test
+  void deserializeFromJSON() throws Exception{
+    ErrorPOJO expected = new ErrorPOJO(
+            errorMessage: "Resource not found",
+            errorCode: 404
+    )
+
+    ErrorPOJO actual = MAPPER.readValue(fixture("fixtures/errorpojo.json"),ErrorPOJO.class)
+
+    assertEquals(expected, actual)
+  }
+
 }
