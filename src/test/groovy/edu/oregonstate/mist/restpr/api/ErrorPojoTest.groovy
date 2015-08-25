@@ -25,4 +25,6 @@ class ErrorPojoTest {
 
     assertEquals(expected, actual)
   }
+
+  //TODO ADD DESERIALIZATION TEST
 }
