@@ -6,6 +6,8 @@ package edu.oregonstate.mist.restpr.resources
 import edu.oregonstate.mist.restpr.api.ErrorPOJO
 import edu.oregonstate.mist.restpr.api.User
 import edu.oregonstate.mist.restpr.db.UserDAO
+import org.skife.jdbi.v2.exceptions.UnableToExecuteStatementException
+
 import javax.validation.Valid
 import com.google.common.base.Optional
 import javax.validation.constraints.NotNull
@@ -21,7 +23,11 @@ import javax.ws.rs.QueryParam
 import javax.ws.rs.core.Context
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
+import javax.ws.rs.core.UriBuilder
 import javax.ws.rs.core.UriInfo
+
+//TODO look up VALID annotation
+//TODO look up NotNull annoation
 
 @Path("/user")
 @Produces(MediaType.APPLICATION_JSON)
@@ -77,32 +83,43 @@ class UserResource {
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  //Entity Type: URI
+  //Entity Type: URI or ErrorPOJO
   public Response postUser(@Valid User newUser) {
     Response returnResponse
-    try {
-      userDAO.postUser(newUser.getUser_login(),newUser.getDisplay_name())
-      URI createdURI = URI.create("/"+userDAO.getLatestUserId())
-      returnResponse = Response.created(createdURI).build()
-
-    } catch (org.skife.jdbi.v2.exceptions.UnableToExecuteStatementException e){
-
-      String constraintError = e.cause.toString()
-      ErrorPOJO returnError
-      if(constraintError.contains("PR_USER_U_USER_LOGIN")){//USER LOGIN IS NOT UNIQUE
-
-        returnError = new ErrorPOJO("User login is not unique", Response.Status.CONFLICT.getStatusCode())
-      }else if(constraintError.contains("PR_USER_U_DISPLAY_NAME")){//DISPLAY NAME IS NOT UNIQUE
-
-        returnError = new ErrorPOJO("Display name is not unique", Response.Status.CONFLICT.getStatusCode())
-
-      }else{//Some other error, should be logged
-        returnError = new ErrorPOJO("Unknown error.", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode())
-      }
-
+    if(newUser.getUser_login() == newUser.getDisplay_name()){
+      ErrorPOJO returnError = new ErrorPOJO(errorMessage:  "user_login and display_name fields are not unique.", errorCode: Response.Status.CONFLICT.getStatusCode())
       return Response.status(returnError.getErrorCode()).entity(returnError).build()
-    }
 
+    }else{
+      try {
+        userDAO.postUser(newUser.getUser_login(),newUser.getDisplay_name())
+        URI createdURI = UriBuilder.fromResource(UserResource.class).path("{user_id}").build(userDAO.getLatestUserId())
+
+        returnResponse = Response.created(createdURI).build()
+        //FIXME NOTE https://github.com/dropwizard/dropwizard/issues/878
+        //Created uri can't be set correctly due to a Jersey bug.
+      } catch (UnableToExecuteStatementException e){
+        String constraintError = e.getMessage()
+
+        ErrorPOJO returnError
+        if(constraintError.contains("PR_USER_U_USER_LOGIN")){//USER LOGIN IS NOT UNIQUE
+          //e.cause will contain this
+          //"java.sql.SQLIntegrityConstraintViolationException: ORA-00001: unique constraint (MISTSTU1.PR_USER_U_USER_LOGIN) violated"
+
+          returnError = new ErrorPOJO(errorMessage: "User login is not unique.",errorCode: Response.Status.CONFLICT.getStatusCode())
+        }else if(constraintError.contains("PR_USER_U_DISPLAY_NAME")){//DISPLAY NAME IS NOT UNIQUE
+          //e.cause will contain this
+          //"java.sql.SQLIntegrityConstraintViolationException: ORA-00001: unique constraint (MISTSTU1.PR_USER_U_DISPLAY_NAME) violated"
+          
+          returnError = new ErrorPOJO(errorMessage: "Display name is not unique.",errorCode: Response.Status.CONFLICT.getStatusCode())
+
+        }else{//Some other error, should be logged
+          returnError = new ErrorPOJO(errorMessage: "Unknown error.", errorCode: Response.Status.INTERNAL_SERVER_ERROR.getStatusCode())
+        }
+
+        return Response.status(returnError.getErrorCode()).entity(returnError).build()
+      }
+    }
     returnResponse
   }
 
@@ -119,7 +136,7 @@ class UserResource {
     User returnUser = userDAO.getUserById(user_id)
     Response returnResponse
     if (returnUser == null) {
-      ErrorPOJO returnError = new ErrorPOJO("Resource not found.",Response.Status.NOT_FOUND.getStatusCode())
+      ErrorPOJO returnError = new ErrorPOJO(errorMessage:  "Resource not found.",errorCode:  Response.Status.NOT_FOUND.getStatusCode())
       returnResponse = Response.status(Response.Status.NOT_FOUND).entity(returnError).build()
 
     }else{
@@ -141,15 +158,14 @@ class UserResource {
   @PUT
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
-  public Response putUserById(@PathParam("user_id") Integer user_id ,@Valid User newUser){
-
-    //TODO CREATE TESTS TO TEST RESPONSE CODES
-
+  public Response putUserById(@PathParam("user_id") Integer user_id ,@Valid User newUser){ 
     Response returnResponse
 
     User checkForUser_id = userDAO.getUserById(user_id)
     if(checkForUser_id == null){
       userDAO.postUserToUserId(user_id, newUser.getUser_login(),newUser.getDisplay_name())
+      //FIXME NOTE https://github.com/dropwizard/dropwizard/issues/878
+      //Created uri can't be set correctly due to a Jersey bug.
       URI createdURI = URI.create("/"+user_id)
       returnResponse = Response.created(createdURI).build()
     }else{

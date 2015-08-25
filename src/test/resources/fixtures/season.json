@@ -1,0 +1,8 @@
+{
+  "season_id":22,
+  "community_name": "Test POST",
+  "cycle_format":  "Feb",
+  "cycle_count": "Monthly",
+  "elo_default_seed": 1200,
+  "year": 2015
+}

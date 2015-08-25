@@ -5,7 +5,6 @@ import edu.oregonstate.mist.restpr.api.Season
 import edu.oregonstate.mist.restpr.db.SeasonDAO
 import com.google.common.base.Optional
 import javax.validation.Valid
-import javax.validation.constraints.NotNull
 import javax.ws.rs.Consumes
 import javax.ws.rs.DELETE
 import javax.ws.rs.GET
@@ -91,13 +90,12 @@ class SeasonResource {
 
       ErrorPOJO returnError
       if(constraintError.contains("SEASON_U_COMMUNITY_NAME")){//USER LOGIN IS NOT UNIQUE
-
-        returnError = new ErrorPOJO("Community name is not unique", Response.Status.CONFLICT.getStatusCode())
+        returnError = new ErrorPOJO(errorMessage: "Community name is not unique", errorCode: Response.Status.CONFLICT.getStatusCode())
 
       }else{//Some other error, should be logged
 
         System.out.println(e.localizedMessage)
-        returnError = new ErrorPOJO("Unknown error.", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode())
+        returnError = new ErrorPOJO(errorMessage: "Unknown error.",errorCode: Response.Status.INTERNAL_SERVER_ERROR.getStatusCode())
       }
 
       return Response.status(returnError.getErrorCode()).entity(returnError).build()
@@ -138,7 +136,7 @@ class SeasonResource {
     Response returnResponse
 
     if (returnSeason == null) {
-      ErrorPOJO returnError = new ErrorPOJO("Resource not found.",Response.Status.NOT_FOUND.getStatusCode())
+      ErrorPOJO returnError = new ErrorPOJO(errorMessage:  "Resource not found.",errorCode: Response.Status.NOT_FOUND.getStatusCode())
       returnResponse = Response.status(Response.Status.NOT_FOUND).entity(returnError).build()
 
     }else{
