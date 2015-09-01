@@ -15,6 +15,7 @@ public interface UserDAO extends Closeable {
   /**
    * Selects users that match the double ended wildcard match clauses using display_name_match and user_login_match.
    * In the event these are empty strings it selects all users.
+   *
    * @param user_login_match      User login to be matched for
    * @param display_name_match    Display name to be matched for
    * @return the selected users that have partial matching user logins and display names
@@ -31,6 +32,7 @@ public interface UserDAO extends Closeable {
 
   /**
    * Selects all users from the user table
+   *
    * @return all users from the user table
    */
   @SqlQuery("""
@@ -41,6 +43,7 @@ public interface UserDAO extends Closeable {
 
   /**
    * Inserts a new user representation into the user table and uses the user sequence to set the user id
+   *
    * @param user_login    The new user's login
    * @param display_name  The new user's display name
    */
@@ -49,6 +52,7 @@ public interface UserDAO extends Closeable {
 
   /**
    * Updates a user with the given user_id with a new user_login and a new display_name
+   *
    * @param user_id       The specified user to be updated
    * @param user_login    The new user_login to be updated with
    * @param display_name  The new display name to be updated with
@@ -62,6 +66,7 @@ public interface UserDAO extends Closeable {
 
   /**
    * Selects a specified user using the given user_id
+   *
    * @param user_id   The specified user to be selected with this id
    * @return the specified user using the given user_id
    */
@@ -74,6 +79,7 @@ public interface UserDAO extends Closeable {
 
   /**
    * Posts a new user to the user table with the given user_id as the user_id to be used in the row.
+   *
    * @param user_id       The user_id of the new user to be inserted to
    * @param user_login    The user login of the new user
    * @param display_name  The display name of the new user
@@ -83,6 +89,7 @@ public interface UserDAO extends Closeable {
 
   /**
    * Deletes user from user table with the given user_id
+   *
    * @param user_id The user_id of the user that is to be deleted from the table
    */
   @SqlUpdate( """
@@ -94,6 +101,7 @@ public interface UserDAO extends Closeable {
   /**
    * Returns the userid of the latest user created using the User sequence
    * //FIXME possible race condition
+   *
    * @return the userid of the latest user created using the User sequence
    */
   @SqlQuery("""

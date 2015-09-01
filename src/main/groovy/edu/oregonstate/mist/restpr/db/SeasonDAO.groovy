@@ -16,6 +16,7 @@ public interface SeasonDAO extends Closeable  {
   /**
    * Selects seasons that match the double ended wildcard match clauses using community_name_match, cycle_format_match
    * cycle_count_match, and year_match. In the event these parameters are empty strings it selects all seasons.
+   *
    * @param community_name_match  Community name to be partially matched for
    * @param cycle_format_match    Cycle Format to be partially matched for
    * @param cycle_count_match     Cycle count to be partially matched for
@@ -40,6 +41,7 @@ public interface SeasonDAO extends Closeable  {
 
   /**
    * Selects all seasons from the season table
+   *
    * @return all seasons from the table
    */
   @SqlQuery("""
@@ -50,6 +52,7 @@ public interface SeasonDAO extends Closeable  {
 
   /**
    * Inserts a new season into the season table and uses the season sequence for the id
+   *
    * @param community_name    Community name of the new season to be inserted
    * @param cycle_format      Cycle format of the new season to be inserted
    * @param cycle_count       Cycle count of the new season to be inserted
@@ -65,6 +68,7 @@ public interface SeasonDAO extends Closeable  {
 
   /**
    * Updates a specified season row using the season_id parameter using the other parameters as the updated values
+   *
    * @param season_id         Season id of the season record to be updated
    * @param community_name    Community name of the season record to be updated
    * @param cycle_format      Cycle format of the season record to be updated
@@ -84,6 +88,7 @@ public interface SeasonDAO extends Closeable  {
 
   /**
    * Selects and returns a specific season using the season_id
+   *
    * @param season_id Season_id of the season record to be selected and returned
    * @return a specific season using the season_id given
    */
@@ -96,6 +101,7 @@ public interface SeasonDAO extends Closeable  {
 
   /**
    * Inserts a season record to a specified row using the season id
+   *
    * @param season_id         Season_id of the row to be inserted to
    * @param community_name    Community name of the row to be inserted with
    * @param cycle_format      Cycle format of the row to be inserted with
@@ -112,6 +118,7 @@ public interface SeasonDAO extends Closeable  {
 
   /**
    * Deletes a specified season row from the table
+   *
    * @param season_id season_id of the season to be deleted
    */
   @SqlUpdate( """
@@ -122,6 +129,7 @@ public interface SeasonDAO extends Closeable  {
   /**
    * Returns the season_id of the latest season created using the season sequence
    * //FIXME possible race condition
+   *
    * @return the season_id of the latest season created using the season sequence
    */
   @SqlQuery("""

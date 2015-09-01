@@ -43,6 +43,7 @@ class UserResource {
 
   /**
    *  Returns all RestPR Users in the table.
+   *
    * @return all Users in the RestPR User table within response body.
    */
   @Path("/all")
@@ -58,6 +59,7 @@ class UserResource {
 
   /**
    *  Returns all of the Users that match the where like %user_login% and %display_name% clause.
+   *
    * @param user_login    The login to partially match against the Users in the table.
    * @param display_name  The display name to partially match against the Users in the table.
    * @return  all of the Users that match the where like %user_login% and %display_name% clause within response body.
@@ -77,6 +79,7 @@ class UserResource {
 
   /**
    *  Posts new user into the User table as long as it does not violate the unique key constraints on both fields.
+   *
    * @param newUser   The new user to be posted to the database.
    * @return Response code with uri of the newly created user
    */
@@ -125,6 +128,7 @@ class UserResource {
 
   /**
    * Returns the user with the specified user_id
+   *
    * @param user_id   The user_id of the user that is to be returned
    * @return Returns the user with the specified user_id
    */
@@ -150,6 +154,7 @@ class UserResource {
 
   /**
    * Updates the user specified with the user_id within the table to be updated with the newUser representation.
+   *
    * @param user_id   User_id of the user to be updated
    * @param newUser   Representation of the new User to be updated with
    * @return An okay response on success
@@ -183,6 +188,7 @@ class UserResource {
 
   /**
    * Deletes the specified user with the given user_id
+   *
    * @param User_id   User_id of the user to be deleted
    * @return An okay response
    */
