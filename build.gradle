@@ -33,6 +33,7 @@ dependencies {
     compile "io.dropwizard:dropwizard-core:${dropwizardVersion}"
     compile "io.dropwizard:dropwizard-jdbi:${dropwizardVersion}"
     compile "io.dropwizard:dropwizard-testing:${dropwizardVersion}"
+    compile "io.dropwizard:dropwizard-auth:${dropwizardVersion}"
 }
 
 codenarc {

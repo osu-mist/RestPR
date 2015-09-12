@@ -36,6 +36,7 @@ Panelists involved in the subjective power rankings can utilize the upset filter
 
 - User
 - Season
+- AuthTest
 
 #Response Codes
 
@@ -73,6 +74,12 @@ The following examples can be excuted with netcat using heredocs like this:
 	HERE
 
 #GET
+Get to /AuthTest
+```
+	nc localhost 8008
+	GET /AuthTest/TestMe HTTP/1.0
+	AUTHORIZATION: Bearer TEST_TOKEN
+```
 Get Users and partial match user_login and display_name query parameters
 ```
 	GET /user?user_login=LOGIN&display_name=DISPLAY HTTP/1.0
