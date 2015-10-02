@@ -13,7 +13,7 @@ import javax.ws.rs.core.Response
  * Created by georgecrary on 8/26/15.
  */
 @Path("/AuthTest")
-@Produces(MediaType.APPLICATION_JSON)
+@Produces(MediaType.TEXT_PLAIN)
 class AuthTestResource {
   @GET
   @Path('/TestMe')
